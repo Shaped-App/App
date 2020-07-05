@@ -1,0 +1,14 @@
+{
+  "versions": [
+    {
+      "version": "v1.0",
+      "api-list": {
+        "/get/browse/question-list": "/api/v1.0/TODO",
+        "/get/browse/question": "/api/v1.0/TODO",
+        "/get/browse/answer-list": "/api/v1.0/TODO",
+        "/get/browse/answer": "/api/v1.0/TODO",
+        "/post/browse/answer": "/api/v1.0/TODO"
+      }
+    }
+  ]
+}
