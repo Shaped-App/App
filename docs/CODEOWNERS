@@ -1,0 +1,3 @@
+# The owners that are required to review all PRs.
+# As a baseline default, both frontend and backend teams are required for all PRs.
+*       @Shaped-App/frontend @Shaped-App/backend
