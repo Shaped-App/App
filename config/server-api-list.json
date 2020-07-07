@@ -3,11 +3,17 @@
     {
       "version": "v1.0",
       "api-list": {
-        "/get/browse/question-list": "/api/v1.0/TODO",
-        "/get/browse/question": "/api/v1.0/TODO",
-        "/get/browse/answer-list": "/api/v1.0/TODO",
-        "/get/browse/answer": "/api/v1.0/TODO",
-        "/post/browse/answer": "/api/v1.0/TODO"
+        "/browse/question-list/get": "/api/v1.0/TODO",
+        "/browse/question/get": "/api/v1.0/TODO",
+        "/browse/answer-list/get": "/api/v1.0/TODO",
+        "/browse/answer/get": "/api/v1.0/TODO",
+        "/browse/answer/post": "/api/v1.0/TODO",
+        "/matching/get": "/api/v1.0/TODO",
+        "/matching/post": "/api/v1.0/TODO",
+        "/profile/info/get": "/api/v1.0/TODO",
+        "/profile/info/post": "/api/v1.0/TODO",
+        "/profile/settings/get": "/api/v1.0/TODO",
+        "/profile/settings/post": "/api/v1.0/TODO"
       }
     }
   ]
