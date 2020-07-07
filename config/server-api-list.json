@@ -1,0 +1,20 @@
+{
+  "versions": [
+    {
+      "version": "v1.0",
+      "api-list": {
+        "/browse/question-list/get": "/api/v1.0/TODO",
+        "/browse/question/get": "/api/v1.0/TODO",
+        "/browse/answer-list/get": "/api/v1.0/TODO",
+        "/browse/answer/get": "/api/v1.0/TODO",
+        "/browse/answer/post": "/api/v1.0/TODO",
+        "/matching/get": "/api/v1.0/TODO",
+        "/matching/post": "/api/v1.0/TODO",
+        "/profile/info/get": "/api/v1.0/TODO",
+        "/profile/info/post": "/api/v1.0/TODO",
+        "/profile/settings/get": "/api/v1.0/TODO",
+        "/profile/settings/post": "/api/v1.0/TODO"
+      }
+    }
+  ]
+}
