@@ -1,12 +1,10 @@
 //Matching-Home
 import React, {Component} from 'react';
-import {
-    SafeAreaView,
-} from 'react-native';
+import { SafeAreaView, } from 'react-native';
 
 import QuestionList from './QuestionList';
 
-export default class HomeScreen extends Component {
+export default class MatchingHomeScreen extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -17,7 +15,7 @@ export default class HomeScreen extends Component {
     render(){
         return(
             <SafeAreaView>
-                <QuestionList questions={this.state.questions}/>
+                <QuestionList questions = {this.state.questions}/>
             </SafeAreaView>
         );
     }
