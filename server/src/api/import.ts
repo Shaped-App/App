@@ -29,7 +29,7 @@ export default class ApiFactory {
         console.debug(this.apis);
     }
 
-    static getInstance(): ApiFactory {
+    public static getInstance(): ApiFactory {
         if (!ApiFactory.instance) {
             ApiFactory.instance = new ApiFactory();
         }
@@ -41,7 +41,6 @@ export default class ApiFactory {
         if (versionApis === undefined) {
             return BAD_API_FLAG;
         }
-        console.log(versionApis)
         const api = versionApis[description];
         if (api === undefined) {
             return BAD_API_FLAG;
