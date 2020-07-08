@@ -23,8 +23,8 @@ class Question extends Component {
 
     render(){
         return (
-            <TouchableHighlight style={styles.question__container}
-            onPress={this.onQuestionPress} underlayColor="lightgray">
+            <TouchableHighlight style = {styles.question__container}
+            onPress = {this.onQuestionPress} underlayColor = "lightgray">
                 <View>
                     <Text style={styles.question__header}>{this.state.question}</Text>
                 </View>
@@ -46,7 +46,7 @@ export default class QuestionList extends Component {
         return (
             <ScrollView>
                 {this.state.questions.forEach((q, i) => 
-                    <Question question={q} question_id = {i} key = {i} />
+                    <Question question = {q} question_id = {i} key = {i} />
                 )}
             </ScrollView>
         );
