@@ -1,6 +1,13 @@
 {
   "versions": [
     {
+      "version": "test", 
+      "api-list": {
+        "/test1/test2/get": "/api/vtest/success12",
+        "/test2/test1/post": "/api/vtest/success21"
+      }
+    },
+    {
       "version": "v1.0",
       "api-list": {
         "/browse/question-list/get": "/api/v1.0/TODO",
