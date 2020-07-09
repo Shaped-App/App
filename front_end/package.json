@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "react": "16.11.0",
-    "react-native": "0.62.2"
+    "react-native": "0.62.2",
+    "react-native-read-more-text": "^1.1.2",
+    "react-native-vector-icons": "^7.0.0",
+    "save": "^2.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
