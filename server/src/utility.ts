@@ -1,7 +1,7 @@
 
 
 export function generateRandomString(length: number) {
-  let s = "";
+  let s = '';
   while (s.length < length) {
     s += Math.random().toString(36).replace(/[^a-z]+/g, '');
   }
