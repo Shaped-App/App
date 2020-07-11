@@ -10,11 +10,11 @@ export class TestService {
 @Injectable()
 export class AppService {
   getBrowseQuestionList(): string {
-    return "TODO";
+    return 'TODO';
   }
 
   getBrowseQuestion(): string {
-    return "TODO";
+    return 'TODO';
   }
 }
 
