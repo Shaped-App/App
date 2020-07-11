@@ -30,12 +30,7 @@ class Response extends Component {
     }
 
     handleChange(value){
-        this.setState({reply: value});
-        if(value === ""){
-            this.setState({disabled: true});
-        } else{
-            this.setState({disabled: false});
-        }
+        this.setState({reply: value, disabled: value === ""});
     }
 
     handleSend(){
@@ -166,24 +161,3 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
-
-/*import ResponseList from './Matching/ResponseList';
-export default class App extends Component {
-  render(){
-      const res = [
-    { response: "Hello my name is Bob Ross. Welcome to today's episode. Today we will be painting a picture of Terry Crews.",
-      user: "Bob Ross",
-      id: 0
-    },
-    { response: "Hello my name is Bob Ross. Welcome to today's episode. Today we will be painting a picture of Terry Crews.",
-      user: "Bob Ross",
-      id: 1
-    },
-  ];
-  return (
-    <SafeAreaView>
-      <ResponseList responses={res}/>
-    </SafeAreaView>
-  );
-  }
-};*/

@@ -1,0 +1,1 @@
+../../../Flipper/xplat/Flipper/FlipperInitConfig 2.h

@@ -1,0 +1,1 @@
+../../../../FlipperKit/iOS/Plugins/FlipperKitLayoutPlugin/FlipperKitLayoutPlugin/UICollectionView+SKInvalidation 3.h
