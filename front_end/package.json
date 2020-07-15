@@ -12,7 +12,12 @@
   "dependencies": {
     "react": "16.11.0",
     "react-native": "0.62.2",
+<<<<<<< HEAD
     "react-native-read-more-text": "^1.1.2"
+=======
+    "react-native-read-more-text": "^1.1.2",
+    "react-native-firebase": "^5.6.0"
+>>>>>>> remove unnecessary files
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
