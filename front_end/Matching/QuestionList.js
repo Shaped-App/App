@@ -20,6 +20,7 @@ class Question extends Component {
 
     onQuestionPress() {
         console.log("Pressed question!");
+        console.log(this.state.question);
     }
 
     render(){
@@ -44,10 +45,11 @@ export default class QuestionList extends Component {
     }
 
     render(){
+        console.log(this.state.questions[0]['question']);
         return (
-            <ScrollView>
-                {this.state.questions.map(question => 
-                <Question response={question.question} 
+            <ScrollView style = {styles.content__container}>
+                {this.state.questions.map((question) => 
+                <Question question={question.question} 
                 question_id = {question.id} key={question.id}/>)}
             </ScrollView>
         );

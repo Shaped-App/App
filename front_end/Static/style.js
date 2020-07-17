@@ -8,9 +8,23 @@ export default StyleSheet.create({
         padding: '5%',
         width: '100%'
     },
+    match__background: {
+        backgroundColor: '#d0faae',
+        width: '100%',
+        height: '100%',
+        alignItems: 'center'
+    },
+    screen__header: {
+        alignItems: 'center',
+        padding: '5%',
+        height: '10%',
+    },
     text: {
         color: '#808080',
         fontSize: 14,
+    },
+    content__container: {
+        width: '90%'
     },
     response__header: {
         flex: 1,
@@ -22,10 +36,6 @@ export default StyleSheet.create({
         color: 'black',
         fontSize: 16,
         fontWeight: '600'
-    },
-    username: {
-        fontSize: 16,
-        marginLeft: 16
     },
     answer__container: {
         backgroundColor: '#ffffff',
@@ -63,5 +73,13 @@ export default StyleSheet.create({
         fontSize: 14,
         color: '#ffffff',
         fontWeight: 'bold'
+    },
+    button: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#ffffff',
+        borderRadius: 37,
+        height: 52,
+        width: 140
     }
 });
