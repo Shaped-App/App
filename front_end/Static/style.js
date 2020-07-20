@@ -42,6 +42,11 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
   },
+  text__success: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    margin: 10,
+  },
   answer__container: {
     backgroundColor: '#ffffff',
     borderRadius: 6,
