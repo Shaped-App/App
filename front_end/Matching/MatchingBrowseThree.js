@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import {SafeAreaView, View, Text, TouchableOpacity} from 'react-native';
 
-import styles from './Static/style.js';
+import styles from '../Static/style';
 
 export default class BrowseThreeScreen extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      question: props.route.params.question,
+      question_id: props.route.params.question_id,
+      navigation: props.navigation
+    };
   }
 
   render() {

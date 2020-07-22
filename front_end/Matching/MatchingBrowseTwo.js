@@ -2,21 +2,24 @@
 import React, {Component} from 'react';
 import {
     SafeAreaView,
-    View,
     Text,
     TextInput,
     TouchableOpacity,
+    View,
 } from 'react-native';
 
-import styles from '../Static/style.js';
+import styles from '../Static/style';
+import {BrowseOption} from '../NavBar';
 
 export default class BrowseTwoScreen extends Component {
     constructor(props){
         super(props);
         this.state = {
-          question: props.question,
+          question: props.route.params.question,
+          question_id: props.route.params.question_id,
           answer: "",
-          disabled: true
+          disabled: true,
+          navigation: props.navigation
         };
         this.handleChange = this.handleChange.bind(this);
         this.handlePress = this.handlePress.bind(this);
@@ -27,14 +30,18 @@ export default class BrowseTwoScreen extends Component {
     }
 
     handlePress(){
-        console.log("Press Save!");
-        console.log(this.state.answer);
+        this.state.navigation.navigate(BrowseOption[2],{
+            question_id: this.state.question_id,
+            question: this.state.question,
+        });
     }
 
     render(){
         return(
             <SafeAreaView style={styles.match__background}>
-                <View style={styles.screen__header}></View>
+                <View style={styles.screen__header}>
+                    <Text style={styles.text__header}>{this.state.question}</Text>
+                </View>
                 <View style={styles.content__container}>
                     <TextInput style={[styles.class__container, {height: 300, paddingTop: 20}]}
                     placeholder={"Start typing..."} onChangeText={value => this.handleChange(value)}
