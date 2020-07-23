@@ -34,7 +34,7 @@ export default class InboxOneScreen extends Component {
     render(){
         return(
             <SafeAreaView style={inbox_style.message__background}>
-                <View style={{width: '90%', marginTop: '5%'}}>
+                <View style={inbox_style.content_container}>
                     <View style={styles.class__container}>
                         <View style={inbox_style.align__row}>
                             <Text style={inbox_style.incoming__header}>Incoming Messages</Text>
