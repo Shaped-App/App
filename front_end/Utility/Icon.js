@@ -7,7 +7,8 @@ import {
 const iconURL = {
     'send': require('../Static/Icons/send.png'),
     'profile': require('../Static/Icons/profile.png'),
-    'arrow': require('../Static/Icons/arrow.png')
+    'arrow': require('../Static/Icons/arrow.png'),
+    'back': require('../Static/Icons/back.png'),
 };
 
 export default class Icon extends Component {

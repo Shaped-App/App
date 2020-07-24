@@ -6,14 +6,15 @@ import {
     Text,
 } from 'react-native';
 
-import styles from '../Static/style.js';
 import QuestionList from './QuestionList';
+import styles from '../Static/style';
 
 export default class BrowseOneScreen extends Component {
     constructor(props){
         super(props);
         this.state = {
-          questions: props.questions
+          questions: [],
+          navigation: props.navigation
         };
     }
 
@@ -24,7 +25,8 @@ export default class BrowseOneScreen extends Component {
                     <Text style={styles.text}>First answer a question</Text>
                     <Text style={styles.text}>Then see other people's response!</Text>
                 </View>
-                <QuestionList questions = {this.state.questions}/>
+                <QuestionList questions = {this.state.questions}
+                navigation={this.state.navigation}/>
             </SafeAreaView>
         );
     }
