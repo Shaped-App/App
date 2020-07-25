@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {SafeAreaView, View, Text, TouchableOpacity} from 'react-native';
 
-import styles from './Static/main_style.js';
-import ResponseList from './Matching/ResponseList';
+import styles from '../Static/main_style.js';
+import ResponseList from '../Matching/ResponseList';
 
 // const responses = [
 //   {

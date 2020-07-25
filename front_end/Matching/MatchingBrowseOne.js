@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {SafeAreaView, View, Text} from 'react-native';
 
 import styles from '../Static/main_style.js';
-import QuestionList from './QuestionList';
+import QuestionList from '../Matching/QuestionList';
 
 export default class BrowseOneScreen extends Component {
   constructor(props) {
