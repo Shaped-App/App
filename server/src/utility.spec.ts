@@ -19,7 +19,7 @@ describe('Utility tests', () => {
     });
   })
 
-  describe('Max tests', () => {
+  describe('Min tests', () => {
     it('1 and 2', () => {
       expect(min(1, 2)).toBe(1);
     });
