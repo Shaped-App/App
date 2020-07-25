@@ -9,7 +9,7 @@ Note: User IDs (uids) are not included in any of these endpoints' inputs because
 
 Input:
 
-```JSON
+```
 {
     "time": <int>
 }
@@ -17,7 +17,7 @@ Input:
 
 Response: 
 
-```JSON
+```
 {
     "qids": [
         {
@@ -40,7 +40,7 @@ Response:
 
 Input:
 
-```json
+```
 {
     "qids": [
         "my_question_id1", 
@@ -52,7 +52,7 @@ Input:
 
 Response: 
 
-```JSON
+```
 {
     "questions": {
         "my_question_id1": {
@@ -75,7 +75,7 @@ Response:
 
 Input:
 
-```JSON
+```
 {
     "qid": "my_question_id1"
 }
@@ -83,7 +83,7 @@ Input:
 
 Response: 
 
-```JSON
+```
 {
     "aids": [
         {
@@ -105,7 +105,7 @@ Response:
 
 Input:
 
-```JSON
+```
 {
     "aids": [
         "my_answer_id1", 
@@ -117,7 +117,7 @@ Input:
 
 Response: 
 
-```JSON
+```
 {
     "answers": {
         "my_answer_id1": {
@@ -139,7 +139,7 @@ Response:
 
 Input:
 
-```JSON
+```
 {
     "qid": "my_question_id1",
     "answer": <string>,
@@ -149,7 +149,7 @@ Input:
 
 Response: 
 
-```JSON
+```
 {
     "qid": "my_question_id1",
     "aid": "my_answer_id1",
@@ -161,7 +161,7 @@ Response:
 
 Input:
 
-```JSON
+```
 {
     "qid": "my_question_id1",
     "aid": "my_answer_id1",
@@ -172,7 +172,7 @@ Input:
 
 Response: 
 
-```JSON
+```
 {
     "qid": "my_question_id1",
     "aid": "my_answer_id1",
@@ -185,7 +185,7 @@ Response:
 
 Input:
 
-```JSON
+```
 {
     "time": <TimeFormatTBD>
 }
@@ -193,7 +193,7 @@ Input:
 
 Response: 
 
-```JSON
+```
 {
     "responses-left": <int>
 }
