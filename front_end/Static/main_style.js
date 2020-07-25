@@ -1,4 +1,7 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+
+var deviceWidth = Dimensions.get('window').width;
+var deviceHeight = Dimensions.get('window').height;
 
 export default StyleSheet.create({
   class__container: {
@@ -6,7 +9,7 @@ export default StyleSheet.create({
     borderRadius: 20,
     marginBottom: 16,
     padding: '5%',
-    width: '100%',
+    width: (deviceWidth * 80) / 100,
   },
   match__background: {
     backgroundColor: '#d0faae',
