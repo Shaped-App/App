@@ -8,10 +8,10 @@ export function generateRandomString(length: number) {
   return s.substr(0, length);
 }
 
-export function min(a: number, b: number) {
+export function min(a: number, b: number): number {
   return a < b ? a : b;
 }
 
-export function max(a: number, b: number) {
+export function max(a: number, b: number): number {
   return a > b ? a : b;
 }

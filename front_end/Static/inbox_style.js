@@ -1,10 +1,14 @@
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
     bar: {
         marginTop: 16,
         borderTopColor: '#808080',
         borderTopWidth: 0.5
+    },
+    content_container: {
+        marginTop: '5%',
+        width: '90%'
     },
     notification: {
         backgroundColor: '#ff7777',
