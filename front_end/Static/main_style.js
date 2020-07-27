@@ -1,15 +1,12 @@
 import {StyleSheet, Dimensions} from 'react-native';
 
-var deviceWidth = Dimensions.get('window').width;
-var deviceHeight = Dimensions.get('window').height;
-
 export default StyleSheet.create({
   class__container: {
     backgroundColor: 'rgba(255,255,255,0.7)',
     borderRadius: 20,
     marginBottom: 16,
     padding: '5%',
-    width: (deviceWidth * 80) / 100,
+    width: '100%',
   },
   match__background: {
     backgroundColor: '#d0faae',

@@ -97,7 +97,7 @@ export default class ResponseList extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView style={styles.content__container}>
         {this.state.responses.map(res => (
           <Response
             response={res.response}
