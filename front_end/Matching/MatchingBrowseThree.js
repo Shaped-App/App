@@ -6,6 +6,11 @@ import styles from '../Static/main_style.js';
 export default class BrowseThreeScreen extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      question: props.route.params.question,
+      question_id: props.route.params.question_id,
+      navigation: props.navigation
+    };
   }
 
   render() {
