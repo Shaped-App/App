@@ -24,7 +24,7 @@ Response:
             "qid": "my_question_id1", 
             "question": <string>,
             "created": <TimeFormatTBD>,
-            "user-answered": <boolean>,
+            "userAnswered": <boolean>,
             "creator": <string> // not sure if we need this
         }, 
         {
@@ -59,7 +59,7 @@ Response:
             "qid": "my_question_id1",
             "question": <string>,
             "created": <TimeFormatTBD>,
-            "user-answered": <boolean>,
+            "userAnswered": <boolean>,
             "creator": <string> // not sure if we need this
         }, 
         "my_question_id2": {
@@ -177,7 +177,7 @@ Response:
     "qid": "my_question_id1",
     "aid": "my_answer_id1",
     "time": <TimeFormatTBD>, 
-    "responses-left": <int>
+    "responsesLeft": <int>
 }
 ```
 
@@ -195,7 +195,7 @@ Response:
 
 ```
 {
-    "responses-left": <int>
+    "responsesLeft": <int>
 }
 ```
 
