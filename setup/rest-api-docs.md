@@ -11,7 +11,7 @@ Input:
 
 ```
 {
-    "time": <int>
+    "time": <TimeFormatTBD>
 }
 ```
 
@@ -77,6 +77,7 @@ Input:
 
 ```
 {
+    "time": <TimeFormatTBD>,
     "qid": "my_question_id1"
 }
 ```
