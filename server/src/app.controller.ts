@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
-import { TestService, BrowseService } from './app.service';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import ApiFactory from './api/import';
-
+import { BrowseService, TestService } from './app.service';
+import * as Dtos from './app.dtos';
+import { QuestionCollection } from './firebase/model'
 
 function getApi(description: string) {
-  return ApiFactory.getInstance().getApi('v1.0', description);
+    return ApiFactory.getInstance().getApi('v1.0', description);
 }
 
 function processRequest(func: Function, body): string {
@@ -20,38 +21,51 @@ export class AppController {
     return this.testService.getTest();
   }
 
-  @Get(getApi('/browse/question-list/get'))
-  getBrowseQuestionList(@Body() body): string {
-    return processRequest(this.browseService.getBrowseQuestionList, body);
+  async getBrowseQuestionList(@Body() body : Dtos.getQuestionListInDto): Promise<Dtos.getQuestionListOutDto> {
+    console.log("question list input", body);
+    return this.browseService.getBrowseQuestionList(body);
   }
 
   @Get(getApi('/browse/question/get'))
-  getBrowseQuestion(@Body() body): string {
-    return processRequest(this.browseService.getBrowseQuestion, body);
+  async getBrowseQuestion(@Body() body: Dtos.getQuestionInDto): Promise<Dtos.getQuestionOutDto> {
+    // console.log(request)
+    console.log("question input", body)
+    
+    
+    // console.log("qids", questionIDs);
+    // const docList : Array<Question> = [];
+    const docList = {};
+    const doc = await QuestionCollection.orderBy("created when").limit(10).get()
+    doc.forEach(function (snapshot) {
+        // const ques: Question = doc.data();
+        // doc.exists ? docList.push(ques) : null;
+        // doc.exists ? docList.push(new Question(doc.data())) : null;
+        snapshot.exists ? docList[snapshot.id] = snapshot.data() : null;
+    })
+    return docList;
+    // return QuestionCollection.orderBy("created when").limit(10).get();
+    // return this.browseService.getBrowseQuestion(params.qids[0]);
+    // return this.browseService.getBrowseQuestion(request.questionID);
   }
 
-  @Get(getApi('/browse/answer-list/get'))
-  getBrowseAnswerList(@Body() body): string {
-    return processRequest(this.browseService.getBrowseAnswerList, body);
+  @Post("/makeQuestion")
+  makeQuestion(@Body() myDto: MyDto): Promise<object> {
+    // console.log(request)
+    console.log(myDto)
+    
+    return this.browseService.makeQuestion(myDto.questionText);
+    // return this.browseService.makeQuestion(myDto.userRef, myDto.questionText);
+    // return this.browseService.getBrowseQuestion(request.questionID);
   }
 
   @Get(getApi('/browse/answer/get'))
-  getBrowseAnswer(@Body() body): string {
-    return processRequest(this.browseService.getBrowseAnswer, body);
+  getBrowseAnswer(@Body() getAnswerDTO: getAnswerInDto): Promise<object> {
+    return this.browseService.getBrowseAnswer(getAnswerDTO.qid, getAnswerDTO.aids);
   }
 
   @Post(getApi('/browse/answer/post'))
-  postBrowseAnswer(@Body() body): string {
-    return processRequest(this.browseService.postBrowseAnswer, body);
-  }
-
-  @Post(getApi('/browse/response/post'))
-  postBrowseResponse(@Body() body): string {
-    return processRequest(this.browseService.postBrowseResponse, body);
-  }
-
-  @Get(getApi('/browse/response-limit/get'))
-  getBrowseResponseLimit(@Body() body): string {
-    return processRequest(this.browseService.getBrowseResponseLimit, body);
+  postBrowseAnswer(@Body() postAnswerDTO: postAnswerInDto): Promise<object> {
+    const userID = "FDr6IxDIO3GDkZMJ8hPy"
+    return this.browseService.postBrowseAnswer(userID, postAnswerDTO.qid, postAnswerDTO.answer, postAnswerDTO.time);
   }
 }
