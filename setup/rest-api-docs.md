@@ -88,6 +88,7 @@ Response:
     "aids": [
         {
             "aid": "my_answer_id1", 
+            "qid": "my_question_id1",
             "answer": <string>,
             "created": <TimeFormatTBD>,
             "creator": <string> // uid
@@ -107,6 +108,7 @@ Input:
 
 ```
 {
+    "qid": "my_question_id1",
     "aids": [
         "my_answer_id1", 
         "my_answer_id2",
@@ -122,6 +124,7 @@ Response:
     "answers": {
         "my_answer_id1": {
             "aid": "my_answer_id1", 
+            "qid": "my_question_id1",
             "answer": <string>,
             "created": <TimeFormatTBD>,
             "creator": <string> // uid
@@ -151,9 +154,13 @@ Response:
 
 ```
 {
-    "qid": "my_question_id1",
-    "aid": "my_answer_id1",
-    "time": <TimeFormatTBD>
+    "answer": {
+        "aid": "my_answer_id1", 
+        "qid": "my_question_id1",
+        "answer": <string>,
+        "created": <TimeFormatTBD>,
+        "creator": <string> // uid
+    }
 }
 ```
 

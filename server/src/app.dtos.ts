@@ -15,6 +15,7 @@ export interface Question {
 }
 
 export interface Answer {
+  qid: QID,
   aid: AID,
   answer: string, 
   created: Time,
@@ -47,6 +48,7 @@ export interface getAnswerListOutDto {
 }
 
 export interface getAnswerInDto {
+  qid: QID,
   aids: AID[]
 }
 
@@ -61,9 +63,7 @@ export interface postAnswerInDto {
 }
 
 export interface postAnswerOutDto {
-  qid: QID, 
-  aid: AID,
-  time: Time
+  answer: Answer
 }
 
 export interface postResponseInDto {
