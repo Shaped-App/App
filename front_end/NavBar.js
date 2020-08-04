@@ -13,6 +13,8 @@ import BrowseThreeScreen from './Matching/MatchingBrowseThree';
 import InboxOneScreen from './Inbox/InboxOne';
 //Profile Screens
 import ProfileOneScreen from './Profile/ProfileOne';
+import Settings from './Profile/Settings';
+import { SettingIcon } from './Profile/UserProfile';
 
 import Icon from './Utility/Icon';
 
@@ -44,6 +46,27 @@ function InboxNav() {
     );
 }
 
+const ProfileStack = createStackNavigator();
+
+function ProfileNav() {
+    return(
+        <ProfileStack.Navigator initialRouteName={ProfileOption[0]}
+        screenOptions={stackOption}>
+            <ProfileStack.Screen name={ProfileOption[0]} component={ProfileOneScreen}
+            options={({navigation}) => ({
+              title: " ",
+              headerRight: () => (
+                <SettingIcon navigation={navigation}/>
+              )
+            })}/>
+            <ProfileStack.Screen name={ProfileOption[1]} component={Settings}
+            options={{
+              title: "Settings",
+            }}/>
+        </ProfileStack.Navigator>
+    );
+}
+
 const Tab = createBottomTabNavigator();
 
 export default class NavBar extends Component {
@@ -66,7 +89,7 @@ export default class NavBar extends Component {
             tabBarVisible: this.getTabBarVisibility(route)
           })}/>
           <Tab.Screen name={tabOption[1]} component={InboxNav}/>
-          <Tab.Screen name={tabOption[2]} component={ProfileOneScreen}/>
+          <Tab.Screen name={tabOption[2]} component={ProfileNav}/>
         </Tab.Navigator>
       </NavigationContainer>
     );
@@ -85,3 +108,4 @@ const stackOption = {
 export const tabOption = ["Matching", "Inbox", "Profile"];
 export const BrowseOption = ["BrowseOne", "BrowseTwo", "BrowseThree", "BrowseFour"];
 export const InboxOption = ["InboxOne", "InboxTwo", "InboxThree"];
+export const ProfileOption = ["ProfileOne", "Settings"];
