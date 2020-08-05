@@ -16,7 +16,6 @@ export default class Home extends Component {
           <TouchableOpacity style={[styles.button, {margin: 30}]}>
             <Text style={styles.text__header}>Browse</Text>
           </TouchableOpacity>
-
           <TouchableOpacity style={[styles.button, {margin: 30}]}>
             <Text style={styles.text__header}>Random</Text>
           </TouchableOpacity>

@@ -1,6 +1,10 @@
 //Matching-Browse-1
-import React, {Component} from 'react';
-import {SafeAreaView, View, Text} from 'react-native';
+import React, { Component } from 'react';
+import {
+  SafeAreaView,
+  View,
+  Text
+} from 'react-native';
 
 import styles from '../Static/main_style.js';
 import QuestionList from '../Matching/QuestionList';
@@ -10,7 +14,7 @@ export default class BrowseOneScreen extends Component {
     super(props);
     this.state = {
       questions: [],
-      navigation: props.navigation
+      navigation: props.navigation,
     };
   }
 
@@ -21,7 +25,10 @@ export default class BrowseOneScreen extends Component {
           <Text style={styles.text}>First answer a question</Text>
           <Text style={styles.text}>Then see other people's response!</Text>
         </View>
-        <QuestionList questions={this.state.questions} navigation={this.state.navigation}/>
+        <QuestionList
+          questions={this.state.questions}
+          navigation={this.state.navigation}
+        />
       </SafeAreaView>
     );
   }
