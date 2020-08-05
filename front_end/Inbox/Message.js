@@ -5,7 +5,7 @@ import Icon from '../Utility/Icon';
 import styles from '../Static/main_style';
 import inbox_style from '../Static/inbox_style';
 
-export default class Message extends Component {
+export default class SingleMessage extends Component {
   constructor(props) {
     super(props);
     this.state = {
