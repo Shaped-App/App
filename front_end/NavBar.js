@@ -23,7 +23,7 @@ function MatchNav() {
     <MatchStack.Navigator initialRouteName={BrowseOption[0]}
     screenOptions={stackOption}>
         <MatchStack.Screen name={BrowseOption[0]} component={BrowseOneScreen}
-        options={{title: "Matching"}}/>
+        options={{title: "Matching", headerLeft: null}}/>
         <MatchStack.Screen name={BrowseOption[1]} component={BrowseTwoScreen}
         options={{title: "Response"}}/>
         <MatchStack.Screen name={BrowseOption[2]} component={BrowseThreeScreen}
@@ -39,7 +39,7 @@ function InboxNav() {
         <InboxStack.Navigator initialRouteName={InboxOption[0]}
         screenOptions={stackOption}>
             <InboxStack.Screen name={InboxOption[0]} component={InboxOneScreen}
-            options={{title: "Messages"}}/>
+            options={{title: "Messages", headerLeft: null}}/>
         </InboxStack.Navigator>
     );
 }
@@ -59,16 +59,14 @@ export default class NavBar extends Component {
 
   render(){
     return (
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name={tabOption[0]} component={MatchNav}
-          options={({route}) => ({
-            tabBarVisible: this.getTabBarVisibility(route)
-          })}/>
-          <Tab.Screen name={tabOption[1]} component={InboxNav}/>
-          <Tab.Screen name={tabOption[2]} component={ProfileOneScreen}/>
+        <Tab.Navigator initialRouteName={tabOption[2]}>
+            <Tab.Screen name={tabOption[0]} component={MatchNav}
+            options={({route}) => ({
+                tabBarVisible: this.getTabBarVisibility(route)
+            })}/>
+            <Tab.Screen name={tabOption[1]} component={InboxNav}/>
+            <Tab.Screen name={tabOption[2]} component={ProfileOneScreen}/>
         </Tab.Navigator>
-      </NavigationContainer>
     );
   }
 }

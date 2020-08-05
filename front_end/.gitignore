@@ -26,6 +26,9 @@ DerivedData
 *.ipa
 *.xcuserstate
 front_end.xcworkspace
+/ios/front_end.xcodeproj
+/ios/front_end.xcworkspace
+ios/front_end/LaunchScreen.storyboard
 
 # CocoaPods
 /ios/Pods/

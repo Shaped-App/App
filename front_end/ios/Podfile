@@ -21,6 +21,10 @@ target 'front_end' do
   post_install do |installer|
     flipper_post_install(installer)
   end
+
+  pod 'FBSDKLoginKit'
+  pod 'Firebase/Auth'
+  pod 'GoogleSignIn'
 end
 
 target 'front_end-tvOS' do

@@ -92,4 +92,31 @@ export default StyleSheet.create({
     height: 52,
     width: 140,
   },
+  onboarding__background: {
+      backgroundColor: '#AAEBFF',
+      width: '100%',
+      height: '100%',
+      alignItems: 'center',
+  },
+  onboarding__button: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#ffffff',
+      borderRadius: 37,
+      height: 52,
+      width: 304,
+  },
+  onboarding__container: {
+      textAlign: 'left',
+      width: '100%',
+      justifyContent: 'center'
+  },
+  onboarding__input: {
+      backgroundColor: 'rgba(255,255,255,0.7)',
+      borderRadius: 20,
+      marginBottom: 16,
+      padding: '5%',
+      width: '100%',
+      height: 50
+  },
 });

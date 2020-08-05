@@ -8,7 +8,7 @@ import {
     View,
 } from 'react-native';
 
-import styles from '../Static/style';
+import styles from '../Static/main_style';
 import {BrowseOption} from '../NavBar';
 
 export default class BrowseTwoScreen extends Component {
