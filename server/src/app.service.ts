@@ -1,17 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import * as Dtos from './app.dtos';
 //TODO: move
 import admin from 'firebase-admin';
+import * as Dtos from './app.dtos';
+import { APIAnswer } from './app.dtos';
 import { FirebaseAnswer, FirebaseQuestion } from './firebase/firebase_objects';
-// import { getCollectionData, getDocumentData, getDocumentIDs } from './firebase/functions';
-import { getDocumentData, getDocuments } from './firebase/functions';
 import { QuestionCollection, UserCollection } from './firebase/model';
 
 type DocRef = admin.firestore.DocumentReference;
 type ColRef = admin.firestore.CollectionReference;
-import FieldValue = admin.firestore.FieldValue;
-import { APIAnswer } from './app.dtos';
-import { query } from 'express';
 
 @Injectable()
 export class TestService {

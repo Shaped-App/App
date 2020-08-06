@@ -1,16 +1,12 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import ApiFactory from './api/import';
-import { BrowseService, TestService } from './app.service';
 import * as Dtos from './app.dtos';
-import { QuestionCollection } from './firebase/model'
+import { BrowseService, TestService } from './app.service';
 
 function getApi(description: string) {
   return ApiFactory.getInstance().getApi('v1.0', description);
 }
 
-function processRequest(func: Function, body): string {
-  return JSON.stringify(func(body));
-}
 @Controller()
 export class AppController {
   constructor(private readonly testService: TestService,
