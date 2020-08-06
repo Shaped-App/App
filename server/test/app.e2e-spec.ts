@@ -25,28 +25,28 @@ describe('AppController (e2e)', () => {
   it('/api/v1.0/browse/question/ (GET)', () => {
     const body = {
       "qids": [
-          "aGixGhyA1S5LZYyXXCcE",
-          "7ahZDKrDfQEhDZO5Br9R"
+        "aGixGhyA1S5LZYyXXCcE",
+        "7ahZDKrDfQEhDZO5Br9R"
       ]
     }
     const response = {
-    "questions": [
+      "questions": [
         {
-            "qid": "7ahZDKrDfQEhDZO5Br9R",
-            "question": "How are you doing today?",
-            "created": "2020-08-05T04:00:00.000Z",
-            "userAnswered": false,
-            "creator": "admin"
+          "qid": "7ahZDKrDfQEhDZO5Br9R",
+          "question": "How are you doing today?",
+          "created": "2020-08-05T04:00:00.000Z",
+          "userAnswered": false,
+          "creator": "admin"
         },
         {
-            "qid": "aGixGhyA1S5LZYyXXCcE",
-            "question": "This is the test question",
-            "created": "2020-08-06T04:00:00.000Z",
-            "userAnswered": false,
-            "creator": "admin"
+          "qid": "aGixGhyA1S5LZYyXXCcE",
+          "question": "This is the test question",
+          "created": "2020-08-06T04:00:00.000Z",
+          "userAnswered": false,
+          "creator": "admin"
         }
-    ]
-}
+      ]
+    }
     return request(app.getHttpServer())
       .get('/api/v1.0/browse/question/')
       .send(body)
@@ -57,18 +57,18 @@ describe('AppController (e2e)', () => {
     const body = {
       "qid": "aGixGhyA1S5LZYyXXCcE",
       "aids": [
-          "9GW3CScIcvl9ZEuwCxEb"
+        "9GW3CScIcvl9ZEuwCxEb"
       ]
     }
     const response = {
       "answers": [
-          {
+        {
           "qid": "aGixGhyA1S5LZYyXXCcE",
           "aid": "9GW3CScIcvl9ZEuwCxEb",
           "answer": "All of the birds died in 1986 due to Reagan killing them all and replacing them with spies that are now watching us. The birds work for the 𝓫𝓸𝓾𝓻𝓰𝓮𝓸𝓲𝓼𝓲𝓮.",
           "created": "2020-08-06T04:00:00.000Z",
           "creator": "users/FDr6IxDIO3GDkZMJ8hPy"
-          }
+        }
       ]
     }
     return request(app.getHttpServer())

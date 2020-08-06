@@ -8,8 +8,8 @@ export type Time = string; // subject to change
 export type ResponsesLeft = number;
 
 export interface APIQuestion {
-  qid: QID, 
-  question: string, 
+  qid: QID,
+  question: string,
   created: Time,
   userAnswered: boolean,
   creator?: UID
@@ -18,7 +18,7 @@ export interface APIQuestion {
 export interface APIAnswer {
   qid: QID,
   aid: AID,
-  answer: string, 
+  answer: string,
   created: Time,
   creator?: UID
 }
@@ -58,7 +58,7 @@ export interface getAnswerOutDto {
 }
 
 export interface postAnswerInDto {
-  qid: QID, 
+  qid: QID,
   answer: string,
   time: Time
 }
@@ -68,15 +68,15 @@ export interface postAnswerOutDto {
 }
 
 export interface postResponseInDto {
-  qid: QID, 
-  aid: AID, 
+  qid: QID,
+  aid: AID,
   response: string,
   time: Time
 }
 
 export interface postResponseOutDto {
-  qid: QID, 
-  aid: AID, 
+  qid: QID,
+  aid: AID,
   time: Time,
   responsesLeft: ResponsesLeft
 }

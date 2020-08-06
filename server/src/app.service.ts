@@ -23,7 +23,7 @@ export class TestService {
 @Injectable()
 export class BrowseService {
   async getBrowseQuestionList(body: Dtos.getQuestionListInDto): Promise<Dtos.getQuestionListOutDto> {
-    return {qids: [{qid: "hello", question: "question", userAnswered: true, created: "today"}]};
+    return { qids: [{ qid: "hello", question: "question", userAnswered: true, created: "today" }] };
   }
 
   async getBrowseQuestion(body: Dtos.getQuestionInDto): Promise<Dtos.getQuestionOutDto> {
@@ -33,19 +33,19 @@ export class BrowseService {
     const q = QuestionCollection.where(admin.firestore.FieldPath.documentId(), "in", body.qids)
     const docs = await q.get()
     docs.forEach(async function (snapshot) {
-        //TODO: data as FirebaseQuestion
-        const data = snapshot.data();
-        const qid = snapshot.id;
-        const ts: admin.firestore.Timestamp = data.created;
-        const question: Dtos.APIQuestion = {
-          qid: qid, 
-          question: data.question, 
-          created: ts.toDate().toJSON(),
-          userAnswered: false,
-          creator: data.creator
-        }
-        snapshot.exists ? docList.push(question) : null;
-        // snapshot.exists ? docList[snapshot.id] = snapshot.data() : null;
+      //TODO: data as FirebaseQuestion
+      const data = snapshot.data();
+      const qid = snapshot.id;
+      const ts: admin.firestore.Timestamp = data.created;
+      const question: Dtos.APIQuestion = {
+        qid: qid,
+        question: data.question,
+        created: ts.toDate().toJSON(),
+        userAnswered: false,
+        creator: data.creator
+      }
+      snapshot.exists ? docList.push(question) : null;
+      // snapshot.exists ? docList[snapshot.id] = snapshot.data() : null;
     })
     for (let index = 0; index < docList.length; index++) {
       const doc = docList[index];
@@ -59,24 +59,24 @@ export class BrowseService {
   }
 
   async getBrowseAnswerList(body: Dtos.getAnswerListInDto): Promise<Dtos.getAnswerListOutDto> {
-    return {aids: [{qid: "hello", aid: "goodbye", answer: "wowee", created: "today"}]};
+    return { aids: [{ qid: "hello", aid: "goodbye", answer: "wowee", created: "today" }] };
   }
 
   async getBrowseAnswer(body: Dtos.getAnswerInDto): Promise<Dtos.getAnswerOutDto> {
     const questionID: string = body.qid;
     const answerIDs: string[] = body.aids;
     // TODO: figure out if firebase can query by list of ids
-    const answerFirebase : FirebaseAnswer = await this.getAnswer(questionID, answerIDs[0]);
+    const answerFirebase: FirebaseAnswer = await this.getAnswer(questionID, answerIDs[0]);
     const ts: admin.firestore.Timestamp = answerFirebase.created;
     // TODO: use class conversion
     const answerResponse: APIAnswer[] = [{
       qid: questionID,
       aid: answerIDs[0],
-      answer: answerFirebase.answer, 
+      answer: answerFirebase.answer,
       created: ts.toDate().toJSON(),
       creator: answerFirebase.creator
     }]
-    
+
     return {
       answers: answerResponse
     };
@@ -84,16 +84,16 @@ export class BrowseService {
 
 
   postBrowseResponse(body: Dtos.postResponseInDto): Dtos.postResponseOutDto {
-    return {qid: "hello", aid: "goodbye", time: "today", responsesLeft: 5};
+    return { qid: "hello", aid: "goodbye", time: "today", responsesLeft: 5 };
   }
 
   getBrowseResponseLimit(body: Dtos.getResponseLimitInDto): Dtos.getResponseLimitOutDto {
-    return {responsesLeft: 5};
+    return { responsesLeft: 5 };
   }
 
   async makeQuestion(questionText: string): Promise<DocRef> {
-    const newQuestionRef : DocRef = QuestionCollection.doc();
-    const newData : FirebaseQuestion = {
+    const newQuestionRef: DocRef = QuestionCollection.doc();
+    const newData: FirebaseQuestion = {
       // qid: newQuestionRef.id,
       question: questionText,
       // created: FieldValue.serverTimestamp(),
@@ -107,10 +107,10 @@ export class BrowseService {
   ///     Helper functions     
   // TODO: actually get userid from firebase auth
   //? needs async or not?
-  async authGetUser() : Promise<Dtos.UID> {
+  async authGetUser(): Promise<Dtos.UID> {
     return "FDr6IxDIO3GDkZMJ8hPy"
   }
-  async getUserAnswered(userID: string, questionID: string) : Promise<boolean> {
+  async getUserAnswered(userID: string, questionID: string): Promise<boolean> {
     return false;
   }
 
@@ -118,7 +118,7 @@ export class BrowseService {
   async postBrowseAnswer(body: Dtos.postAnswerInDto): Promise<Dtos.postAnswerOutDto> {
     const userID: Dtos.UID = await this.authGetUser();
     const questionID: Dtos.QID = body.qid;
-    const answerText: string = body.answer; 
+    const answerText: string = body.answer;
 
     //?  using client-submitted time or server made time?
     const time: Dtos.Time = body.time;
@@ -135,8 +135,8 @@ export class BrowseService {
     // TODO: make sure question document exists
     // TODO: make "answer" collection not a special string
     // make answer document
-    const newAnswerRef : DocRef = questionRef.collection("answers").doc();
-    const newAnswerData : FirebaseAnswer = {
+    const newAnswerRef: DocRef = questionRef.collection("answers").doc();
+    const newAnswerData: FirebaseAnswer = {
       answer: answerText,
       // created: FieldValue.serverTimestamp(),
       created: admin.firestore.Timestamp.now(),
@@ -145,23 +145,23 @@ export class BrowseService {
     newAnswerRef.set(newAnswerData);
     // return answer document
     // TODO: type casting between APIAnswer and FirebaseAnswer
-    const api : APIAnswer = {
+    const api: APIAnswer = {
       qid: questionRef.id,
       aid: newAnswerRef.id,
-      answer: answerText, 
+      answer: answerText,
       created: newAnswerData.created.toString(),
       creator: userRef.id
     }
     return api;
   }
-  async getAnswer(questionID: Dtos.QID, answerID: Dtos.AID) : Promise<FirebaseAnswer> {
+  async getAnswer(questionID: Dtos.QID, answerID: Dtos.AID): Promise<FirebaseAnswer> {
     const questionRef = QuestionCollection.doc(questionID);
-    const answerRef : DocRef = questionRef.collection("answers").doc(answerID);
+    const answerRef: DocRef = questionRef.collection("answers").doc(answerID);
     // const answerData: admin.firestore.DocumentData = answerRef.get();
     const answerData = answerRef.get();
     const answer = (await answerData).data()
     //! same typecast here
-    const response : FirebaseAnswer = {
+    const response: FirebaseAnswer = {
       answer: answer.answer,
       creator: answer.creator,
       created: answer.created,

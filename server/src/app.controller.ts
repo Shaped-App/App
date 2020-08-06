@@ -5,7 +5,7 @@ import * as Dtos from './app.dtos';
 import { QuestionCollection } from './firebase/model'
 
 function getApi(description: string) {
-    return ApiFactory.getInstance().getApi('v1.0', description);
+  return ApiFactory.getInstance().getApi('v1.0', description);
 }
 
 function processRequest(func: Function, body): string {
@@ -13,15 +13,15 @@ function processRequest(func: Function, body): string {
 }
 @Controller()
 export class AppController {
-  constructor(private readonly testService: TestService, 
-    private readonly browseService: BrowseService) {}
+  constructor(private readonly testService: TestService,
+    private readonly browseService: BrowseService) { }
 
   @Get(ApiFactory.getInstance().getApi('test', '/test1/test2/get'))
   getTest(): string {
     return this.testService.getTest();
   }
 
-  async getBrowseQuestionList(@Body() body : Dtos.getQuestionListInDto): Promise<Dtos.getQuestionListOutDto> {
+  async getBrowseQuestionList(@Body() body: Dtos.getQuestionListInDto): Promise<Dtos.getQuestionListOutDto> {
     console.log("question list input", body);
     return this.browseService.getBrowseQuestionList(body);
   }
@@ -29,14 +29,14 @@ export class AppController {
   @Get(getApi('/browse/question/get'))
   async getBrowseQuestion(@Body() body: Dtos.getQuestionInDto): Promise<Dtos.getQuestionOutDto> {
     console.log("question input", body)
-    return this.browseService.getBrowseQuestion(body);  
+    return this.browseService.getBrowseQuestion(body);
   }
 
   // @Post("/makeQuestion")
   // makeQuestion(@Body() myDto: MyDto): Promise<object> {
   //   // console.log(request)
   //   console.log(myDto)
-    
+
   //   return this.browseService.makeQuestion(myDto.questionText);
   //   // return this.browseService.makeQuestion(myDto.userRef, myDto.questionText);
   //   // return this.browseService.getBrowseQuestion(request.questionID);
