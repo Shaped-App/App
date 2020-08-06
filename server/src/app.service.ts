@@ -36,10 +36,11 @@ export class BrowseService {
         //TODO: data as FirebaseQuestion
         const data = snapshot.data();
         const qid = snapshot.id;
+        const ts: admin.firestore.Timestamp = data.created;
         const question: Dtos.APIQuestion = {
           qid: qid, 
           question: data.question, 
-          created: data.created,
+          created: ts.toDate().toJSON(),
           userAnswered: false,
           creator: data.creator
         }
@@ -66,13 +67,16 @@ export class BrowseService {
     const answerIDs: string[] = body.aids;
     // TODO: figure out if firebase can query by list of ids
     const answerFirebase : FirebaseAnswer = await this.getAnswer(questionID, answerIDs[0]);
+    const ts: admin.firestore.Timestamp = answerFirebase.created;
+    // TODO: use class conversion
     const answerResponse: APIAnswer[] = [{
       qid: questionID,
       aid: answerIDs[0],
       answer: answerFirebase.answer, 
-      created: answerFirebase.createdTime.toString(),
+      created: ts.toDate().toJSON(),
       creator: answerFirebase.creator
     }]
+    
     return {
       answers: answerResponse
     };
@@ -92,7 +96,8 @@ export class BrowseService {
     const newData : FirebaseQuestion = {
       // qid: newQuestionRef.id,
       question: questionText,
-      createdTime: FieldValue.serverTimestamp(),
+      // created: FieldValue.serverTimestamp(),
+      created: admin.firestore.Timestamp.now(),
       creator: "admin",
     };
     newQuestionRef.set(newData);
@@ -133,7 +138,8 @@ export class BrowseService {
     const newAnswerRef : DocRef = questionRef.collection("answers").doc();
     const newAnswerData : FirebaseAnswer = {
       answer: answerText,
-      createdTime: FieldValue.serverTimestamp(),
+      // created: FieldValue.serverTimestamp(),
+      created: admin.firestore.Timestamp.now(),
       creator: userRef.path,
     }
     newAnswerRef.set(newAnswerData);
@@ -143,7 +149,7 @@ export class BrowseService {
       qid: questionRef.id,
       aid: newAnswerRef.id,
       answer: answerText, 
-      created: newAnswerData.createdTime.toString(),
+      created: newAnswerData.created.toString(),
       creator: userRef.id
     }
     return api;
@@ -158,7 +164,7 @@ export class BrowseService {
     const response : FirebaseAnswer = {
       answer: answer.answer,
       creator: answer.creator,
-      createdTime: answer.createdTime,
+      created: answer.created,
     }
     return response;
   }

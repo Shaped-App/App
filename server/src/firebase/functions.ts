@@ -25,7 +25,7 @@ export async function getQuestions(questionIDs: Array<string>): Promise<Array<Fi
     console.log("qids", questionIDs);
     // const docList : Array<Question> = [];
     const docList = [];
-    const doc = await QuestionCollection.orderBy("created when").limit(10).get()
+    const doc = await QuestionCollection.orderBy("created").limit(10).get()
     doc.forEach(function (doc) {
         // const ques: Question = doc.data();
         // doc.exists ? docList.push(ques) : null;
@@ -38,15 +38,15 @@ export async function getQuestions(questionIDs: Array<string>): Promise<Array<Fi
 
 
 //TODO: this function works weirdly when documents have same fields
-// export async function getCollectionData(collection: string): Promise<object> {
-//     const data = {};
-//     await db.collection(collection).get().then((querySnapshot) => {
-//         querySnapshot.forEach((doc) => {
-//             Object.assign(data, doc.data());
-//         });
-//     });
-//     return data;
-// }
+export async function getCollectionData(collection: string): Promise<object> {
+    const data = {};
+    await db.collection(collection).get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            Object.assign(data, doc.data());
+        });
+    });
+    return data;
+}
 
 // export async function setDocuments(collection: string): Promise<string[]> {
 //     let documentList: string[] = [];

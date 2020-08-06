@@ -10,26 +10,26 @@ import admin from 'firebase-admin';
 type QID = string;
 type AID = string;
 type UID = string;
-type Time = admin.firestore.FieldValue;
+type Time = admin.firestore.Timestamp;
 
 // Firebase question
 export interface FirebaseQuestion {
   // qid: QID;
   question: string;
-  createdTime: Time;
+  created: Time;
   creator: UID;
 }
 export interface FirebaseAnswer {
   // aid: AID;
   answer: string;
-  createdTime: Time;
+  created: Time;
   creator: UID;
 }
 // API question
 // export interface Question {
 //   qid: string;
 //   question: string;
-//   createdTime: Number;
+//   created: Number;
 //   creator: string;
 //   "user-answered": boolean;
 // }
@@ -39,7 +39,7 @@ export interface FirebaseAnswer {
 //   export interface Question {
 //     qid: string;
 //     question: string;
-//     createdTime: admin.firestore.FieldValue;
+//     created: admin.firestore.FieldValue;
 //     creator: string;
 //   }
 // }
@@ -47,7 +47,7 @@ export interface FirebaseAnswer {
 //   export interface Question {
 //     qid: string;
 //     question: string;
-//     createdTime: Number;
+//     created: Number;
 //     creator: string;
 //     "user-answered": boolean;
 //   }
