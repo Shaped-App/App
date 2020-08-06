@@ -28,44 +28,29 @@ export class AppController {
 
   @Get(getApi('/browse/question/get'))
   async getBrowseQuestion(@Body() body: Dtos.getQuestionInDto): Promise<Dtos.getQuestionOutDto> {
-    // console.log(request)
     console.log("question input", body)
-    
-    
-    // console.log("qids", questionIDs);
-    // const docList : Array<Question> = [];
-    const docList = {};
-    const doc = await QuestionCollection.orderBy("created when").limit(10).get()
-    doc.forEach(function (snapshot) {
-        // const ques: Question = doc.data();
-        // doc.exists ? docList.push(ques) : null;
-        // doc.exists ? docList.push(new Question(doc.data())) : null;
-        snapshot.exists ? docList[snapshot.id] = snapshot.data() : null;
-    })
-    return docList;
-    // return QuestionCollection.orderBy("created when").limit(10).get();
-    // return this.browseService.getBrowseQuestion(params.qids[0]);
-    // return this.browseService.getBrowseQuestion(request.questionID);
+    return this.browseService.getBrowseQuestion(body);  
   }
 
-  @Post("/makeQuestion")
-  makeQuestion(@Body() myDto: MyDto): Promise<object> {
-    // console.log(request)
-    console.log(myDto)
+  // @Post("/makeQuestion")
+  // makeQuestion(@Body() myDto: MyDto): Promise<object> {
+  //   // console.log(request)
+  //   console.log(myDto)
     
-    return this.browseService.makeQuestion(myDto.questionText);
-    // return this.browseService.makeQuestion(myDto.userRef, myDto.questionText);
-    // return this.browseService.getBrowseQuestion(request.questionID);
-  }
+  //   return this.browseService.makeQuestion(myDto.questionText);
+  //   // return this.browseService.makeQuestion(myDto.userRef, myDto.questionText);
+  //   // return this.browseService.getBrowseQuestion(request.questionID);
+  // }
 
   @Get(getApi('/browse/answer/get'))
-  getBrowseAnswer(@Body() getAnswerDTO: getAnswerInDto): Promise<object> {
-    return this.browseService.getBrowseAnswer(getAnswerDTO.qid, getAnswerDTO.aids);
+  getBrowseAnswer(@Body() body: Dtos.getAnswerInDto): Promise<Dtos.getAnswerOutDto> {
+    return this.browseService.getBrowseAnswer(body);
+    // return this.browseService.getBrowseAnswer(getAnswerDTO.qid, getAnswerDTO.aids);
   }
 
   @Post(getApi('/browse/answer/post'))
-  postBrowseAnswer(@Body() postAnswerDTO: postAnswerInDto): Promise<object> {
-    const userID = "FDr6IxDIO3GDkZMJ8hPy"
-    return this.browseService.postBrowseAnswer(userID, postAnswerDTO.qid, postAnswerDTO.answer, postAnswerDTO.time);
+  postBrowseAnswer(@Body() body: Dtos.postAnswerInDto): Promise<Dtos.postAnswerOutDto> {
+    return this.browseService.postBrowseAnswer(body);
+    // return this.browseService.postBrowseAnswer(userID, body.qid, body.answer, body.time);
   }
 }

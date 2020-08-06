@@ -11,6 +11,7 @@ type DocRef = admin.firestore.DocumentReference;
 type ColRef = admin.firestore.CollectionReference;
 import FieldValue = admin.firestore.FieldValue;
 import { APIAnswer } from './app.dtos';
+import { query } from 'express';
 
 @Injectable()
 export class TestService {
@@ -26,7 +27,34 @@ export class BrowseService {
   }
 
   async getBrowseQuestion(body: Dtos.getQuestionInDto): Promise<Dtos.getQuestionOutDto> {
-    return {questions: [{qid: "hello", question: "question", userAnswered: true, created: "today"}]};
+    const docList = [];
+    // TODO: get by ids, not orderby
+    // const docs = await QuestionCollection.where("id", "==", body.qids[0]).orderBy("created").limit(10).get()
+    const q = QuestionCollection.where(admin.firestore.FieldPath.documentId(), "in", body.qids)
+    const docs = await q.get()
+    docs.forEach(async function (snapshot) {
+        //TODO: data as FirebaseQuestion
+        const data = snapshot.data();
+        const qid = snapshot.id;
+        const question: Dtos.APIQuestion = {
+          qid: qid, 
+          question: data.question, 
+          created: data.created,
+          userAnswered: false,
+          creator: data.creator
+        }
+        snapshot.exists ? docList.push(question) : null;
+        // snapshot.exists ? docList[snapshot.id] = snapshot.data() : null;
+    })
+    for (let index = 0; index < docList.length; index++) {
+      const doc = docList[index];
+      const userAnswered = await this.getUserAnswered(await this.authGetUser(), doc.qid);
+      doc.userAnswered = userAnswered
+    }
+    console.log("docList length: ", docList.length);
+    return {
+      questions: docList
+    }
   }
 
   async getBrowseAnswerList(body: Dtos.getAnswerListInDto): Promise<Dtos.getAnswerListOutDto> {
@@ -36,6 +64,7 @@ export class BrowseService {
   async getBrowseAnswer(body: Dtos.getAnswerInDto): Promise<Dtos.getAnswerOutDto> {
     const questionID: string = body.qid;
     const answerIDs: string[] = body.aids;
+    // TODO: figure out if firebase can query by list of ids
     const answerFirebase : FirebaseAnswer = await this.getAnswer(questionID, answerIDs[0]);
     const answerResponse: APIAnswer[] = [{
       qid: questionID,
@@ -60,7 +89,6 @@ export class BrowseService {
 
   async makeQuestion(questionText: string): Promise<DocRef> {
     const newQuestionRef : DocRef = QuestionCollection.doc();
-    // const newData : FirebaseObjects.Question = {
     const newData : FirebaseQuestion = {
       // qid: newQuestionRef.id,
       question: questionText,
@@ -68,20 +96,19 @@ export class BrowseService {
       creator: "admin",
     };
     newQuestionRef.set(newData);
-    // /*const serverTs*/ newQuestionRef.set({
-    //   "question": questionText,
-    //   "creator": userRef,
-    //   "created when": ts
-    // });
-    
     return newQuestionRef;
   }
 
+  ///     Helper functions     
   // TODO: actually get userid from firebase auth
   //? needs async or not?
   async authGetUser() : Promise<Dtos.UID> {
     return "FDr6IxDIO3GDkZMJ8hPy"
   }
+  async getUserAnswered(userID: string, questionID: string) : Promise<boolean> {
+    return false;
+  }
+
   // async postBrowseAnswer(userID: string, questionID: string, answerText: string, time: string) : Promise<DocRef> {
   async postBrowseAnswer(body: Dtos.postAnswerInDto): Promise<Dtos.postAnswerOutDto> {
     const userID: Dtos.UID = await this.authGetUser();
@@ -123,7 +150,6 @@ export class BrowseService {
   }
   async getAnswer(questionID: Dtos.QID, answerID: Dtos.AID) : Promise<FirebaseAnswer> {
     const questionRef = QuestionCollection.doc(questionID);
-    // TODO: figure out if firebase can query by list of ids
     const answerRef : DocRef = questionRef.collection("answers").doc(answerID);
     // const answerData: admin.firestore.DocumentData = answerRef.get();
     const answerData = answerRef.get();
