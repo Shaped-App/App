@@ -14,7 +14,7 @@ import InboxOneScreen from './Inbox/InboxOne';
 //Profile Screens
 import ProfileOneScreen from './Profile/ProfileOne';
 import Settings from './Profile/Settings';
-import { SettingIcon } from './Profile/UserProfile';
+import { SettingIcon } from './Profile/UserProfileComponents';
 
 import Icon from './Utility/Icon';
 

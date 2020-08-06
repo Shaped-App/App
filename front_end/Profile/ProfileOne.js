@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import { UserProfile } from './UserProfile';
+import UserProfile from './UserProfile';
 
 export default class ProfileOneScreen extends Component {
     constructor(props){
