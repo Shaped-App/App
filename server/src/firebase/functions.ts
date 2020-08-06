@@ -1,6 +1,5 @@
 import db, { QuestionCollection } from './model';
 import { FirebaseQuestion } from './firebase_objects'
-import admin from 'firebase-admin';
 
 
 
@@ -47,33 +46,4 @@ export async function getCollectionData(collection: string): Promise<object> {
     });
     return data;
 }
-
-// export async function setDocuments(collection: string): Promise<string[]> {
-//     let documentList: string[] = [];
-//     await db.collection(collection).get().then((querySnapshot) => {
-//         querySnapshot.forEach(function(doc) {
-//             // doc.data() is never undefined for query doc snapshots
-//             documentList.push(doc.id)
-//         });
-//     });
-//     return documentList;
-// }
-
-export async function setDocumentData(doc: admin.firestore.DocumentReference, data: admin.firestore.DocumentData): Promise<admin.firestore.WriteResult> {
-    return doc.set(data);
-}
-// export async function setCollectionData(collection: admin.firestore.CollectionReference): Promise<admin.firestore.WriteResult> {
-
-// }
-
-// export async function setCollectionData(collection: string): Promise<object> {
-//     let data = {};
-//     await db.collection(collection).get().then((querySnapshot) => {
-//         querySnapshot.forEach((doc) => {
-//             Object.assign(data, doc.data());
-//         });
-//     });
-//     return data;
-// }
-
 

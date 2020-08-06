@@ -1,64 +1,45 @@
 import admin from 'firebase-admin';
-//TODO: need separate interfaces for firebase vs rest api
-// firebase interfaces for how the data is stored in firebase (input)
-//  firebase model?
-// api interfaces for how the data is sent as json (output)
-//  api model?
 
-
-  
 type QID = string;
 type AID = string;
 type UID = string;
 type Time = admin.firestore.Timestamp;
 
 // Firebase question
-export interface FirebaseQuestion {
+export class FirebaseQuestion {
   // qid: QID;
   question: string;
   created: Time;
   creator: UID;
+  constructor(question: string, created: Time, creator: UID) {
+    this.question = question;
+    this.created = created;
+    this.creator = creator;
+  }
 }
-export interface FirebaseAnswer {
+
+export const questionConverter = {
+  toFirestore: function (question: FirebaseQuestion) {
+    return {
+      question: question.question,
+      created: question.created,
+      creator: question.creator
+    };
+  },
+  fromFirestore: function (snapshot: { data: (arg0: any) => any; }, options: any) {
+    const data = snapshot.data(options);
+    return new City(data.name, data.state, data.country);
+  }
+};
+
+export class FirebaseAnswer {
   // aid: AID;
   answer: string;
   created: Time;
   creator: UID;
+  constructor(answer: string, created: Time, creator: UID) {
+    this.answer = answer;
+    this.created = created;
+    this.creator = creator;
+  }
 }
-// API question
-// export interface Question {
-//   qid: string;
-//   question: string;
-//   created: Number;
-//   creator: string;
-//   "user-answered": boolean;
-// }
-
-// namespace FirebaseObjects {
-
-//   export interface Question {
-//     qid: string;
-//     question: string;
-//     created: admin.firestore.FieldValue;
-//     creator: string;
-//   }
-// }
-// namespace ApiObjects{
-//   export interface Question {
-//     qid: string;
-//     question: string;
-//     created: Number;
-//     creator: string;
-//     "user-answered": boolean;
-//   }
-// }
-
-// namespace firebase_objects {
-    // export interface Question {
-    //     qid: string;
-    //     question: string;
-    //     created: number;
-    //     user_answered: boolean;
-    //     creator: string;
-    // }
-// }

@@ -17,6 +17,7 @@ export class AppController {
     return this.testService.getTest();
   }
 
+  @Get(getApi('/browse/question-list/get'))
   async getBrowseQuestionList(@Body() body: Dtos.getQuestionListInDto): Promise<Dtos.getQuestionListOutDto> {
     console.log("question list input", body);
     return this.browseService.getBrowseQuestionList(body);
@@ -24,19 +25,26 @@ export class AppController {
 
   @Get(getApi('/browse/question/get'))
   async getBrowseQuestion(@Body() body: Dtos.getQuestionInDto): Promise<Dtos.getQuestionOutDto> {
-    console.log("question input", body)
+    console.log("question input", body);
     return this.browseService.getBrowseQuestion(body);
   }
 
   // @Post("/makeQuestion")
   // makeQuestion(@Body() myDto: MyDto): Promise<object> {
-  //   // console.log(request)
   //   console.log(myDto)
 
   //   return this.browseService.makeQuestion(myDto.questionText);
-  //   // return this.browseService.makeQuestion(myDto.userRef, myDto.questionText);
-  //   // return this.browseService.getBrowseQuestion(request.questionID);
   // }
+
+  @Post(getApi('/browse/response/post'))
+  postBrowseResponse(@Body() body: Dtos.postResponseInDto): Promise<Dtos.postResponseOutDto> {
+    return processRequest(this.browseService.postBrowseResponse, body);
+  }
+
+  @Get(getApi('/browse/response-limit/get'))
+  getBrowseResponseLimit(@Body() body: Dtos.postResponseInDto): Promise<Dtos.postResponseOutDto> {
+    return processRequest(this.browseService.getBrowseResponseLimit, body);
+  }
 
   @Get(getApi('/browse/answer/get'))
   getBrowseAnswer(@Body() body: Dtos.getAnswerInDto): Promise<Dtos.getAnswerOutDto> {

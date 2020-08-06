@@ -1,5 +1,3 @@
-
-
 //? to export or not to export
 export type QID = string;
 export type AID = string;
@@ -12,7 +10,7 @@ export interface APIQuestion {
   question: string,
   created: Time,
   userAnswered: boolean,
-  creator?: UID
+  creator?: UID;
 }
 
 export interface APIAnswer {
@@ -20,71 +18,71 @@ export interface APIAnswer {
   aid: AID,
   answer: string,
   created: Time,
-  creator?: UID
+  creator?: UID;
 }
 
 export interface getQuestionListInDto {
-  time: Time
+  time: Time;
 }
 
 export interface getQuestionListOutDto {
-  qids: APIQuestion[]
+  qids: APIQuestion[];
 }
 
 export interface getQuestionInDto {
-  qids: QID[]
+  qids: QID[];
 }
 
 export interface getQuestionOutDto {
-  questions: APIQuestion[]
+  questions: APIQuestion[];
 }
 
 export interface getAnswerListInDto {
   time: Time,
-  qid: QID
+  qid: QID;
 }
 
 export interface getAnswerListOutDto {
-  aids: APIAnswer[]
+  aids: APIAnswer[];
 }
 
 export interface getAnswerInDto {
   qid: QID,
-  aids: AID[]
+  aids: AID[];
 }
 
 export interface getAnswerOutDto {
-  answers: APIAnswer[]
+  answers: APIAnswer[];
 }
 
 export interface postAnswerInDto {
   qid: QID,
   answer: string,
-  time: Time
+  time: Time;
 }
 
 export interface postAnswerOutDto {
-  answer: APIAnswer
+  answer: APIAnswer;
 }
 
 export interface postResponseInDto {
   qid: QID,
   aid: AID,
   response: string,
-  time: Time
+  time: Time;
 }
 
 export interface postResponseOutDto {
   qid: QID,
   aid: AID,
   time: Time,
-  responsesLeft: ResponsesLeft
+  responsesLeft: ResponsesLeft;
 }
 
 export interface getResponseLimitInDto {
-  time: Time
+  time: Time;
 }
 
 export interface getResponseLimitOutDto {
-  responsesLeft: ResponsesLeft
+  responsesLeft: ResponsesLeft;
 }

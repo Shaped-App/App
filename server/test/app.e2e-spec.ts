@@ -1,5 +1,5 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
+import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
 
@@ -28,7 +28,7 @@ describe('AppController (e2e)', () => {
         "aGixGhyA1S5LZYyXXCcE",
         "7ahZDKrDfQEhDZO5Br9R"
       ]
-    }
+    };
     const response = {
       "questions": [
         {
@@ -46,7 +46,7 @@ describe('AppController (e2e)', () => {
           "creator": "admin"
         }
       ]
-    }
+    };
     return request(app.getHttpServer())
       .get('/api/v1.0/browse/question/')
       .send(body)
@@ -59,7 +59,7 @@ describe('AppController (e2e)', () => {
       "aids": [
         "9GW3CScIcvl9ZEuwCxEb"
       ]
-    }
+    };
     const response = {
       "answers": [
         {
@@ -70,7 +70,7 @@ describe('AppController (e2e)', () => {
           "creator": "users/FDr6IxDIO3GDkZMJ8hPy"
         }
       ]
-    }
+    };
     return request(app.getHttpServer())
       .get('/api/v1.0/browse/answer/')
       .send(body)

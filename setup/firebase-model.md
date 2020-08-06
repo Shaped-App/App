@@ -1,7 +1,9 @@
 # Firebase model
 
 ###Root level collections
+
 #####questions: collection of Question documents
+
 ```
 questionID: document {
   question: string,     // text of the question
@@ -16,6 +18,7 @@ questionID: document {
 ```
 
 #####users: collection of User documents
+
 ```
 userID: document {
   name: string                   //? add other parts of profile info

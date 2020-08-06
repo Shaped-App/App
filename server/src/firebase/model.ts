@@ -1,9 +1,7 @@
-import { ROOT_DIR } from '../const'
+import admin from 'firebase-admin';
+import { ROOT_DIR } from '../const';
 
 console.log('***** Loading firestore database *****');
-//TODO: determine if these changes are necessary
-// var admin = require('firebase-admin');
-import admin from 'firebase-admin';
 
 const serviceAccount = require(ROOT_DIR + 'firebase_key.json');
 

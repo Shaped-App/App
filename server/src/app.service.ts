@@ -152,6 +152,7 @@ export class BrowseService {
   }
   async getAnswer(questionID: Dtos.QID, answerID: Dtos.AID): Promise<FirebaseAnswer> {
     const questionRef = QuestionCollection.doc(questionID);
+    // TODO: make "answer" collection not a special string
     const answerRef: DocRef = questionRef.collection("answers").doc(answerID);
     // const answerData: admin.firestore.DocumentData = answerRef.get();
     const answerData = answerRef.get();
