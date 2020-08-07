@@ -1,8 +1,8 @@
 # Firebase model
 
-###Root level collections
+### Root level collections
 
-#####questions: collection of Question documents
+##### questions: collection of Question documents
 
 ```
 questionID: document {
@@ -17,7 +17,7 @@ questionID: document {
   }
 ```
 
-#####users: collection of User documents
+##### users: collection of User documents
 
 ```
 userID: document {
