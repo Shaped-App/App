@@ -121,7 +121,3 @@ export const inboxThree = "InboxThree";
 //profile option
 export const userProfile = "UserProfile";
 export const settings = "Settings";
-
-export const BrowseOption = ["BrowseOne", "BrowseTwo", "BrowseThree", "BrowseFour"];
-export const InboxOption = ["InboxOne", "InboxTwo", "InboxThree"];
-export const ProfileOption = ["ProfileOne", "Settings"];
