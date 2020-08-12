@@ -8,7 +8,7 @@ import {
 
 import styles from '../Static/style';
 import Icon from '../Utility/Icon';
-import {BrowseOption} from '../NavBar';
+import {browseTwo} from '../NavBar';
 
 class Question extends Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class Question extends Component {
     }
 
     onQuestionPress() {
-        this.state.navigation.navigate(BrowseOption[1], {
+        this.state.navigation.navigate(browseTwo, {
             question: this.state.question,
             question_id: this.state.id,
         });
