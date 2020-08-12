@@ -3,14 +3,9 @@ import {SafeAreaView, View, Text, TouchableOpacity} from 'react-native';
 
 import styles from '../Static/main_style.js';
 
-export default class BrowseThreeScreen extends Component {
+export default class Home extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      question: props.route.params.question,
-      question_id: props.route.params.question_id,
-      navigation: props.navigation
-    };
   }
 
   render() {
@@ -18,11 +13,11 @@ export default class BrowseThreeScreen extends Component {
       <SafeAreaView style={styles.match__background}>
         <View style={styles.screen__header} />
         <View style={[styles.content__container, styles.content__centering]}>
-          <Text style={[styles.text__success]}>Success!</Text>
-          <Text>Your response has been recorded.</Text>
-          <Text>Now explore what others have said.</Text>
           <TouchableOpacity style={[styles.button, {margin: 30}]}>
-            <Text style={styles.text__header}>Let's go</Text>
+            <Text style={styles.text__header}>Browse</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.button, {margin: 30}]}>
+            <Text style={styles.text__header}>Random</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
