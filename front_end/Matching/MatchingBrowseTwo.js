@@ -25,9 +25,9 @@ export default class BrowseTwoScreen extends Component {
         this.handlePress = this.handlePress.bind(this);
     }
 
-    handleChange(value){
-        this.setState({answer: value, disabled: value === ""});
-    }
+  handleChange(value) {
+    this.setState({answer: value, disabled: value === ''});
+  }
 
     handlePress(){
         this.state.navigation.navigate(BrowseOption[2],{
