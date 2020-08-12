@@ -12,7 +12,7 @@ import { Headline, SettingIcon, Bio } from './UserProfileComponents'
 import styles from '../Static/style';
 import pro_styles from '../Static/profile_style';
 
-//TODO: Add error checking
+//TODO: Add error checking and editing interest
   
 export default class UserProfile extends Component {
     constructor(props) {
@@ -119,6 +119,14 @@ export default class UserProfile extends Component {
     }
 
     render() {
+        let curState;
+        if(this.state.isEditing){
+            curState = this.state.editState;
+        }else{
+            curState = this.state;
+        }
+        const { username, location, occupation, age } = curState;
+        const { about, verse, interestEnabled, activityEnabled, interests, activities } = curState;
         return (
             <SafeAreaView style={pro_styles.background}>
                 <ScrollView>
@@ -129,47 +137,26 @@ export default class UserProfile extends Component {
                                 <Text style={styles.location}>Edit Profile</Text>
                             </TouchableOpacity>
                         }
-                        {this.state.isEditing ?
-                            <Headline 
-                                isEdit={true}
-                                name={this.state.editState.username}
-                                location={this.state.editState.location}
-                                occupation={this.state.editState.occupation}
-                                age={this.state.editState.age}
-                                handleChange={this.handleChange}
-                            /> :
-                            <Headline 
-                                isEdit={false}
-                                name={this.state.username}
-                                location={this.state.location}
-                                occupation={this.state.occupation}
-                                age={this.state.age}
-                                handleChange={this.handleChange}
-                            />
-                        }
-                        {this.state.isEditing ?
-                            <Bio
-                                isEditing={true}
-                                about={this.state.editState.about}
-                                verse={this.state.verse}
-                                handleChange={this.handleChange}
-                                interestEnabled={this.state.editState.interestEnabled}
-                                activityEnabled={this.state.editState.activityEnabled}
-                                interests={this.state.editState.interests}
-                                activities={this.state.activities}
-                                toggleInterest={this.toggleInterest}
-                                toggleActivity={this.toggleActivity}
-                            />:
-                            <Bio
-                                isEditing={false}
-                                about={this.state.about}
-                                verse={this.state.verse}
-                                interestEnabled={this.state.interestEnabled}
-                                activityEnabled={this.state.activityEnabled}
-                                interests={this.state.interests}
-                                activities={this.state.activities}
-                            />
-                        }
+                        <Headline 
+                            isEdit={this.state.isEditing}
+                            name={username}
+                            location={location}
+                            occupation={occupation}
+                            age={age}
+                            handleChange={this.handleChange}
+                        />
+                        <Bio
+                            isEditing={this.state.isEditing}
+                            about={about}
+                            verse={verse}
+                            handleChange={this.handleChange}
+                            interestEnabled={interestEnabled}
+                            activityEnabled={activityEnabled}
+                            interests={interests}
+                            activities={activities}
+                            toggleInterest={this.toggleInterest}
+                            toggleActivity={this.toggleActivity}
+                        />
                     </View>
                 </ScrollView>
             </SafeAreaView>

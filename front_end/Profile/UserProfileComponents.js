@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import {
-    SafeAreaView,
-    ScrollView,
     Switch,
     Text,
     TextInput,
@@ -12,7 +10,7 @@ import {
 import Icon from '../Utility/Icon';
 import styles from '../Static/style';
 import pro_styles from '../Static/profile_style';
-import { ProfileOption } from '../NavBar';
+import { settings } from '../NavBar';
 
 class SettingIcon extends Component{
     constructor(props) {
@@ -21,7 +19,7 @@ class SettingIcon extends Component{
 
     render(){
         return(
-            <TouchableOpacity onPress={() => this.props.navigation.navigate(ProfileOption[1])}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate(settings)}>
                 <Icon name="setting" size={30} />
             </TouchableOpacity>
         );
