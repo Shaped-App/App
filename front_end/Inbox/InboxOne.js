@@ -10,7 +10,7 @@ import {
 
 import SingleMessage from './Message';
 import Icon from '../Utility/Icon';
-import styles from '../Static/style';
+import styles from '../Static/main_style';
 import inbox_style from '../Static/inbox_style';
 
 export default class InboxOneScreen extends Component {
