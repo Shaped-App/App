@@ -74,7 +74,7 @@ export default class NavBar extends Component {
     const routeName = route.state
       ? route.state.routes[route.state.index].name
       : '';
-    if (routeName === BrowseTwo) {
+    if (routeName === "BrowseTwo") {
       return false;
     }
     return true;

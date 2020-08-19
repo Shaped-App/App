@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import Icon from '../Utility/Icon';
-import styles from '../Static/style';
+import styles from '../Static/main_style';
 import pro_styles from '../Static/profile_style';
 import { settings } from '../NavBar';
 
@@ -41,7 +41,7 @@ class Activity extends Component {
             <View>
                 <TouchableOpacity onPress={this.onPressActivities}>
                     <View style={styles.class__container}>
-                        <Text style={[pro_styles.text_header, { marginBottom: 12 }]}>{this.props.question}</Text>
+                        <Text style={[styles.text__header, { marginBottom: 12 }]}>{this.props.question}</Text>
                         <Text style={pro_styles.text_style}>{this.props.answer}</Text>
                     </View>
                 </TouchableOpacity>
@@ -106,8 +106,8 @@ class Headline extends Component {
         return (
             <View style={{ alignItems: 'center' }}>
                 <Text style={pro_styles.username_header}>{this.props.name}</Text>
-                <Text style={pro_styles.text_header}>{this.props.location}</Text>
-                <Text style={pro_styles.text_header}>{this.props.age + ', ' + this.props.occupation} </Text>
+                <Text style={styles.text__header}>{this.props.location}</Text>
+                <Text style={styles.text__header}>{this.props.age + ', ' + this.props.occupation} </Text>
             </View>
         );
     }
@@ -122,21 +122,21 @@ class Bio extends Component {
         return (
             <View style={styles.content__container}>
                 <Text style={pro_styles.category_header}>About</Text>
-                <View style={styles.class__container}>
                     {this.props.isEditing ?
                         <TextInput
-                            keyboardType='numeric'
                             value={this.props.about}
+                            style={pro_styles.edit_text_input}
                             onChangeText={value => this.props.handleChange(value, "about")}
                             multiline={true}
                             maxLength={150}
                         /> :
-                        <Text style={pro_styles.text_style}>{this.props.about}</Text>
+                        <View style={pro_styles.edit_text_input}>
+                            <Text>{this.props.about}</Text>
+                        </View>
                     }
-                </View>
                 <Text style={pro_styles.category_header}>Favorite Bible Verse</Text>
-                <View style={styles.class__container}>
-                    <Text style={pro_styles.text_style}>{this.props.verse}</Text>
+                <View style={pro_styles.edit_text_input}>
+                    <Text>{this.props.verse}</Text>
                 </View>
                 {(this.props.interestEnabled || this.props.isEditing) &&
                     <View>

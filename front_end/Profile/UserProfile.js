@@ -9,7 +9,7 @@ import {
 
 import Icon from '../Utility/Icon';
 import { Headline, SettingIcon, Bio } from './UserProfileComponents'
-import styles from '../Static/style';
+import styles from '../Static/main_style';
 import pro_styles from '../Static/profile_style';
 
 //TODO: Add error checking and editing interest
@@ -21,19 +21,19 @@ export default class UserProfile extends Component {
             navigation: props.navigation,
             //proPic: props.profileImage
             userID: props.userID,
-            username: "",
-            location: "",
-            age: "",
-            occupation: "",
-            about: "",
-            verse: "",
-            interests: [""],
+            username: "Ethan Lee",
+            location: "Ann Arbor, MI",
+            age: "21",
+            occupation: "Student",
+            about: "I like Maple Xu",
+            verse: "Revelation 21:4",
+            interests: ["Sleep"],
             interestEnabled: true,
             activities: [],
             activityEnabled: true,
             isOwner: props.isOwner,
             isEditing: false,
-            editState: {}
+            prevState: {}
         };
         this.onPressSave = this.onPressSave.bind(this);
         this.onPressCancel = this.onPressCancel.bind(this);
@@ -45,7 +45,7 @@ export default class UserProfile extends Component {
   
     onPressCancel() {
         console.log("Pressed Cancel Button");
-        this.setState({ isEditing: false });
+        this.setState(this.state.prevState);
         this.state.navigation.setOptions({
             title: " ",
             headerLeft: null,
@@ -57,7 +57,7 @@ export default class UserProfile extends Component {
   
     onPressSave() {
         console.log("Pressed Save");
-        this.setState(this.state.editState);
+        this.setState({isEditing: false});
         this.state.navigation.setOptions({
             title: " ",
             headerLeft: null,
@@ -70,20 +70,8 @@ export default class UserProfile extends Component {
     onPressEdit() {
         console.log("Pressed Edit Button");
         this.setState({
-            isEditing: true,
-            editState: {
-                isEditing: false,
-                username: this.state.username,
-                location: this.state.location,
-                age: this.state.age,
-                occupation: this.state.occupation,
-                about: this.state.about,
-                verse: this.state.verse,
-                interests: this.state.interests,
-                interestEnabled: this.state.interestEnabled,
-                activities: this.state.activities,
-                activityEnabled: this.state.activityEnabled,
-            }
+            prevState: this.state,
+            isEditing: true
         });
         this.state.navigation.setOptions({
             title: "Edit Profile",
@@ -101,44 +89,34 @@ export default class UserProfile extends Component {
     }
   
     toggleInterest() {
-        let temp = this.state.editState;
-        temp.interestEnabled = !temp.interestEnabled;
-        this.setState({ editState: temp });
+        this.setState({ interestEnabled: !this.state.interestEnabled });
     }
   
     toggleActivity() {
-        let temp = this.state.editState;
-        temp.activityEnabled = !temp.activityEnabled;
-        this.setState({ editState: temp });
+        this.setState({ activityEnabled: !this.state.activityEnabled });
     }
   
     handleChange(value, key) {
-        let temp = this.state.editState;
+        let temp = this.state;
         temp[key] = key != "age" ? value : value.replace(/[^0-9]/g, '');
-        this.setState({ editState: temp });
+        this.setState(temp);
     }
 
     render() {
-        let curState;
-        if(this.state.isEditing){
-            curState = this.state.editState;
-        }else{
-            curState = this.state;
-        }
-        const { username, location, occupation, age } = curState;
-        const { about, verse, interestEnabled, activityEnabled, interests, activities } = curState;
+        const { isOwner, isEditing, username, location, occupation, age } = this.state;
+        const { about, verse, interestEnabled, activityEnabled, interests, activities } = this.state;
         return (
             <SafeAreaView style={pro_styles.background}>
                 <ScrollView>
                     <View style={{ alignItems: 'center' }}>
                         <Icon name='profile' size={160} />
-                        {this.state.isOwner && !this.state.isEditing &&
+                        {isOwner && !isEditing &&
                             <TouchableOpacity style={pro_styles.edit_button} onPress={this.onPressEdit}>
-                                <Text style={styles.location}>Edit Profile</Text>
+                                <Text style={styles.text__header}>Edit Profile</Text>
                             </TouchableOpacity>
                         }
                         <Headline 
-                            isEdit={this.state.isEditing}
+                            isEdit={isEditing}
                             name={username}
                             location={location}
                             occupation={occupation}
@@ -146,7 +124,7 @@ export default class UserProfile extends Component {
                             handleChange={this.handleChange}
                         />
                         <Bio
-                            isEditing={this.state.isEditing}
+                            isEditing={isEditing}
                             about={about}
                             verse={verse}
                             handleChange={this.handleChange}

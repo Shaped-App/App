@@ -29,10 +29,6 @@ export default StyleSheet.create({
         marginBottom: 16,
         padding: 10
     },
-    text_header: {
-        fontSize: 16,
-        fontWeight: '600',
-    },
     category_header: {
         fontSize: 16,
         fontWeight: 'bold',
@@ -46,7 +42,9 @@ export default StyleSheet.create({
     edit_text_input: {
         backgroundColor: 'rgba(255,255,255,0.7)',
         borderRadius: 16,
-        padding: 10,
+        paddingLeft: 16,
+        paddingTop: 8,
+        paddingBottom: 8,
         marginBottom: 8,
     },
     edit_text: {
