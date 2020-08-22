@@ -9,6 +9,7 @@ const iconURL = {
     'profile': require('../Static/Icons/profile.png'),
     'arrow': require('../Static/Icons/arrow.png'),
     'back': require('../Static/Icons/back.png'),
+    'setting': require('../Static/Icons/setting.png'),
 };
 
 export default class Icon extends Component {

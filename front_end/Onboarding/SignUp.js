@@ -1,4 +1,4 @@
-//Matching-Browse-1
+//Sign-Up
 import React, {Component} from 'react';
 import {
     SafeAreaView,
