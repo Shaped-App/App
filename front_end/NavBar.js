@@ -82,7 +82,6 @@ export default class NavBar extends Component {
 
   render(){
     return (
-      <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen name={tabMatch} component={MatchNav}
           options={({route}) => ({
