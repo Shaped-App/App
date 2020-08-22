@@ -8,8 +8,8 @@ import {
     View,
 } from 'react-native';
 
-import styles from '../Static/style';
-import {BrowseOption} from '../NavBar';
+import styles from '../Static/main_style';
+import {browseThree} from '../NavBar';
 
 export default class BrowseTwoScreen extends Component {
     constructor(props){
@@ -30,7 +30,7 @@ export default class BrowseTwoScreen extends Component {
   }
 
     handlePress(){
-        this.state.navigation.navigate(BrowseOption[2],{
+        this.state.navigation.navigate(browseThree,{
             question_id: this.state.question_id,
             question: this.state.question,
         });
