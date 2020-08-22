@@ -91,7 +91,6 @@ export default class NavBar extends Component {
           <Tab.Screen name={tabInbox} component={InboxNav}/>
           <Tab.Screen name={tabProfile} component={ProfileNav}/>
         </Tab.Navigator>
-      </NavigationContainer>
     );
   }
 }
