@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import styles from '../Static/main_style.js';
+import onboardingStyles from '../Static/onboarding_style.js';
 
 import {navBar} from './OnboardingNav';
 import {InterestPicker, DistancePicker, AgeBoundPicker} from './OnboardingComponents';
@@ -57,12 +58,12 @@ export default class OnboardingFive extends Component {
 
     render(){
         return(
-            <SafeAreaView style={styles.onboarding__background}>
+            <SafeAreaView style={onboardingStyles.background}>
                 <View style={[styles.content__container, styles.content__centering]}>
                     <InterestPicker friendship={this.state.friendship} relationship={this.state.relationship} setFriendship={this.setFriendship} setRelationship={this.setRelationship}/>
                     <DistancePicker setDistance={this.setDistance}/>
                     <AgeBoundPicker lowerAgeArray={[18, 19, 20]} upperAgeArray={[20, 21, 22]} setLowerAgeBound={this.setLowerAgeBound} setUpperAgeBound={this.setUpperAgeBound}/>
-                    <TouchableOpacity style={[styles.onboarding__button, {margin: 30, height: 80}]} onPress={this.onNextPress}>
+                    <TouchableOpacity style={[onboardingStyles.button, {margin: 30, height: 80}]} onPress={this.onNextPress}>
                         <Text style={{color: 'black', fontSize: 20, fontWeight: '600'}}>Save</Text>
                     </TouchableOpacity>
                 </View>

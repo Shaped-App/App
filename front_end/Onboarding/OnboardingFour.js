@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import styles from '../Static/main_style.js';
+import onboardingStyles from '../Static/onboarding_style.js';
 
 import {onboardingFive} from './OnboardingNav';
 import {DoneButton, GenderPicker, OnboardingInput} from './OnboardingComponents';
@@ -72,7 +73,7 @@ export default class OnboardingFour extends Component {
 
     render(){
         return(
-            <SafeAreaView style={styles.onboarding__background}>
+            <SafeAreaView style={onboardingStyles.background}>
                 <View style={[styles.content__container, styles.content__centering]}>
                     <GenderPicker gender={this.state.gender} setGender={this.setGender}/>
                     <OnboardingInput text={"Name"} placeholder={"Start typing..."} changeText={this.setName}/>

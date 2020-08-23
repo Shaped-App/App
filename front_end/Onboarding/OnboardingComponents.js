@@ -11,6 +11,7 @@ import {
 import ScrollPicker from 'react-native-wheel-scroll-picker';
 
 import styles from '../Static/main_style.js';
+import onboardingStyles from '../Static/onboarding_style.js';
 
 export const Logo = () => (
     <View style={{padding: 25, justifyContent: 'center', alignItems: 'center',}}>
@@ -36,7 +37,7 @@ export class GenderPicker extends Component {
 
     render() {
         return (
-            <View style={styles.onboarding__container}>
+            <View style={onboardingStyles.container}>
                 <Text style={{padding: 10}}>I identify as</Text>
                 <View style={{flexDirection:'row', justifyContent: 'space-between', paddingLeft: 30, paddingRight: 30}}>
                     <TouchableOpacity style={[styles.button, this.props.gender === "female" ? {opacity: 1} : {opacity: .6}]}
@@ -64,10 +65,10 @@ export class OnboardingInput extends Component {
 
     render() {
         return (
-          <View style={styles.onboarding__container}>
+          <View style={onboardingStyles.container}>
               <Text style={{padding: 5}}>{this.state.text}</Text>
               <TextInput
-                  style={[styles.onboarding__input]}
+                  style={[onboardingStyles.input]}
                   placeholder={this.state.placeholder}
                   onChangeText={value => this.props.changeText(value)}
                   multiline={false}
@@ -86,7 +87,7 @@ export class InterestPicker extends Component {
 
     render() {
         return (
-            <View style={[styles.onboarding__container, {margin: 10}]}>
+            <View style={[onboardingStyles.container, {margin: 10}]}>
                 <Text style={{padding: 10, fontSize: 16}}>I am interested in finding a</Text>
                 <View style={{flexDirection:'row', justifyContent: 'space-between', paddingLeft: 30, paddingRight: 30}}>
                     <TouchableOpacity style={[styles.button, this.props.friendship ? {opacity: 1} : {opacity: .6}]}
@@ -112,7 +113,7 @@ export class DistancePicker extends Component {
 
     render() {
         return (
-            <View style={[styles.onboarding__container, {height: 150}]}>
+            <View style={[onboardingStyles.container, {height: 150}]}>
                 <Text style={{padding: 10, fontSize: 16}}>Within...</Text>
                 <ScrollPicker
                     dataSource={[
@@ -175,7 +176,7 @@ export class AgeBoundPicker extends Component {
 
     render() {
         return (
-            <View style={[styles.onboarding__container, {height: 150}]}>
+            <View style={[onboardingStyles.container, {height: 150}]}>
                 <Text style={{padding: 10, fontSize: 16}}>Age Range</Text>
                 <View style={{flexDirection:'row', justifyContent: 'space-between', paddingLeft: 30, paddingRight: 30, alignItems: 'center'}}>
                     <AgePicker ageArray={this.props.lowerAgeArray} setAgeBound={this.props.setLowerAgeBound}/>

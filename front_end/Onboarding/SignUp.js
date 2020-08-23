@@ -9,9 +9,10 @@ import {
 } from 'react-native';
 
 import styles from '../Static/main_style.js';
+import onboardingStyles from '../Static/onboarding_style.js';
 
 import {onboardingOne, signIn} from './OnboardingNav';
-import {Logo, OnboardingInput} from './OnboardingComponents';
+import {OnboardingInput} from './OnboardingComponents';
 
 export default class SignUp extends Component {
     constructor(props){
@@ -54,14 +55,14 @@ export default class SignUp extends Component {
 
     render(){
         return(
-            <SafeAreaView style={styles.onboarding__background}>
+            <SafeAreaView style={onboardingStyles.background}>
                 <View style={[styles.content__container, styles.content__centering, {width: 300}]}>
-                    <Logo/>
+                    <Text style={{fontSize: 40, paddingBottom: 30}}>Sign Up</Text>
                     <OnboardingInput text={"Email"} placeholder={"example@email.com"} changeText={this.setEmail}/>
                     <OnboardingInput text={"Phone Number"} placeholder={"1234567890"} changeText={this.setPhoneNumber}/>
                     <OnboardingInput text={"Password"} placeholder={"Start typing..."} changeText={this.setPassword}/>
                     <OnboardingInput text={"Confirm Password"} placeholder={"Start typing..."} changeText={this.setPassword}/>
-                    <TouchableOpacity style={[styles.onboarding__button, {margin: 30, width: 200}]} onPress={this.onSignUpPress}>
+                    <TouchableOpacity style={[onboardingStyles.button, {margin: 30, width: 200}]} onPress={this.onSignUpPress}>
                         <Text style={styles.text__header}>Sign Up</Text>
                     </TouchableOpacity>
                     <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
