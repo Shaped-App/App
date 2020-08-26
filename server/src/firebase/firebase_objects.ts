@@ -1,4 +1,5 @@
 import admin from 'firebase-admin';
+import { APIQuestion } from 'src/app.dtos';
 
 type QID = string;
 type AID = string;
@@ -7,18 +8,29 @@ type Time = admin.firestore.Timestamp;
 
 // Firebase question
 export class FirebaseQuestion {
-  // qid: QID;
   question: string;
   created: Time;
   creator: UID;
-  constructor(question: string, created: Time, creator: UID) {
+  qid: QID; //TODO: maybe optional? since writing to firestore with id is weird
+  constructor(question: string, created: Time, creator: UID, qid: QID) {
     this.question = question;
     this.created = created;
     this.creator = creator;
+    this.qid = qid;
+  }
+  toAPIQuestion(): APIQuestion {
+    const question: APIQuestion = {
+      question: this.question,
+      created: this.created.toDate().toISOString(),
+      userAnswered: false,  //TODO: change to proper behavior
+      creator: this.creator,
+      qid: this.qid,
+    }
+    return question
   }
 }
 
-export const questionConverter = {
+export const FirestoreQuestionConverter: FirebaseFirestore.FirestoreDataConverter<FirebaseQuestion> = {
   toFirestore: function (question: FirebaseQuestion) {
     return {
       question: question.question,
@@ -26,10 +38,10 @@ export const questionConverter = {
       creator: question.creator
     };
   },
-  fromFirestore: function (snapshot: { data: (arg0: any) => any; }, options: any) {
-    const data = snapshot.data(options);
-    return new City(data.name, data.state, data.country);
-  }
+  fromFirestore(snapshot: FirebaseFirestore.DocumentData): FirebaseQuestion {
+    // const data = snapshot.data();
+    return new FirebaseQuestion(snapshot.question, snapshot.created, snapshot.creator, snapshot.id);
+  },
 };
 
 export class FirebaseAnswer {

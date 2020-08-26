@@ -2,9 +2,10 @@ import { Injectable } from '@nestjs/common';
 //TODO: move
 import admin from 'firebase-admin';
 import * as Dtos from './app.dtos';
-import { APIAnswer } from './app.dtos';
-import { FirebaseAnswer, FirebaseQuestion } from './firebase/firebase_objects';
+import { APIAnswer, APIQuestion } from './app.dtos';
+import { FirebaseAnswer, FirebaseQuestion, FirestoreQuestionConverter } from './firebase/firebase_objects';
 import { QuestionCollection, UserCollection } from './firebase/model';
+import { getFirebaseQuestionsFromIDs, getAPIQuestionsFromIDs, authGetUser } from './firebase/functions';
 
 type DocRef = admin.firestore.DocumentReference;
 type ColRef = admin.firestore.CollectionReference;
@@ -18,39 +19,21 @@ export class TestService {
 
 @Injectable()
 export class BrowseService {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async getBrowseQIDsFromTime(time: Dtos.Time) : Promise<Array<Dtos.QID>> {
+    // const qids = await QuestionCollection.orderBy("created").limit(10).get()
+    return ["aGixGhyA1S5LZYyXXCcE", "7ahZDKrDfQEhDZO5Br9R"]
+  }
   async getBrowseQuestionList(body: Dtos.getQuestionListInDto): Promise<Dtos.getQuestionListOutDto> {
-    return { qids: [{ qid: "hello", question: "question", userAnswered: true, created: "today" }] };
+    const qids = await this.getBrowseQIDsFromTime(body.time)
+    return {
+      qids: await getAPIQuestionsFromIDs(qids)
+    }
   }
 
   async getBrowseQuestion(body: Dtos.getQuestionInDto): Promise<Dtos.getQuestionOutDto> {
-    const docList = [];
-    // TODO: get by ids, not orderby
-    // const docs = await QuestionCollection.where("id", "==", body.qids[0]).orderBy("created").limit(10).get()
-    const q = QuestionCollection.where(admin.firestore.FieldPath.documentId(), "in", body.qids)
-    const docs = await q.get()
-    docs.forEach(async function (snapshot) {
-      //TODO: data as FirebaseQuestion
-      const data = snapshot.data();
-      const qid = snapshot.id;
-      const ts: admin.firestore.Timestamp = data.created;
-      const question: Dtos.APIQuestion = {
-        qid: qid,
-        question: data.question,
-        created: ts.toDate().toJSON(),
-        userAnswered: false,
-        creator: data.creator
-      }
-      snapshot.exists ? docList.push(question) : null;
-      // snapshot.exists ? docList[snapshot.id] = snapshot.data() : null;
-    })
-    for (let index = 0; index < docList.length; index++) {
-      const doc = docList[index];
-      const userAnswered = await this.getUserAnswered(await this.authGetUser(), doc.qid);
-      doc.userAnswered = userAnswered
-    }
-    console.log("docList length: ", docList.length);
     return {
-      questions: docList
+      questions: await getAPIQuestionsFromIDs(body.qids)
     }
   }
 
@@ -89,30 +72,21 @@ export class BrowseService {
 
   async makeQuestion(questionText: string): Promise<DocRef> {
     const newQuestionRef: DocRef = QuestionCollection.doc();
-    const newData: FirebaseQuestion = {
-      // qid: newQuestionRef.id,
-      question: questionText,
+    const newData: FirebaseQuestion = new FirebaseQuestion( 
+      questionText,
       // created: FieldValue.serverTimestamp(),
-      created: admin.firestore.Timestamp.now(),
-      creator: "admin",
-    };
+      admin.firestore.Timestamp.now(),
+      await authGetUser(),
+      newQuestionRef.id,
+      );
     newQuestionRef.set(newData);
     return newQuestionRef;
   }
 
-  ///     Helper functions     
-  // TODO: actually get userid from firebase auth
-  //? needs async or not?
-  async authGetUser(): Promise<Dtos.UID> {
-    return "FDr6IxDIO3GDkZMJ8hPy"
-  }
-  async getUserAnswered(userID: string, questionID: string): Promise<boolean> {
-    return false;
-  }
 
   // async postBrowseAnswer(userID: string, questionID: string, answerText: string, time: string) : Promise<DocRef> {
   async postBrowseAnswer(body: Dtos.postAnswerInDto): Promise<Dtos.postAnswerOutDto> {
-    const userID: Dtos.UID = await this.authGetUser();
+    const userID: Dtos.UID = await authGetUser();
     const questionID: Dtos.QID = body.qid;
     const answerText: string = body.answer;
 
