@@ -1,7 +1,8 @@
 import admin from 'firebase-admin';
-import { APIQuestion } from 'src/app.dtos';
+import { APIQuestion, APIAnswer } from 'src/app.dtos';
 
 type QID = string;
+//TODO: aid requires qid, make class instead?
 type AID = string;
 type UID = string;
 type Time = admin.firestore.Timestamp;
@@ -31,11 +32,11 @@ export class FirebaseQuestion {
 }
 
 export const FirestoreQuestionConverter: FirebaseFirestore.FirestoreDataConverter<FirebaseQuestion> = {
-  toFirestore: function (question: FirebaseQuestion) {
+  toFirestore: function (fireQuestion: FirebaseQuestion) {
     return {
-      question: question.question,
-      created: question.created,
-      creator: question.creator
+      question: fireQuestion.question,
+      created: fireQuestion.created,
+      creator: fireQuestion.creator
     };
   },
   fromFirestore(snapshot: FirebaseFirestore.DocumentData): FirebaseQuestion {
@@ -45,13 +46,38 @@ export const FirestoreQuestionConverter: FirebaseFirestore.FirestoreDataConverte
 };
 
 export class FirebaseAnswer {
-  // aid: AID;
+  qid: QID;
+  aid: AID;
   answer: string;
   created: Time;
   creator: UID;
-  constructor(answer: string, created: Time, creator: UID) {
+  constructor(aid: AID, answer: string, created: Time, creator: UID) {
+    this.aid = aid;
     this.answer = answer;
     this.created = created;
     this.creator = creator;
   }
+  toAPIAnswer(): APIAnswer {
+    const answer: APIAnswer = {
+      qid: this.qid,
+      aid: this.aid,
+      answer: this.answer,
+      created: this.created.toDate().toISOString(),
+      creator: this.creator
+    }
+    return answer
+  }
 }
+
+export const FirestoreAnswerConverter: FirebaseFirestore.FirestoreDataConverter<FirebaseAnswer> = {
+  toFirestore: function (fireAnswer: FirebaseAnswer) {
+    return {
+      answer: fireAnswer.answer,
+      created: fireAnswer.created,
+      creator: fireAnswer.creator
+    };
+  },
+  fromFirestore(snapshot: FirebaseFirestore.DocumentData): FirebaseAnswer {
+    return new FirebaseAnswer(snapshot.id, snapshot.answer, snapshot.created, snapshot.creator);
+  },
+};

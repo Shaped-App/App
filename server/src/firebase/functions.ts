@@ -1,7 +1,7 @@
 import admin from 'firebase-admin';
-import { APIQuestion, UID } from 'src/app.dtos';
-import { FirebaseQuestion, FirestoreQuestionConverter } from './firebase_objects';
-import db, { QuestionCollection } from './model';
+import { AID, APIQuestion, QID, UID } from 'src/app.dtos';
+import { FirebaseAnswer, FirebaseQuestion, FirestoreQuestionConverter, FirestoreAnswerConverter } from './firebase_objects';
+import db, { AnswerCollectionFromID, DocRef, QuestionCollection } from './model';
 
 
 
@@ -52,6 +52,14 @@ export async function getAPIQuestionsFromIDs(questionIDs: Array<string>): Promis
     console.log("APIQuestions length: ", docList.length);
     return docList
 }
+
+export async function getAnswerOfQuestion(questionID: QID, answerID: AID): Promise<FirebaseAnswer> {
+    const answerRef: DocRef = AnswerCollectionFromID(questionID).doc(answerID);
+    const answerData = await answerRef.withConverter(FirestoreAnswerConverter).get()
+    const answer: FirebaseAnswer = answerData.data()
+    return answer;
+}
+
 ///     Helper functions     
 // TODO: actually get userid from firebase auth
 //? needs async or not?
@@ -62,14 +70,3 @@ export async function authGetUser(): Promise<UID> {
 export async function getUserAnswered(userID: string, questionID: string): Promise<boolean> {
     return false;
 }
-//TODO: this function works weirdly when documents have same fields
-export async function getCollectionData(collection: string): Promise<object> {
-    const data = {};
-    await db.collection(collection).get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            Object.assign(data, doc.data());
-        });
-    });
-    return data;
-}
-

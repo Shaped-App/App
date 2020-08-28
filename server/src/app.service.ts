@@ -2,13 +2,11 @@ import { Injectable } from '@nestjs/common';
 //TODO: move
 import admin from 'firebase-admin';
 import * as Dtos from './app.dtos';
-import { APIAnswer, APIQuestion } from './app.dtos';
-import { FirebaseAnswer, FirebaseQuestion, FirestoreQuestionConverter } from './firebase/firebase_objects';
-import { QuestionCollection, UserCollection } from './firebase/model';
-import { getFirebaseQuestionsFromIDs, getAPIQuestionsFromIDs, authGetUser } from './firebase/functions';
+import { APIAnswer } from './app.dtos';
+import { FirebaseAnswer, FirebaseQuestion } from './firebase/firebase_objects';
+import { authGetUser, getAPIQuestionsFromIDs, getAnswerOfQuestion } from './firebase/functions';
+import { DocRef, QuestionCollection, UserCollection, AnswerCollection } from './firebase/model';
 
-type DocRef = admin.firestore.DocumentReference;
-type ColRef = admin.firestore.CollectionReference;
 
 @Injectable()
 export class TestService {
@@ -45,7 +43,7 @@ export class BrowseService {
     const questionID: string = body.qid;
     const answerIDs: string[] = body.aids;
     // TODO: figure out if firebase can query by list of ids
-    const answerFirebase: FirebaseAnswer = await this.getAnswer(questionID, answerIDs[0]);
+    const answerFirebase: FirebaseAnswer = await getAnswerOfQuestion(questionID, answerIDs[0]);
     const ts: admin.firestore.Timestamp = answerFirebase.created;
     // TODO: use class conversion
     const answerResponse: APIAnswer[] = [{
@@ -105,38 +103,10 @@ export class BrowseService {
     // TODO: make sure question document exists
     // TODO: make "answer" collection not a special string
     // make answer document
-    const newAnswerRef: DocRef = questionRef.collection("answers").doc();
-    const newAnswerData: FirebaseAnswer = {
-      answer: answerText,
-      // created: FieldValue.serverTimestamp(),
-      created: admin.firestore.Timestamp.now(),
-      creator: userRef.path,
-    }
-    newAnswerRef.set(newAnswerData);
-    // return answer document
-    // TODO: type casting between APIAnswer and FirebaseAnswer
-    const api: APIAnswer = {
-      qid: questionRef.id,
-      aid: newAnswerRef.id,
-      answer: answerText,
-      created: newAnswerData.created.toString(),
-      creator: userRef.id
-    }
-    return api;
-  }
-  async getAnswer(questionID: Dtos.QID, answerID: Dtos.AID): Promise<FirebaseAnswer> {
-    const questionRef = QuestionCollection.doc(questionID);
-    // TODO: make "answer" collection not a special string
-    const answerRef: DocRef = questionRef.collection("answers").doc(answerID);
-    // const answerData: admin.firestore.DocumentData = answerRef.get();
-    const answerData = answerRef.get();
-    const answer = (await answerData).data()
-    //! same typecast here
-    const response: FirebaseAnswer = {
-      answer: answer.answer,
-      creator: answer.creator,
-      created: answer.created,
-    }
-    return response;
+    const newAnswerRef: DocRef = AnswerCollection(questionRef).doc();
+    const newAnswer = new FirebaseAnswer(newAnswerRef.id, answerText, admin.firestore.Timestamp.now(), userRef.path)
+    newAnswerRef.set(newAnswer);
+    // return answer document in APIAnswer format
+    return newAnswer.toAPIAnswer();
   }
 }
