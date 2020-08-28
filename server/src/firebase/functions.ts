@@ -1,5 +1,5 @@
 import admin from 'firebase-admin';
-import { AID, APIQuestion, QID, UID } from 'src/app.dtos';
+import { AID, APIQuestion, QID, UID, APIAnswer } from 'src/app.dtos';
 import { FirebaseAnswer, FirebaseQuestion, FirestoreQuestionConverter, FirestoreAnswerConverter } from './firebase_objects';
 import db, { AnswerCollectionFromID, DocRef, QuestionCollection } from './model';
 
@@ -22,10 +22,10 @@ export async function getDocumentData(collection: string, document: string): Pro
     })
 }
 
-export async function getFirebaseQuestionsFromIDs(questionIDs: Array<string>): Promise<Array<FirebaseQuestion>> {
+export async function getFirebaseQuestionsFromIDs(questionIDs: Array<QID>): Promise<Array<FirebaseQuestion>> {
     const docList: FirebaseQuestion[] = [];
-    const q = QuestionCollection.where(admin.firestore.FieldPath.documentId(), "in", questionIDs)
-    const docs = await q.withConverter(FirestoreQuestionConverter).get()
+    const questionQuery= QuestionCollection.where(admin.firestore.FieldPath.documentId(), "in", questionIDs)
+    const docs = await questionQuery.withConverter(FirestoreQuestionConverter).get()
     docs.forEach(async function (snapshot) {
         const question: FirebaseQuestion = snapshot.data();
         snapshot.exists ? docList.push(question) : null;
@@ -34,10 +34,10 @@ export async function getFirebaseQuestionsFromIDs(questionIDs: Array<string>): P
     return docList
 }
 
-export async function getAPIQuestionsFromIDs(questionIDs: Array<string>): Promise<Array<APIQuestion>> {
+export async function getAPIQuestionsFromIDs(questionIDs: Array<QID>): Promise<Array<APIQuestion>> {
     const docList = [];
-    const q = QuestionCollection.where(admin.firestore.FieldPath.documentId(), "in", questionIDs)
-    const docs = await q.withConverter(FirestoreQuestionConverter).get()
+    const questionQuery = QuestionCollection.where(admin.firestore.FieldPath.documentId(), "in", questionIDs)
+    const docs = await questionQuery.withConverter(FirestoreQuestionConverter).get()
     docs.forEach(async function (snapshot) {
         const data: FirebaseQuestion = snapshot.data();
         const question: APIQuestion = data.toAPIQuestion();
@@ -53,11 +53,17 @@ export async function getAPIQuestionsFromIDs(questionIDs: Array<string>): Promis
     return docList
 }
 
-export async function getAnswerOfQuestion(questionID: QID, answerID: AID): Promise<FirebaseAnswer> {
-    const answerRef: DocRef = AnswerCollectionFromID(questionID).doc(answerID);
-    const answerData = await answerRef.withConverter(FirestoreAnswerConverter).get()
-    const answer: FirebaseAnswer = answerData.data()
-    return answer;
+export async function getAnswersOfQuestion(questionID: QID, answerIDs: Array<AID>): Promise<Array<APIAnswer>> {
+    // const answerRef: DocRef = AnswerCollectionFromID(questionID).doc(answerID);
+    const answerQuery = AnswerCollectionFromID(questionID).where(admin.firestore.FieldPath.documentId(), "in", answerIDs)
+    const answerData = await answerQuery.withConverter(FirestoreAnswerConverter).get()
+    const answerList: APIAnswer[] = [];
+    answerData.forEach(async function (snapshot) {
+        const data: FirebaseAnswer = snapshot.data();
+        const question: APIAnswer = data.toAPIAnswer();
+        snapshot.exists ? answerList.push(question) : null;
+    })
+    return answerList;
 }
 
 ///     Helper functions     

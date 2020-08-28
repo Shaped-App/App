@@ -4,8 +4,8 @@ import admin from 'firebase-admin';
 import * as Dtos from './app.dtos';
 import { APIAnswer } from './app.dtos';
 import { FirebaseAnswer, FirebaseQuestion } from './firebase/firebase_objects';
-import { authGetUser, getAPIQuestionsFromIDs, getAnswerOfQuestion } from './firebase/functions';
-import { DocRef, QuestionCollection, UserCollection, AnswerCollection } from './firebase/model';
+import { authGetUser, getAPIQuestionsFromIDs, getAnswersOfQuestion } from './firebase/functions';
+import { AnswerCollection, DocRef, QuestionCollection, UserCollection } from './firebase/model';
 
 
 @Injectable()
@@ -42,20 +42,9 @@ export class BrowseService {
   async getBrowseAnswer(body: Dtos.getAnswerInDto): Promise<Dtos.getAnswerOutDto> {
     const questionID: string = body.qid;
     const answerIDs: string[] = body.aids;
-    // TODO: figure out if firebase can query by list of ids
-    const answerFirebase: FirebaseAnswer = await getAnswerOfQuestion(questionID, answerIDs[0]);
-    const ts: admin.firestore.Timestamp = answerFirebase.created;
-    // TODO: use class conversion
-    const answerResponse: APIAnswer[] = [{
-      qid: questionID,
-      aid: answerIDs[0],
-      answer: answerFirebase.answer,
-      created: ts.toDate().toJSON(),
-      creator: answerFirebase.creator
-    }]
-
+    const answerFirebase = await getAnswersOfQuestion(questionID, answerIDs);
     return {
-      answers: answerResponse
+      answers: answerFirebase
     };
   }
 
