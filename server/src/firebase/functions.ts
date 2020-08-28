@@ -24,7 +24,7 @@ export async function getDocumentData(collection: string, document: string): Pro
 
 export async function getFirebaseQuestionsFromIDs(questionIDs: Array<QID>): Promise<Array<FirebaseQuestion>> {
     const docList: FirebaseQuestion[] = [];
-    const questionQuery= QuestionCollection.where(admin.firestore.FieldPath.documentId(), "in", questionIDs)
+    const questionQuery = QuestionCollection.where(admin.firestore.FieldPath.documentId(), "in", questionIDs)
     const docs = await questionQuery.withConverter(FirestoreQuestionConverter).get()
     docs.forEach(async function (snapshot) {
         const question: FirebaseQuestion = snapshot.data();
@@ -35,12 +35,14 @@ export async function getFirebaseQuestionsFromIDs(questionIDs: Array<QID>): Prom
 }
 
 export async function getAPIQuestionsFromIDs(questionIDs: Array<QID>): Promise<Array<APIQuestion>> {
-    const docList = [];
+    const docList: APIQuestion[] = [];
     const questionQuery = QuestionCollection.where(admin.firestore.FieldPath.documentId(), "in", questionIDs)
     const docs = await questionQuery.withConverter(FirestoreQuestionConverter).get()
     docs.forEach(async function (snapshot) {
         const data: FirebaseQuestion = snapshot.data();
-        const question: APIQuestion = data.toAPIQuestion();
+        // data.qid = snapshot.id;
+        // const question: APIQuestion = data.toAPIQuestion();
+        const question: APIQuestion = data.toAPIQuestion(snapshot.id);
         snapshot.exists ? docList.push(question) : null;
     })
     // This loop just adds userAnswered
@@ -60,10 +62,32 @@ export async function getAnswersOfQuestion(questionID: QID, answerIDs: Array<AID
     const answerList: APIAnswer[] = [];
     answerData.forEach(async function (snapshot) {
         const data: FirebaseAnswer = snapshot.data();
-        const question: APIAnswer = data.toAPIAnswer();
+        const question: APIAnswer = data.toAPIAnswer(questionID, snapshot.id);
         snapshot.exists ? answerList.push(question) : null;
     })
     return answerList;
+}
+
+export async function makeAnswer(creator: UID, question: QID, answerText: string): Promise<APIAnswer> {
+    // TODO: make sure question document exists
+    // TODO: make "answer" collection not a special string
+    // make answer document
+    const newAnswerRef: DocRef = AnswerCollectionFromID(question).doc();
+    const newAnswer = new FirebaseAnswer(answerText, admin.firestore.Timestamp.now(), creator)
+    newAnswerRef.set(newAnswer);
+    // return answer document in APIAnswer format
+    return newAnswer.toAPIAnswer(question, newAnswerRef.id);
+}
+
+export async function makeQuestion(questionText: string): Promise<APIQuestion> {
+    const newQuestionRef: DocRef = QuestionCollection.doc();
+    const newData: FirebaseQuestion = new FirebaseQuestion(
+        questionText,
+        admin.firestore.Timestamp.now(),
+        await authGetUser(),
+    );
+    newQuestionRef.set(newData);
+    return newData.toAPIQuestion(newQuestionRef.id);
 }
 
 ///     Helper functions     

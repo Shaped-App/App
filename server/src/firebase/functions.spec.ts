@@ -1,9 +1,7 @@
 import {
     getDocuments,
     getDocumentData,
-    getCollectionData
 } from './functions';
-import db from './model';
 
 describe('Firebase functions tests', () => {
   describe('Testing getDocuments', () => {
@@ -22,10 +20,5 @@ describe('Firebase functions tests', () => {
     });
   });
 
-  describe('Testing getCollectionData', () => {
-    it('Should find { doc_field1: doc_value1, doc_field2: doc_value2, doc_field3: doc_value3 }', async() => {
-      expect(await getCollectionData('test')).toMatchObject({ 'doc_field1': 'doc_value1', 'doc_field2': 'doc_value2', 'doc_field3': 'doc_value3' })
-    })
-  })
 });
   

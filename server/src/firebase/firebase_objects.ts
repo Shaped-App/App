@@ -9,23 +9,25 @@ type Time = admin.firestore.Timestamp;
 
 // Firebase question
 export class FirebaseQuestion {
+  // qid: QID; //TODO: maybe optional? since writing to firestore with id is weird
   question: string;
   created: Time;
   creator: UID;
-  qid: QID; //TODO: maybe optional? since writing to firestore with id is weird
-  constructor(question: string, created: Time, creator: UID, qid: QID) {
+  // constructor(qid: QID, question: string, created: Time, creator: UID) {
+  constructor(question: string, created: Time, creator: UID) {
+    // this.qid = qid;
     this.question = question;
     this.created = created;
     this.creator = creator;
-    this.qid = qid;
   }
-  toAPIQuestion(): APIQuestion {
+  toAPIQuestion(qid: QID): APIQuestion {
     const question: APIQuestion = {
+      // qid: this.qid,
+      qid: qid,
       question: this.question,
       created: this.created.toDate().toISOString(),
       userAnswered: false,  //TODO: change to proper behavior
       creator: this.creator,
-      qid: this.qid,
     }
     return question
   }
@@ -40,27 +42,28 @@ export const FirestoreQuestionConverter: FirebaseFirestore.FirestoreDataConverte
     };
   },
   fromFirestore(snapshot: FirebaseFirestore.DocumentData): FirebaseQuestion {
-    // const data = snapshot.data();
-    return new FirebaseQuestion(snapshot.question, snapshot.created, snapshot.creator, snapshot.id);
+    console.log("stuff: ", snapshot);
+    const data = snapshot;
+    return new FirebaseQuestion(data.question, data.created, data.creator);
   },
 };
 
 export class FirebaseAnswer {
-  qid: QID;
-  aid: AID;
+  // qid: QID;
+  // aid: AID;
   answer: string;
   created: Time;
   creator: UID;
-  constructor(aid: AID, answer: string, created: Time, creator: UID) {
-    this.aid = aid;
+  constructor(answer: string, created: Time, creator: UID) {
+    // this.aid = aid;
     this.answer = answer;
     this.created = created;
     this.creator = creator;
   }
-  toAPIAnswer(): APIAnswer {
+  toAPIAnswer(qid: QID, aid: AID): APIAnswer {
     const answer: APIAnswer = {
-      qid: this.qid,
-      aid: this.aid,
+      qid: qid,
+      aid: aid,
       answer: this.answer,
       created: this.created.toDate().toISOString(),
       creator: this.creator
@@ -78,6 +81,6 @@ export const FirestoreAnswerConverter: FirebaseFirestore.FirestoreDataConverter<
     };
   },
   fromFirestore(snapshot: FirebaseFirestore.DocumentData): FirebaseAnswer {
-    return new FirebaseAnswer(snapshot.id, snapshot.answer, snapshot.created, snapshot.creator);
+    return new FirebaseAnswer(snapshot.answer, snapshot.created, snapshot.creator);
   },
 };

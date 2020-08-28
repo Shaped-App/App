@@ -4,7 +4,7 @@ import admin from 'firebase-admin';
 import * as Dtos from './app.dtos';
 import { APIAnswer } from './app.dtos';
 import { FirebaseAnswer, FirebaseQuestion } from './firebase/firebase_objects';
-import { authGetUser, getAPIQuestionsFromIDs, getAnswersOfQuestion } from './firebase/functions';
+import { authGetUser, getAPIQuestionsFromIDs, getAnswersOfQuestion, makeAnswer } from './firebase/functions';
 import { AnswerCollection, DocRef, QuestionCollection, UserCollection } from './firebase/model';
 
 
@@ -48,6 +48,19 @@ export class BrowseService {
     };
   }
 
+  async postBrowseAnswer(body: Dtos.postAnswerInDto): Promise<Dtos.postAnswerOutDto> {
+    const userID: Dtos.UID = await authGetUser();
+    const questionID: Dtos.QID = body.qid;
+    const answerText: string = body.answer;
+
+    //?  using client-submitted time or server made time?
+    // const time: Dtos.Time = body.time;
+    // const questionRef = QuestionCollection.doc(questionID);
+    // const userRef = UserCollection.doc(userID);
+    return {
+      answer: await makeAnswer(userID, questionID, answerText)
+    }
+  }
 
   postBrowseResponse(body: Dtos.postResponseInDto): Dtos.postResponseOutDto {
     return { qid: "hello", aid: "goodbye", time: "today", responsesLeft: 5 };
@@ -60,42 +73,14 @@ export class BrowseService {
   async makeQuestion(questionText: string): Promise<DocRef> {
     const newQuestionRef: DocRef = QuestionCollection.doc();
     const newData: FirebaseQuestion = new FirebaseQuestion( 
+      // newQuestionRef.id,
       questionText,
-      // created: FieldValue.serverTimestamp(),
       admin.firestore.Timestamp.now(),
       await authGetUser(),
-      newQuestionRef.id,
       );
     newQuestionRef.set(newData);
     return newQuestionRef;
   }
 
 
-  // async postBrowseAnswer(userID: string, questionID: string, answerText: string, time: string) : Promise<DocRef> {
-  async postBrowseAnswer(body: Dtos.postAnswerInDto): Promise<Dtos.postAnswerOutDto> {
-    const userID: Dtos.UID = await authGetUser();
-    const questionID: Dtos.QID = body.qid;
-    const answerText: string = body.answer;
-
-    //?  using client-submitted time or server made time?
-    const time: Dtos.Time = body.time;
-
-    const questionRef = QuestionCollection.doc(questionID);
-    const userRef = UserCollection.doc(userID);
-    // const answerResponse: APIAnswer = this.makeAnswer(userRef, questionRef, answerText)
-    return {
-      answer: await this.makeAnswer(userRef, questionRef, answerText)
-    }
-  }
-
-  async makeAnswer(userRef: DocRef, questionRef: DocRef, answerText: string): Promise<APIAnswer> {
-    // TODO: make sure question document exists
-    // TODO: make "answer" collection not a special string
-    // make answer document
-    const newAnswerRef: DocRef = AnswerCollection(questionRef).doc();
-    const newAnswer = new FirebaseAnswer(newAnswerRef.id, answerText, admin.firestore.Timestamp.now(), userRef.path)
-    newAnswerRef.set(newAnswer);
-    // return answer document in APIAnswer format
-    return newAnswer.toAPIAnswer();
-  }
 }
