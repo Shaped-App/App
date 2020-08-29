@@ -1,26 +1,9 @@
 import admin from 'firebase-admin';
 import { AID, APIQuestion, QID, UID, APIAnswer, postResponseOutDto } from 'src/app.dtos';
 import { FirebaseAnswer, FirebaseQuestion, FirestoreQuestionConverter, FirestoreAnswerConverter } from './firebase_objects';
-import db, { AnswerCollectionFromID, DocRef, QuestionCollection } from './model';
+import { AnswerCollectionFromID, DocRef, QuestionCollection } from './model';
 
 
-
-export async function getDocuments(collection: string): Promise<string[]> {
-    const documentList: string[] = [];
-    await db.collection(collection).get().then((querySnapshot) => {
-        querySnapshot.forEach(function (doc) {
-            // doc.data() is never undefined for query doc snapshots
-            documentList.push(doc.id)
-        });
-    });
-    return documentList;
-}
-
-export async function getDocumentData(collection: string, document: string): Promise<object> {
-    return db.collection(collection).doc(document).get().then((doc) => {
-        return doc.exists ? doc.data() : null;
-    })
-}
 
 export async function getFirebaseQuestionsFromIDs(questionIDs: Array<QID>): Promise<Array<FirebaseQuestion>> {
     const docList: FirebaseQuestion[] = [];

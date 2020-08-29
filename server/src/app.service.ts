@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as Dtos from './app.dtos';
 import { authGetUser, getAnswersOfQuestion, getAPIQuestionsFromIDs, makeAnswer, postResponseToAnswer } from './firebase/functions';
-import admin from 'firebase-admin';
 
 
 @Injectable()
