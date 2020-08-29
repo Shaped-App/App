@@ -1,11 +1,6 @@
 import { Injectable } from '@nestjs/common';
-//TODO: move
-import admin from 'firebase-admin';
 import * as Dtos from './app.dtos';
-import { APIAnswer } from './app.dtos';
-import { FirebaseAnswer, FirebaseQuestion } from './firebase/firebase_objects';
-import { authGetUser, getAPIQuestionsFromIDs, getAnswersOfQuestion, makeAnswer } from './firebase/functions';
-import { AnswerCollection, DocRef, QuestionCollection, UserCollection } from './firebase/model';
+import { authGetUser, getAnswersOfQuestion, getAPIQuestionsFromIDs, makeAnswer } from './firebase/functions';
 
 
 @Injectable()
@@ -20,7 +15,11 @@ export class BrowseService {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async getBrowseQIDsFromTime(time: Dtos.Time) : Promise<Array<Dtos.QID>> {
     // const qids = await QuestionCollection.orderBy("created").limit(10).get()
-    return ["aGixGhyA1S5LZYyXXCcE", "7ahZDKrDfQEhDZO5Br9R"]
+    return ["aGixGhyA1S5LZYyXXCcE", "7ahZDKrDfQEhDZO5Br9R"];
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async getAnswerIDsForQuestion(questionID: Dtos.QID, time: Dtos.Time) : Promise<Array<Dtos.QID>> {
+    return ["9GW3CScIcvl9ZEuwCxEb"];
   }
   async getBrowseQuestionList(body: Dtos.getQuestionListInDto): Promise<Dtos.getQuestionListOutDto> {
     const qids = await this.getBrowseQIDsFromTime(body.time)
@@ -36,7 +35,10 @@ export class BrowseService {
   }
 
   async getBrowseAnswerList(body: Dtos.getAnswerListInDto): Promise<Dtos.getAnswerListOutDto> {
-    return { aids: [{ qid: "hello", aid: "goodbye", answer: "wowee", created: "today" }] };
+    const aids = await this.getAnswerIDsForQuestion(body.qid, body.time);
+    return {
+      aids: await getAnswersOfQuestion(body.qid, aids)
+    }
   }
 
   async getBrowseAnswer(body: Dtos.getAnswerInDto): Promise<Dtos.getAnswerOutDto> {
@@ -70,17 +72,6 @@ export class BrowseService {
     return { responsesLeft: 5 };
   }
 
-  async makeQuestion(questionText: string): Promise<DocRef> {
-    const newQuestionRef: DocRef = QuestionCollection.doc();
-    const newData: FirebaseQuestion = new FirebaseQuestion( 
-      // newQuestionRef.id,
-      questionText,
-      admin.firestore.Timestamp.now(),
-      await authGetUser(),
-      );
-    newQuestionRef.set(newData);
-    return newQuestionRef;
-  }
 
 
 }

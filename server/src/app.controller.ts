@@ -51,6 +51,12 @@ export class AppController {
     // return this.browseService.getBrowseAnswer(getAnswerDTO.qid, getAnswerDTO.aids);
   }
 
+  @Get(getApi('/browse/answer-list/get'))
+  getBrowseAnswerList(@Body() body: Dtos.getAnswerListInDto): Promise<Dtos.getAnswerListOutDto> {
+    return this.browseService.getBrowseAnswerList(body);
+    // return this.browseService.getBrowseAnswer(getAnswerDTO.qid, getAnswerDTO.aids);
+  }
+
   @Post(getApi('/browse/answer/post'))
   postBrowseAnswer(@Body() body: Dtos.postAnswerInDto): Promise<Dtos.postAnswerOutDto> {
     return this.browseService.postBrowseAnswer(body);
