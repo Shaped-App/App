@@ -35,14 +35,10 @@ export class AppController {
   //   return this.browseService.makeQuestion(myDto.questionText);
   // }
 
-  @Post(getApi('/browse/response/post'))
-  async postBrowseResponse(@Body() body: Dtos.postResponseInDto): Promise<Dtos.postResponseOutDto> {
-    return this.browseService.postBrowseResponse(body);
-  }
-
-  @Get(getApi('/browse/response-limit/get'))
-  async getBrowseResponseLimit(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
-    return this.browseService.getBrowseResponseLimit(body);
+  @Get(getApi('/browse/answer-list/get'))
+  getBrowseAnswerList(@Body() body: Dtos.getAnswerListInDto): Promise<Dtos.getAnswerListOutDto> {
+    return this.browseService.getBrowseAnswerList(body);
+    // return this.browseService.getBrowseAnswer(getAnswerDTO.qid, getAnswerDTO.aids);
   }
 
   @Get(getApi('/browse/answer/get'))
@@ -51,15 +47,19 @@ export class AppController {
     // return this.browseService.getBrowseAnswer(getAnswerDTO.qid, getAnswerDTO.aids);
   }
 
-  @Get(getApi('/browse/answer-list/get'))
-  getBrowseAnswerList(@Body() body: Dtos.getAnswerListInDto): Promise<Dtos.getAnswerListOutDto> {
-    return this.browseService.getBrowseAnswerList(body);
-    // return this.browseService.getBrowseAnswer(getAnswerDTO.qid, getAnswerDTO.aids);
-  }
-
   @Post(getApi('/browse/answer/post'))
   postBrowseAnswer(@Body() body: Dtos.postAnswerInDto): Promise<Dtos.postAnswerOutDto> {
     return this.browseService.postBrowseAnswer(body);
     // return this.browseService.postBrowseAnswer(userID, body.qid, body.answer, body.time);
+  }
+
+  @Post(getApi('/browse/response/post'))
+  async postBrowseResponse(@Body() body: Dtos.postResponseInDto): Promise<Dtos.postResponseOutDto> {
+    return this.browseService.postBrowseResponse(body);
+  }
+
+  @Get(getApi('/browse/response-limit/get'))
+  async getBrowseResponseLimit(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
+    return this.browseService.getBrowseResponseLimit(body);
   }
 }

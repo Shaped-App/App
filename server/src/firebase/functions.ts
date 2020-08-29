@@ -1,5 +1,5 @@
 import admin from 'firebase-admin';
-import { AID, APIQuestion, QID, UID, APIAnswer } from 'src/app.dtos';
+import { AID, APIQuestion, QID, UID, APIAnswer, postResponseOutDto } from 'src/app.dtos';
 import { FirebaseAnswer, FirebaseQuestion, FirestoreQuestionConverter, FirestoreAnswerConverter } from './firebase_objects';
 import db, { AnswerCollectionFromID, DocRef, QuestionCollection } from './model';
 
@@ -88,6 +88,15 @@ export async function makeQuestion(questionText: string): Promise<APIQuestion> {
     );
     newQuestionRef.set(newData);
     return newData.toAPIQuestion(newQuestionRef.id);
+}
+
+export async function postResponseToAnswer(qid: QID, aid: AID): Promise<postResponseOutDto> {
+    return {
+        qid: qid,
+        aid: aid,
+        time: admin.firestore.Timestamp.now().toDate().toISOString(),
+        responsesLeft: 5
+    };
 }
 
 ///     Helper functions     
