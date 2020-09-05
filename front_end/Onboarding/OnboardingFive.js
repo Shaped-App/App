@@ -22,6 +22,7 @@ export default class OnboardingFive extends Component {
             distance: 0,
             upperAgeBound: 0,
             lowerAgeBound: 0,
+            done: false,
             navigation: props.navigation
         };
         this.onNextPress = this.onNextPress.bind(this);

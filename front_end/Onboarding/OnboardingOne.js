@@ -7,6 +7,8 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
+import ImagePicker from 'react-native-image-crop-picker';
+
 import styles from '../Static/main_style.js';
 import onboardingStyles from '../Static/onboarding_style.js';
 
@@ -25,14 +27,28 @@ export default class OnboardingOne extends Component {
     }
 
     onCameraRollPress() {
-        console.log('camera roll button pressed');
+        ImagePicker.openPicker({
+            width: 300,
+            height: 400,
+            cropping: true
+        }).then(image => {
+            // send photo to backend
+            console.log(image);
+        });
         this.state.navigation.navigate(onboardingTwoA,{
             navigation: this.state.navigation,
         });
     }
 
     onTakePhotoPress() {
-        console.log('camera roll button pressed');
+        ImagePicker.openCamera({
+            width: 300,
+            height: 400,
+            cropping: true,
+        }).then(image => {
+            // send photo to backend
+            console.log(image);
+        });
         this.state.navigation.navigate(onboardingTwoB,{
             navigation: this.state.navigation,
         });

@@ -35,10 +35,7 @@ export default class OnboardingFour extends Component {
         this.setZipCode = this.setZipCode.bind(this);
 
         this.state.navigation.setOptions({headerRight: () => (
-            <DoneButton active={true} onPress={this.onDonePress}/>
-            // DEBUGGING THIS. when passing in a bool as props, even when updating the state here, it doesn't rerender
-            // the done button with the appropriate changes. Therefore I'll leave it like this for now, but this should
-            // be changed down the road if we can make it so the user can only continue after filling everything in.
+            <DoneButton active={this.state.done} onPress={this.onDonePress}/>
         )})
     }
 
@@ -49,11 +46,15 @@ export default class OnboardingFour extends Component {
     }
 
     checkDone() {
-        this.state.name !== "" && this.state.birthday !== Date() && this.state.zipCode !== "" ? this.setState({done: true}) : this.setState({done: false});
+        this.setState({done: this.state.name !== "" && this.state.birthday !== Date() && this.state.zipCode !== ""})
+        this.state.navigation.setOptions({headerRight: () => (
+            <DoneButton active={this.state.done} onPress={this.onDonePress}/>
+        )})
     }
 
     setGender(input) {
         this.setState({gender: input});
+        this.checkDone();
     }
 
     setName(value) {

@@ -11,7 +11,7 @@ import {
 import styles from '../Static/main_style.js';
 import onboardingStyles from '../Static/onboarding_style.js';
 
-import {onboardingOne, signIn} from './OnboardingNav';
+import {onboardingFour, signIn} from './OnboardingNav';
 import {OnboardingInput} from './OnboardingComponents';
 
 export default class SignUp extends Component {
@@ -30,7 +30,7 @@ export default class SignUp extends Component {
     }
 
     onSignUpPress() {
-        this.state.navigation.navigate(onboardingOne,{
+        this.state.navigation.navigate(onboardingFour,{
             navigation: this.state.navigation,
         });
     }
