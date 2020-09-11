@@ -1,0 +1,19 @@
+﻿,type,gettable,user_controlled_publicity,user_changeable,needed_for_user_init,notes
+email              ,text,TRUE,FALSE,FALSE,TRUE,
+phone_number       ,number,TRUE,FALSE,FALSE,TRUE,
+password           ,text?,FALSE,FALSE,FALSE,TRUE,should be hashed in transit? Or some weird firebase auth stuff
+profile_pic        ,image,TRUE,FALSE,FALSE,TRUE,
+gender             ,text?,TRUE,FALSE,FALSE,TRUE,text or bool?
+first_name,text,TRUE,FALSE,FALSE,TRUE,
+full_name,text,TRUE,FALSE,FALSE,TRUE,
+birthday           ,timestamp,TRUE,FALSE,FALSE,TRUE,
+zipcode            ,number,TRUE,FALSE,TRUE,TRUE,"do we need better location? This forces user to update location, we could just request permission"
+looking_for_friend,bool,TRUE,FALSE,TRUE,TRUE,"are these two opposite, or both able to be true"
+looking_for_relationship,bool,TRUE,FALSE,TRUE,TRUE,
+mile_distance      ,number,TRUE,FALSE,TRUE,TRUE,
+age_low            ,number,TRUE,FALSE,TRUE,TRUE,
+age_high           ,number,TRUE,FALSE,TRUE,TRUE,
+about              ,text,TRUE,FALSE,TRUE,FALSE,
+bible_verse        ,text,TRUE,FALSE,TRUE,FALSE,
+interests          ,text[],TRUE,TRUE,TRUE,FALSE,
+recent_activity    ,post/text?[],TRUE,TRUE,TRUE,FALSE,
