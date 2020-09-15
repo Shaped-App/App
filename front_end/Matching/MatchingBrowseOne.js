@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import styles from '../Static/main_style.js';
+import { getQuestionList } from '../Static/config.js';
 import QuestionList from '../Matching/QuestionList';
 
 export default class BrowseOneScreen extends Component {
@@ -16,6 +17,21 @@ export default class BrowseOneScreen extends Component {
       questions: [],
       navigation: props.navigation,
     };
+    this.fetchQuestionList = this.fetchQuestionList.bind(this);
+    this.setQuestionList = this.setQuestionList.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchQuestionList();
+  }
+
+  setQuestionList(data){
+    console.log(data);
+    this.setState({questions: data});
+  }
+
+  fetchQuestionList(){
+    getQuestionList(this.setQuestionList);
   }
 
   render() {
