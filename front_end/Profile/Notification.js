@@ -14,6 +14,7 @@ import pro_styles from '../Static/profile_style';
 export default class Notification extends Component {
     constructor(props) {
         super(props);
+        //TODO: add get/post request
         this.state = {
             navigation: props.navigation,
             allow: true,

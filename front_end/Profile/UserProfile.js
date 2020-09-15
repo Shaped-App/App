@@ -27,7 +27,7 @@ export default class UserProfile extends Component {
             occupation: "",
             about: "",
             verse: "",
-            interests: ["hello", "skateboarding", "snowboarding", "sleeping", "saxophone"],
+            interests: [],
             interestEnabled: true,
             activities: [],
             activityEnabled: true,
