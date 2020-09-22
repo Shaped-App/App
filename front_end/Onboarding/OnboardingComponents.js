@@ -72,6 +72,7 @@ export class OnboardingInput extends Component {
                   placeholder={this.state.placeholder}
                   onChangeText={value => this.props.changeText(value)}
                   multiline={false}
+                  secureTextEntry={this.props.secureTextEntry}
               />
           </View>
         );

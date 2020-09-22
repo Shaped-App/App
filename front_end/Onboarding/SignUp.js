@@ -8,6 +8,8 @@ import {
     Image
 } from 'react-native';
 
+import auth from '@react-native-firebase/auth';
+
 import styles from '../Static/main_style.js';
 import onboardingStyles from '../Static/onboarding_style.js';
 
@@ -25,11 +27,29 @@ export default class SignUp extends Component {
         };
         this.onSignUpPress = this.onSignUpPress.bind(this);
         this.setEmail = this.setEmail.bind(this);
+        this.setPassword = this.setPassword.bind(this);
         this.setPhoneNumber = this.setPhoneNumber.bind(this);
         this.onSignInPress = this.onSignInPress.bind(this);
     }
 
     onSignUpPress() {
+        auth()
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then(() => {
+              console.log('User account created & signed in!');
+            })
+            .catch(error => {
+              if (error.code === 'auth/email-already-in-use') {
+                console.log('That email address is already in use!');
+              }
+
+              if (error.code === 'auth/invalid-email') {
+                console.log('That email address is invalid!');
+              }
+
+              console.error(error);
+        });
+        // TODO: send other vars to the backend
         this.state.navigation.navigate(onboardingFour,{
             navigation: this.state.navigation,
         });
@@ -60,8 +80,8 @@ export default class SignUp extends Component {
                     <Text style={{fontSize: 40, paddingBottom: 30}}>Sign Up</Text>
                     <OnboardingInput text={"Email"} placeholder={"example@email.com"} changeText={this.setEmail}/>
                     <OnboardingInput text={"Phone Number"} placeholder={"1234567890"} changeText={this.setPhoneNumber}/>
-                    <OnboardingInput text={"Password"} placeholder={"Start typing..."} changeText={this.setPassword}/>
-                    <OnboardingInput text={"Confirm Password"} placeholder={"Start typing..."} changeText={this.setPassword}/>
+                    <OnboardingInput text={"Password"} placeholder={"Start typing..."} changeText={this.setPassword} secureTextEntry={true}/>
+                    <OnboardingInput text={"Confirm Password"} placeholder={"Start typing..."} changeText={this.setPassword} secureTextEntry={true}/>
                     <TouchableOpacity style={[onboardingStyles.button, {margin: 30, width: 200}]} onPress={this.onSignUpPress}>
                         <Text style={styles.text__header}>Sign Up</Text>
                     </TouchableOpacity>

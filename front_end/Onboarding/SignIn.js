@@ -29,6 +29,22 @@ export default class SignUp extends Component {
     }
 
     onSignInPress() {
+        auth()
+            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then(() => {
+              console.log('User account signed in!');
+            })
+            .catch(error => {
+              if (error.code === 'auth/email-already-in-use') {
+                console.log('That email address is already in use!');
+              }
+
+              if (error.code === 'auth/invalid-email') {
+                console.log('That email address is invalid!');
+              }
+
+              console.error(error);
+        });
         this.state.navigation.navigate(navBar,{
             navigation: this.state.navigation,
         });
@@ -54,7 +70,7 @@ export default class SignUp extends Component {
                 <View style={[styles.content__container, styles.content__centering, {width: 300}]}>
                     <Text style={{fontSize: 40, paddingBottom: 30}}>Sign In</Text>
                     <OnboardingInput text={"Email or phone number"} placeholder={"Start typing..."} changeText={this.setEmail}/>
-                    <OnboardingInput text={"Password"} placeholder={"Start typing..."} changeText={this.setPassword}/>
+                    <OnboardingInput text={"Password"} placeholder={"Start typing..."} changeText={this.setPassword} secureTextEntry={true}/>
                     <TouchableOpacity style={[onboardingStyles.button, {margin: 30, width: 200}]} onPress={this.onSignInPress}>
                         <Text style={styles.text__header}>Sign In</Text>
                     </TouchableOpacity>

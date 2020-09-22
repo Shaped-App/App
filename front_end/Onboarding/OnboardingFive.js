@@ -25,6 +25,7 @@ export default class OnboardingFive extends Component {
             done: false,
             navigation: props.navigation
         };
+        this.checkDone = this.checkDone.bind(this);
         this.onNextPress = this.onNextPress.bind(this);
         this.setFriendship = this.setFriendship.bind(this);
         this.setRelationship = this.setRelationship.bind(this);
@@ -33,12 +34,18 @@ export default class OnboardingFive extends Component {
         this.setUpperAgeBound = this.setUpperAgeBound.bind(this);
     }
 
+    checkDone() {
+        this.setState({done: this.state.friendship || this.state.relationship});
+    }
+
     setFriendship(input) {
         this.setState({friendship: input});
+        this.checkDone();
     }
 
     setRelationship(input) {
         this.setState({relationship: input});
+        this.checkDone();
     }
 
     setDistance(input) {
@@ -64,8 +71,8 @@ export default class OnboardingFive extends Component {
                     <InterestPicker friendship={this.state.friendship} relationship={this.state.relationship} setFriendship={this.setFriendship} setRelationship={this.setRelationship}/>
                     <DistancePicker setDistance={this.setDistance}/>
                     <AgeBoundPicker lowerAgeArray={[18, 19, 20]} upperAgeArray={[20, 21, 22]} setLowerAgeBound={this.setLowerAgeBound} setUpperAgeBound={this.setUpperAgeBound}/>
-                    <TouchableOpacity style={[onboardingStyles.button, {margin: 30, height: 80}]} onPress={this.onNextPress}>
-                        <Text style={{color: 'black', fontSize: 20, fontWeight: '600'}}>Save</Text>
+                    <TouchableOpacity style={[onboardingStyles.button, {margin: 30, height: 80}]} onPress={this.onNextPress} disabled={!this.state.done}>
+                        <Text style={[this.state.done ? {color: 'black'} : {color: 'grey'}, {fontSize: 20, fontWeight: '600'}]}>Save</Text>
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>
