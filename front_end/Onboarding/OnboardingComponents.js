@@ -39,7 +39,7 @@ export class GenderPicker extends Component {
         return (
             <View style={onboardingStyles.container}>
                 <Text style={{padding: 10}}>I identify as</Text>
-                <View style={{flexDirection:'row', justifyContent: 'space-between', paddingLeft: 30, paddingRight: 30}}>
+                <View style={[this.props.gender ? true : true, {flexDirection:'row', justifyContent: 'space-between', paddingLeft: 30, paddingRight: 30}]}>
                     <TouchableOpacity style={[styles.button, this.props.gender === "female" ? {opacity: 1} : {opacity: .6}]}
                                       onPress={() => this.props.setGender("female")}>
                         <Text style={styles.text__header}>Female</Text>

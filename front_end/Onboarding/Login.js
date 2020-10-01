@@ -11,7 +11,6 @@ import auth from '@react-native-firebase/auth';
 
 import styles from '../Static/main_style.js';
 import onboardingStyles from '../Static/onboarding_style.js';
-import LoginTest from './test.js';
 
 import {Logo} from './OnboardingComponents';
 import {signIn, signUp, navBar} from './OnboardingNav';
@@ -51,7 +50,6 @@ export default class Login extends Component {
             <SafeAreaView style={onboardingStyles.background}>
                 <View style={[styles.content__container, styles.content__centering]}>
                     <Logo/>
-                    {LoginTest}
                     <TouchableOpacity style={[onboardingStyles.button, {margin: 20, height: 70}]} onPress={this.onSignUpPress}>
                         <Text style={onboardingStyles.large__button}>Sign Up</Text>
                     </TouchableOpacity>

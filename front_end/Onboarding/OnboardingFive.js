@@ -35,7 +35,9 @@ export default class OnboardingFive extends Component {
     }
 
     checkDone() {
-        this.setState({done: this.state.friendship || this.state.relationship});
+        setTimeout(() => {
+            this.setState({done: this.state.friendship || this.state.relationship});
+        }, 0); // unsure why, but this is the only way it will update immediately
     }
 
     setFriendship(input) {

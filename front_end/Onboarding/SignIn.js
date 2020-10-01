@@ -8,6 +8,8 @@ import {
     Image
 } from 'react-native';
 
+import auth from '@react-native-firebase/auth';
+
 import styles from '../Static/main_style.js';
 import onboardingStyles from '../Static/onboarding_style.js';
 
@@ -20,42 +22,50 @@ export default class SignUp extends Component {
         this.state = {
             email: "",
             password: "",
+            done: false,
             navigation: props.navigation
         };
+        this.checkDone = this.checkDone.bind(this);
         this.onSignInPress = this.onSignInPress.bind(this);
         this.setEmail = this.setEmail.bind(this);
         this.setPassword = this.setPassword.bind(this);
         this.onSignUpPress = this.onSignUpPress.bind(this);
     }
 
+    checkDone() {
+        this.setState({done: this.state.email && this.state.password});
+    }
+
     onSignInPress() {
         auth()
-            .createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .signInWithEmailAndPassword(this.state.email, this.state.password)
             .then(() => {
-              console.log('User account signed in!');
+                this.state.navigation.navigate(navBar,{
+                    navigation: this.state.navigation,
+                });
             })
             .catch(error => {
-              if (error.code === 'auth/email-already-in-use') {
-                console.log('That email address is already in use!');
-              }
+                if (error.code === 'auth/email-already-in-use') {
+                  console.log('That email address is already in use!');
+                }
 
-              if (error.code === 'auth/invalid-email') {
-                console.log('That email address is invalid!');
-              }
+                if (error.code === 'auth/invalid-email') {
+                  console.log('That email address is invalid!');
+                }
 
-              console.error(error);
+                console.error(error);
         });
-        this.state.navigation.navigate(navBar,{
-            navigation: this.state.navigation,
-        });
+
     }
 
     setEmail(input) {
         this.setState({email: input});
+        this.checkDone();
     }
 
     setPassword(input) {
         this.setState({password: input});
+        this.checkDone();
     }
 
     onSignUpPress() {
@@ -69,10 +79,10 @@ export default class SignUp extends Component {
             <SafeAreaView style={onboardingStyles.background}>
                 <View style={[styles.content__container, styles.content__centering, {width: 300}]}>
                     <Text style={{fontSize: 40, paddingBottom: 30}}>Sign In</Text>
-                    <OnboardingInput text={"Email or phone number"} placeholder={"Start typing..."} changeText={this.setEmail}/>
+                    <OnboardingInput text={"Email"} placeholder={"Start typing..."} changeText={this.setEmail}/>
                     <OnboardingInput text={"Password"} placeholder={"Start typing..."} changeText={this.setPassword} secureTextEntry={true}/>
-                    <TouchableOpacity style={[onboardingStyles.button, {margin: 30, width: 200}]} onPress={this.onSignInPress}>
-                        <Text style={styles.text__header}>Sign In</Text>
+                    <TouchableOpacity style={[onboardingStyles.button, {margin: 30, width: 200}]} onPress={this.onSignInPress} disabled={!this.state.done}>
+                        <Text style={[styles.text__header, this.state.done ? {color: 'black'} : {color: 'grey'}]}>Sign In</Text>
                     </TouchableOpacity>
                     <View style={{flexDirection:'row', justifyContent: 'space-between'}}>
                         <Text style={{padding: 10, fontSize: 16}}>Don't have an account?</Text>

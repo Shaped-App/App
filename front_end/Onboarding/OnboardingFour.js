@@ -53,8 +53,10 @@ export default class OnboardingFour extends Component {
     }
 
     setGender(input) {
-        this.setState({gender: input});
-        this.checkDone();
+        setTimeout(() => {
+            this.setState({gender: input});
+            this.checkDone();
+        }, 0);
     }
 
     setName(value) {
