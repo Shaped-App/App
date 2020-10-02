@@ -5,7 +5,8 @@ import {
     View,
     Text,
     TouchableOpacity,
-    Image
+    Image,
+    Alert
 } from 'react-native';
 
 import auth from '@react-native-firebase/auth';
@@ -15,6 +16,38 @@ import onboardingStyles from '../Static/onboarding_style.js';
 
 import {onboardingFour, signIn} from './OnboardingNav';
 import {OnboardingInput} from './OnboardingComponents';
+
+const emailInUseAlert = () =>
+    Alert.alert(
+        "Invalid email",
+        "That email is already taken. Please enter a valid email.",
+        [{ text: "OK" }],
+        { cancelable: false }
+    );
+
+const emailInvalidAlert = () =>
+    Alert.alert(
+        "Invalid email",
+        "That email is invalid. Please enter a valid email.",
+        [{ text: "OK" }],
+        { cancelable: false }
+    );
+
+const passwordMatchAlert = () =>
+    Alert.alert(
+        "Passwords don't match",
+        "The entered passwords don't match.",
+        [{ text: "OK" }],
+        { cancelable: false }
+    );
+
+const passwordWeakAlert = () =>
+    Alert.alert(
+        "Password is too weak",
+        "Please enter a password with at least 6 characters.",
+        [{ text: "OK" }],
+        { cancelable: false }
+    );
 
 export default class SignUp extends Component {
     constructor(props){
@@ -42,27 +75,33 @@ export default class SignUp extends Component {
 
     onSignUpPress() {
         if (this.state.password !== this.state.checkPassword) {
-            // TODO: ALERT bad check!
+            passwordMatchAlert();
+        } else {
+            auth()
+                .createUserWithEmailAndPassword(this.state.email, this.state.password)
+                .then(() => {
+                    this.state.navigation.navigate(onboardingFour,{
+                        navigation: this.state.navigation,
+                        email: this.state.email,
+                        phoneNumber: this.state.phoneNumber,
+                    });
+                })
+                .catch(error => {
+                    if (error.code === 'auth/email-already-in-use') {
+                        emailInUseAlert();
+                    }
+
+                    if (error.code === 'auth/invalid-email') {
+                        emailInvalidAlert();
+                    }
+
+                    if (error.code === 'auth/weak-password') {
+                        passwordWeakAlert();
+                    }
+
+                    console.error(error);
+            });
         }
-        auth()
-            .createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .then(() => {
-                // TODO: send other vars to the backend
-                this.state.navigation.navigate(onboardingFour,{
-                    navigation: this.state.navigation,
-                });
-            })
-            .catch(error => {
-                if (error.code === 'auth/email-already-in-use') {
-                  console.log('That email address is already in use!');
-                }
-
-                if (error.code === 'auth/invalid-email') {
-                  console.log('That email address is invalid!');
-                }
-
-                console.error(error);
-        });
     }
 
     setEmail(input) {

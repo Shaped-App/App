@@ -17,6 +17,12 @@ export default class OnboardingFive extends Component {
     constructor(props){
         super(props);
         this.state = {
+            email: props.email,
+            phoneNumber: props.phoneNumber,
+            gender: props.gender,
+            name: props.name,
+            birthday: props.birthday,
+            zipCode: props.zipCode,
             friendship: false,
             relationship: false,
             distance: 0,
@@ -37,7 +43,7 @@ export default class OnboardingFive extends Component {
     checkDone() {
         setTimeout(() => {
             this.setState({done: this.state.friendship || this.state.relationship});
-        }, 0); // unsure why, but this is the only way it will update immediately
+        }, 0);
     }
 
     setFriendship(input) {
@@ -63,6 +69,7 @@ export default class OnboardingFive extends Component {
     }
 
     onNextPress() {
+        // TODO: send all info to the backend
         this.state.navigation.navigate(navBar);
     }
 

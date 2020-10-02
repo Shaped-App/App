@@ -6,7 +6,10 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
+
+import moment from "moment";
 
 import styles from '../Static/main_style.js';
 import onboardingStyles from '../Static/onboarding_style.js';
@@ -14,10 +17,28 @@ import onboardingStyles from '../Static/onboarding_style.js';
 import {onboardingFive} from './OnboardingNav';
 import {DoneButton, GenderPicker, OnboardingInput} from './OnboardingComponents';
 
+const badDateAlert = () =>
+    Alert.alert(
+      "Invalid birthday",
+      "Please enter a valid birthday.",
+      [{ text: "OK" }],
+      { cancelable: false }
+    );
+
+const badZipCodeAlert = () =>
+    Alert.alert(
+      "Invalid ZIP Code",
+      "Please enter a valid ZIP Code.",
+      [{ text: "OK" }],
+      { cancelable: false }
+    );
+
 export default class OnboardingFour extends Component {
     constructor(props){
         super(props);
         this.state = {
+            email: props.email,
+            phoneNumber: props.phoneNumber,
             gender: "",
             name: "",
             birthday: Date(),
@@ -40,9 +61,22 @@ export default class OnboardingFour extends Component {
     }
 
     onDonePress() {
-        this.state.navigation.navigate(onboardingFive,{
-            navigation: this.state.navigation,
-        });
+        var date = moment(this.state.birthday);
+        if (!date.isValid()) {
+            badDateAlert();
+        } else if (isNaN(this.state.zipCode)) {
+            badZipCodeAlert();
+        } else {
+            this.state.navigation.navigate(onboardingFive,{
+                navigation: this.state.navigation,
+                email: this.state.email,
+                phoneNumber: this.state.phoneNumber,
+                gender: this.state.gender,
+                name: this.state.name,
+                birthday: this.state.birthday,
+                zipCode: this.state.zipCode,
+            });
+        }
     }
 
     checkDone() {
@@ -65,7 +99,7 @@ export default class OnboardingFour extends Component {
     }
 
     setBirthday(value) {
-        this.setState({birthday: value})
+        this.setState({birthday: new Date(value)})
         this.checkDone();
     }
 
@@ -81,7 +115,7 @@ export default class OnboardingFour extends Component {
                     <GenderPicker gender={this.state.gender} setGender={this.setGender}/>
                     <OnboardingInput text={"Name"} placeholder={"Start typing..."} changeText={this.setName}/>
                     <OnboardingInput text={"Birthday"} placeholder={"MM/DD/YYYY"} changeText={this.setBirthday}/>
-                    <OnboardingInput text={"Zip Code"} placeholder={"00000"} changeText={this.setZipCode}/>
+                    <OnboardingInput text={"ZIP Code"} placeholder={"00000"} changeText={this.setZipCode}/>
                 </View>
             </SafeAreaView>
         );
