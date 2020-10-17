@@ -5,7 +5,7 @@ import { authGetUser, getAnswersOfQuestion, getAPIQuestionsFromIDs, getUIDFromTo
 
 @Injectable()
 export class TestService {
-  getTokenTest(token: Dtos.Token) : Promise<Dtos.UID> {
+  getTokenTest(token: Dtos.Token) : Promise<JSON> {
     return getUIDFromTokenTest(token);
   }
 
