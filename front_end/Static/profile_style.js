@@ -22,13 +22,6 @@ export default StyleSheet.create({
         marginTop: 8,
         marginBottom: 8
     },
-    interest_container: {
-        backgroundColor: 'rgba(255,255,255,0.7)',
-        borderRadius: 16,
-        marginRight: 16,
-        marginBottom: 16,
-        padding: 10
-    },
     category_header: {
         fontSize: 16,
         fontWeight: 'bold',
@@ -51,5 +44,35 @@ export default StyleSheet.create({
         fontSize: 12,
         color: '#353535',
         marginBottom: 8,
+    },
+    interest_container: {
+        position: "relative",
+        paddingRight: 16,
+        paddingTop: 10
+    },
+    interest_background: {
+        backgroundColor: 'rgba(255,255,255,0.7)',
+        borderRadius: 16,
+        padding: 10
+    },
+    remove__button: {
+        right: 0,
+        top: 0,
+        position: 'absolute',
+        borderRadius: 15,
+        backgroundColor: 'lightgray',
+        width: 30,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    add__button: {
+        marginLeft: 10,
+        borderRadius: 15,
+        backgroundColor: '#16B7EA',
+        width: 30,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
     }
 });

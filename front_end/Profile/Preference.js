@@ -64,7 +64,7 @@ export default class PreferenceScreen extends Component {
 
     render(){
         return(
-            <SafeAreaView style={styles.background}>
+            <SafeAreaView style={[styles.background, {alignItems: 'center'}]}>
                 <View style={[styles.content__container, { padding: '5%',flex: 1, flexDirection: 'column', justifyContent: 'space-between'}]}>
                     <View>
                         <Text style={[styles.text__header, {marginBottom: '7.5%', marginTop: '7.5%'}]}>Select Gender</Text>

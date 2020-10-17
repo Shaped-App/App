@@ -58,8 +58,8 @@ export default class QuestionList extends Component {
         return (
             <ScrollView style={styles.content__container}>
                 {this.state.questions.map((question) =>
-                    <Question question={question.question} question_id={question.id}
-                        navigation={this.state.navigation} key={question.id} />)}
+                    <Question question={question.question} question_id={question.qid}
+                        navigation={this.state.navigation} key={question.qid} />)}
             </ScrollView>
         );
     }

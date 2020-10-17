@@ -8,6 +8,11 @@ export default StyleSheet.create({
     padding: '5%',
     width: '100%',
   },
+  background: {
+    backgroundColor: '#aaebff',
+    width: '100%',
+    height: '100%',
+  },
   match__background: {
     backgroundColor: '#d0faae',
     width: '100%',
@@ -91,5 +96,52 @@ export default StyleSheet.create({
     borderRadius: 37,
     height: 52,
     width: 140,
+  },
+  row__alignment: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
+  big__button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#ffffff',
+    borderRadius: 37,
+    height: 52,
+    width: '100%',
+  },
+  single__input: {
+    backgroundColor: 'rgba(255,255,255,0.7)',
+    borderRadius: 20,
+    marginBottom: 16,
+    padding: 8,
+    width: '100%',
+  },
+  onboarding__background: {
+      backgroundColor: '#AAEBFF',
+      width: '100%',
+      height: '100%',
+      alignItems: 'center',
+  },
+  onboarding__button: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#ffffff',
+      borderRadius: 37,
+      height: 52,
+      width: 304,
+  },
+  onboarding__container: {
+      textAlign: 'left',
+      width: '100%',
+      justifyContent: 'center'
+  },
+  onboarding__input: {
+      backgroundColor: 'rgba(255,255,255,0.7)',
+      borderRadius: 20,
+      marginBottom: 16,
+      padding: '5%',
+      width: '100%',
+      height: 50
   },
 });

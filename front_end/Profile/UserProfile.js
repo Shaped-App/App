@@ -41,6 +41,8 @@ export default class UserProfile extends Component {
         this.toggleInterest = this.toggleInterest.bind(this);
         this.toggleActivity = this.toggleActivity.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.removeInterests = this.removeInterests.bind(this);
+        this.addInterest = this.addInterest.bind(this);
     }
 
     onPressCancel() {
@@ -102,11 +104,32 @@ export default class UserProfile extends Component {
         this.setState(temp);
     }
 
+    removeInterests(index){
+        console.log("remove interest");
+        let temp = [];
+        for(var i = 0; i < this.state.interests.length; ++i){
+            if(i != index){
+                temp.push(this.state.interests[i]);
+            }
+        }
+        this.setState({ interests: temp });
+    }
+
+    addInterest(value){
+        console.log("interested in "+value);
+        let temp = [];
+        for(var i = 0; i < this.state.interests.length; ++i){
+            temp.push(this.state.interests[i]);
+        }
+        temp.push(value);
+        this.setState({ interests: temp });
+    }
+
     render() {
         const { isOwner, isEditing, username, location, occupation, age } = this.state;
         const { about, verse, interestEnabled, activityEnabled, interests, activities } = this.state;
         return (
-            <SafeAreaView style={pro_styles.background}>
+            <SafeAreaView style={styles.background}>
                 <ScrollView>
                     <View style={{ alignItems: 'center' }}>
                         <View style={{padding: 20}}>
@@ -136,6 +159,8 @@ export default class UserProfile extends Component {
                             activities={activities}
                             toggleInterest={this.toggleInterest}
                             toggleActivity={this.toggleActivity}
+                            addInterest={this.addInterest}
+                            removeInterests={this.removeInterests}
                         />
                     </View>
                 </ScrollView>

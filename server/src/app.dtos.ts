@@ -1,89 +1,88 @@
+//? to export or not to export
+export type QID = string;
+export type AID = string;
+export type UID = string;
+export type Time = string; // subject to change
+export type ResponsesLeft = number;
 
-
-type QID = string;
-type AID = string;
-type UID = string;
-type Time = string; // subject to change
-type ResponsesLeft = number;
-
-export interface Question {
-  qid: QID, 
-  question: string, 
+export interface APIQuestion {
+  qid: QID,
+  question: string,
   created: Time,
   userAnswered: boolean,
-  creator?: UID
+  creator?: UID;
 }
 
-export interface Answer {
+export interface APIAnswer {
   qid: QID,
   aid: AID,
-  answer: string, 
+  answer: string,
   created: Time,
-  creator?: UID
+  creator?: UID;
 }
 
 export interface getQuestionListInDto {
-  time: Time
+  time: Time;
 }
 
 export interface getQuestionListOutDto {
-  qids: Question[]
+  qids: APIQuestion[];
 }
 
 export interface getQuestionInDto {
-  qids: QID[]
+  qids: QID[];
 }
 
 export interface getQuestionOutDto {
-  questions: Question[]
+  questions: APIQuestion[];
 }
 
 export interface getAnswerListInDto {
   time: Time,
-  qid: QID
+  qid: QID;
 }
 
 export interface getAnswerListOutDto {
-  aids: Answer[]
+  aids: APIAnswer[];
 }
 
 export interface getAnswerInDto {
   qid: QID,
-  aids: AID[]
+  aids: AID[];
 }
 
 export interface getAnswerOutDto {
-  answers: Answer[]
+  answers: APIAnswer[];
 }
 
 export interface postAnswerInDto {
-  qid: QID, 
+  qid: QID,
   answer: string,
-  time: Time
+  time: Time;
 }
 
 export interface postAnswerOutDto {
-  answer: Answer
+  answer: APIAnswer;
 }
 
 export interface postResponseInDto {
-  qid: QID, 
-  aid: AID, 
+  qid: QID,
+  aid: AID,
   response: string,
-  time: Time
+  time: Time;
 }
 
 export interface postResponseOutDto {
-  qid: QID, 
-  aid: AID, 
+  qid: QID,
+  aid: AID,
   time: Time,
-  responsesLeft: ResponsesLeft
+  responsesLeft: ResponsesLeft;
 }
 
 export interface getResponseLimitInDto {
-  time: Time
+  time: Time;
 }
 
 export interface getResponseLimitOutDto {
-  responsesLeft: ResponsesLeft
+  responsesLeft: ResponsesLeft;
 }

@@ -58,7 +58,17 @@ class Interest extends Component {
     render() {
         return (
             <View style={pro_styles.interest_container}>
-                <Text>{this.props.interest}</Text>
+                <View style={pro_styles.interest_background}>
+                    <Text>{this.props.interest}</Text>
+                </View>
+                {this.props.isEditing && 
+                    <TouchableOpacity
+                        onPress={() => this.props.removeInterests(this.props.index)}
+                        style={pro_styles.remove__button}
+                    >
+                        <Icon name="setting" size={20} />
+                    </TouchableOpacity>
+                }
             </View>
         );
     };
@@ -116,6 +126,22 @@ class Headline extends Component {
 class Bio extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            isAdding: false,
+            input: "",
+        }
+        this.onPressAdd = this.onPressAdd.bind(this);
+    }
+
+    onPressAdd(){
+        if(this.state.isAdding){
+            if(this.state.input !== ""){
+                this.props.addInterest(this.state.input);
+            }
+            this.setState({isAdding: false});
+        }else{
+            this.setState({input: "", isAdding: true});
+        }
     }
 
     render() {
@@ -151,11 +177,27 @@ class Bio extends Component {
                             />
                         }
                         </View>
-                        <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-                        {this.props.interests.map((interest) =>
-                            <Interest interest={interest} key={interest} />
-                        )}
+                        <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}>
+                            {this.props.interests.map((interest, index) =>
+                                <Interest interest={interest} key={index} isEditing={this.props.isEditing}
+                                removeInterests={this.props.removeInterests} index={index}/>
+                            )}
+                            {this.props.isEditing &&
+                                <TouchableOpacity
+                                    onPress={this.onPressAdd}
+                                    style={pro_styles.add__button}
+                                >
+                                    <Icon name="setting" size={20} />
+                                </TouchableOpacity>
+                            }
                         </View>
+                        {this.state.isAdding &&
+                            <TextInput
+                                style={[pro_styles.edit_text_input, {marginTop: 10}]}
+                                value={this.props.name}
+                                onChangeText={value => this.setState({input: value})}
+                            />
+                        }
                     </View>
                 }
                 {(this.props.activityEnabled || this.props.isEditing) &&

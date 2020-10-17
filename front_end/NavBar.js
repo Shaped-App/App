@@ -14,6 +14,10 @@ import InboxOneScreen from './Inbox/InboxOne';
 //Profile Screens
 import ProfileOneScreen from './Profile/ProfileOne';
 import Settings from './Profile/Settings';
+import Account from './Profile/Account';
+import PreferenceScreen from './Profile/Preference';
+import Notification from './Profile/Notification';
+import Feedback from './Profile/Feedback';
 import { SettingIcon } from './Profile/UserProfileComponents';
 
 import Icon from './Utility/Icon';
@@ -61,9 +65,15 @@ function ProfileNav() {
               headerLeft: null
             })}/>
             <ProfileStack.Screen name={settings} component={Settings}
-            options={{
-              title: "Settings",
-            }}/>
+            options={{ title: settings }}/>
+            <ProfileStack.Screen name={account} component={Account}
+            options={{ title: account }}/>
+            <ProfileStack.Screen name={preference} component={PreferenceScreen}
+            options={{ title: preference }}/>
+            <ProfileStack.Screen name={notification} component={Notification}
+            options={{ title: notification }}/>
+            <ProfileStack.Screen name={feedback} component={Feedback}
+            options={{ title: feedback }}/>
         </ProfileStack.Navigator>
     );
 }
@@ -120,3 +130,7 @@ export const inboxThree = "InboxThree";
 //profile option
 export const userProfile = "UserProfile";
 export const settings = "Settings";
+export const account = "Account";
+export const preference = "Preference";
+export const notification = "Notification";
+export const feedback = "Feedback";
