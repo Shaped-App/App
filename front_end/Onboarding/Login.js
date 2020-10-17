@@ -7,9 +7,13 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
-import styles from '../Static/main_style.js';
+import auth from '@react-native-firebase/auth';
 
-import {signIn, signUp} from './OnboardingNav';
+import styles from '../Static/main_style.js';
+import onboardingStyles from '../Static/onboarding_style.js';
+
+import {Logo} from './OnboardingComponents';
+import {signIn, signUp, navBar} from './OnboardingNav';
 
 export default class Login extends Component {
     constructor(props){
@@ -19,6 +23,14 @@ export default class Login extends Component {
         };
         this.onSignUpPress = this.onSignUpPress.bind(this);
         this.onSignInPress = this.onSignInPress.bind(this);
+    }
+
+    componentDidMount() {
+        auth().onAuthStateChanged(user => {
+            if (user) {
+                //this.props.navigation.navigate(navBar);
+            }
+        })
     }
 
     onSignUpPress() {
@@ -35,13 +47,14 @@ export default class Login extends Component {
 
     render(){
         return(
-            <SafeAreaView style={styles.onboarding__background}>
+            <SafeAreaView style={onboardingStyles.background}>
                 <View style={[styles.content__container, styles.content__centering]}>
-                    <TouchableOpacity style={[styles.onboarding__button, {margin: 30}]} onPress={this.onSignUpPress}>
-                        <Text style={styles.text__header}>Sign Up</Text>
+                    <Logo/>
+                    <TouchableOpacity style={[onboardingStyles.button, {margin: 20, height: 70}]} onPress={this.onSignUpPress}>
+                        <Text style={onboardingStyles.large__button}>Sign Up</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.onboarding__button, {margin: 30}]} onPress={this.onSignInPress}>
-                        <Text style={styles.text__header}>Sign In</Text>
+                    <TouchableOpacity style={[onboardingStyles.button, {margin: 20, height: 70}]} onPress={this.onSignInPress}>
+                        <Text style={onboardingStyles.large__button}>Sign In</Text>
                     </TouchableOpacity>
                 </View>
             </SafeAreaView>

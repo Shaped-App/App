@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 import styles from '../Static/main_style.js';
+import onboardingStyles from '../Static/onboarding_style.js';
 
 import {onboardingThree} from './OnboardingNav';
 import {DoneButton} from './OnboardingComponents';
@@ -32,7 +33,7 @@ export default class OnboardingTwoB extends Component {
 
     render(){
         return(
-            <SafeAreaView style={styles.onboarding__background}>
+            <SafeAreaView style={onboardingStyles.background}>
                 <View style={[styles.content__container, styles.content__centering]}>
                     <Text>temp placement for camera/photo taking</Text>
                 </View>

@@ -29,7 +29,7 @@ function MatchNav() {
     <MatchStack.Navigator initialRouteName={browseOne}
     screenOptions={stackOption}>
         <MatchStack.Screen name={browseOne} component={BrowseOneScreen}
-        options={{title: "Matching"}}/>
+        options={{title: "Matching", headerLeft: null}}/>
         <MatchStack.Screen name={browseTwo} component={BrowseTwoScreen}
         options={{title: "Response"}}/>
         <MatchStack.Screen name={browseThree} component={BrowseThreeScreen}
@@ -45,7 +45,7 @@ function InboxNav() {
         <InboxStack.Navigator initialRouteName={inboxOne}
         screenOptions={stackOption}>
             <InboxStack.Screen name={inboxOne} component={InboxOneScreen}
-            options={{title: "Messages"}}/>
+            options={{title: "Messages", headerLeft: null}}/>
         </InboxStack.Navigator>
     );
 }
@@ -61,7 +61,8 @@ function ProfileNav() {
               title: " ",
               headerRight: () => (
                 <SettingIcon navigation={navigation}/>
-              )
+              ),
+              headerLeft: null
             })}/>
             <ProfileStack.Screen name={settings} component={Settings}
             options={{ title: settings }}/>
