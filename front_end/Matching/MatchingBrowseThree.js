@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {SafeAreaView, View, Text, TouchableOpacity} from 'react-native';
 
+import {browseFour} from '../NavBar';
 import styles from '../Static/main_style.js';
 
 export default class BrowseThreeScreen extends Component {
@@ -11,6 +12,14 @@ export default class BrowseThreeScreen extends Component {
       question_id: props.route.params.question_id,
       navigation: props.navigation
     };
+    this.handlePress = this.handlePress.bind(this);
+  }
+
+  handlePress(){
+    console.log("Pressed Button!");
+    this.state.navigation.navigate(browseFour,{
+        question_id: this.state.question_id,
+    });
   }
 
   render() {
@@ -21,7 +30,7 @@ export default class BrowseThreeScreen extends Component {
           <Text style={[styles.text__success]}>Success!</Text>
           <Text>Your response has been recorded.</Text>
           <Text>Now explore what others have said.</Text>
-          <TouchableOpacity style={[styles.button, {margin: 30}]}>
+          <TouchableOpacity onPress={this.handlePress} style={[styles.button, {margin: 30}]}>
             <Text style={styles.text__header}>Let's go</Text>
           </TouchableOpacity>
         </View>

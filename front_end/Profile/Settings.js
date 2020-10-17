@@ -39,11 +39,11 @@ export default class Settings extends Component {
                         <Text style={pro_styles.category_header}>Notification</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate(feedback)}>
-                        <Text style={pro_styles.category_header}>Feedback</Text>
+                        <Text style={pro_styles.category_header}>Feedback</Text>{/*this is going to be a link*/}
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    {/*<TouchableOpacity>
                         <Text style={pro_styles.category_header}>About</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
                     <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'center'}}>
                         <TouchableOpacity
                             style={styles.button}
