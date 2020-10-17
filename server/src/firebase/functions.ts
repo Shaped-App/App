@@ -6,18 +6,20 @@ import { AnswerCollectionFromID, DocRef, QuestionCollection } from './model';
 export async function getUIDFromTokenTest(token: Token): Promise<UID> 
 {
     const abUID = "88JPgNMNl4ZLollyfoTyHoS9qjC3"
+    // try {
+    //     const abToke = await admin.auth().createCustomToken(abUID);
+    //     console.log("got abtoke");
+    //     const decToke = admin.auth().verifyIdToken(abToke); 
+    //     console.log("verify abtoke");
+    //     console.log((await decToke).uid);
+    // }
+    // catch (e) {
+    //     console.log("ab bad");
+    //     console.log(e);
+    // }
     try {
-        const abToke = await admin.auth().createCustomToken(abUID);
-        console.log("got abtoke");
-        const decToke = admin.auth().verifyIdToken(abToke); 
-        console.log("verify abtoke");
-        console.log((await decToke).uid);
-    }
-    catch (e) {
-        console.log("ab bad");
-        console.log(e);
-    }
-    try {
+        console.log("token is");
+        console.log(token);
         const goodToken = await admin.auth().verifyIdToken(token);
         const uid = goodToken.uid;
         console.log("from token got uid:", uid);

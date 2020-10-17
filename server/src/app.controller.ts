@@ -14,6 +14,9 @@ export class AppController {
 
   @Post('/test/tokenTest')
   postTokenTest(@Body() body: Dtos.getTokenInDto): Promise<string> {
+    console.log("body is");
+    console.log(body);
+    console.log("body end");
     return this.testService.getTokenTest(body.token);
   }
 
