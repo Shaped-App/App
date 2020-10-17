@@ -13,7 +13,7 @@ import styles from '../Static/main_style';
 import pro_styles from '../Static/profile_style';
 
 //TODO: Add error checking and editing interest
-  
+
 export default class UserProfile extends Component {
     constructor(props) {
         super(props);
@@ -44,7 +44,7 @@ export default class UserProfile extends Component {
         this.removeInterests = this.removeInterests.bind(this);
         this.addInterest = this.addInterest.bind(this);
     }
-  
+
     onPressCancel() {
         console.log("Pressed Cancel Button");
         this.setState(this.state.prevState);
@@ -56,7 +56,7 @@ export default class UserProfile extends Component {
             )
         });
     }
-  
+
     onPressSave() {
         console.log("Pressed Save");
         this.setState({isEditing: false});
@@ -68,7 +68,7 @@ export default class UserProfile extends Component {
             )
         });
     }
-  
+
     onPressEdit() {
         console.log("Pressed Edit Button");
         this.setState({
@@ -78,26 +78,26 @@ export default class UserProfile extends Component {
         this.state.navigation.setOptions({
             title: "Edit Profile",
             headerLeft: () => (
-                <TouchableOpacity onPress={this.onPressCancel}>
+                <TouchableOpacity style={{padding: 15}} onPress={this.onPressCancel}>
                     <Text>Cancel</Text>
                 </TouchableOpacity>
             ),
             headerRight: () => (
-                <TouchableOpacity onPress={this.onPressSave}>
+                <TouchableOpacity style={{padding: 15}} onPress={this.onPressSave}>
                     <Text>Save</Text>
                 </TouchableOpacity>
             )
         });
     }
-  
+
     toggleInterest() {
         this.setState({ interestEnabled: !this.state.interestEnabled });
     }
-  
+
     toggleActivity() {
         this.setState({ activityEnabled: !this.state.activityEnabled });
     }
-  
+
     handleChange(value, key) {
         let temp = this.state;
         temp[key] = key != "age" ? value : value.replace(/[^0-9]/g, '');
@@ -132,13 +132,15 @@ export default class UserProfile extends Component {
             <SafeAreaView style={styles.background}>
                 <ScrollView>
                     <View style={{ alignItems: 'center' }}>
+                        <View style={{padding: 20}}>
                         <Icon name='profile' size={160} />
+                        </View>
                         {isOwner && !isEditing &&
                             <TouchableOpacity style={pro_styles.edit_button} onPress={this.onPressEdit}>
                                 <Text style={styles.text__header}>Edit Profile</Text>
                             </TouchableOpacity>
                         }
-                        <Headline 
+                        <Headline
                             isEdit={isEditing}
                             name={username}
                             location={location}

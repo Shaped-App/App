@@ -5,6 +5,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 //Onboarding Screens
+import Splash from './Splash';
 import Login from './Login';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
@@ -32,6 +33,7 @@ export default class OnboardingStack extends Component {
                 <Stack.Screen name={onboardingThree} component={OnboardingThree} options={{title: "Welcome!"}}/>
                 <Stack.Screen name={onboardingFour} component={OnboardingFour} options={{title: "Introduce yourself"}}/>
                 <Stack.Screen name={onboardingFive} component={OnboardingFive} options={{title: "Your Preferences"}}/>
+                <Stack.Screen name={splash} component={Splash} options={{headerShown: false}}/>
             </Stack.Navigator>
         );
     };
@@ -46,7 +48,6 @@ const stackOption = {
     headerTitleStyle: {fontSize: 20}
 };
 
-export const splash = "Splash";
 export const login = "Login";
 export const signIn = "SignIn";
 export const signUp = "SignUp";
@@ -57,3 +58,4 @@ export const onboardingThree= "OnboardingThree";
 export const onboardingFour = "OnboardingFour";
 export const onboardingFive = "OnboardingFive";
 export const navBar = "NavBar";
+export const splash = "Splash";

@@ -19,7 +19,7 @@ class SettingIcon extends Component{
 
     render(){
         return(
-            <TouchableOpacity onPress={() => this.props.navigation.navigate(settings)}>
+            <TouchableOpacity style={{padding: 15}} onPress={() => this.props.navigation.navigate(settings)}>
                 <Icon name="setting" size={30} />
             </TouchableOpacity>
         );
@@ -54,7 +54,7 @@ class Interest extends Component {
     constructor(props) {
         super(props);
     }
-  
+
     render() {
         return (
             <View style={pro_styles.interest_container}>
@@ -78,7 +78,7 @@ class Headline extends Component {
     constructor(props){
         super(props);
     }
-    
+
     render(){
         if(this.props.isEdit){
             return(
@@ -168,7 +168,7 @@ class Bio extends Component {
                     <View>
                         <View style={{ flex: 1, flexDirection: 'row' }}>
                         <Text style={pro_styles.category_header}>Interests</Text>
-                        {this.props.isEditing && 
+                        {this.props.isEditing &&
                             <Switch
                                 trackColor={{ false: "#CBCBCB", true: "#16B7EA" }}
                                 onValueChange={this.props.toggleInterest}

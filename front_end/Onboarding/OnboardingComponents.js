@@ -8,9 +8,10 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
-import ScrollPicker from 'react-native-wheel-scroll-picker';
+import {Picker} from '@react-native-community/picker';
 
 import styles from '../Static/main_style.js';
+import onboardingStyles from '../Static/onboarding_style.js';
 
 export const Logo = () => (
     <View style={{padding: 25, justifyContent: 'center', alignItems: 'center',}}>
@@ -31,20 +32,36 @@ export class GenderPicker extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            gender: ""
         }
+        this.handleFemale = this.handleFemale.bind(this);
+        this.handleMale = this.handleMale.bind(this);
+    }
+
+    handleFemale = () => {
+        this.setState({gender: "female"});
+        this.props.setGender("female");
+    }
+
+    handleMale = () => {
+        this.setState({gender: "male"});
+        this.props.setGender("male");
     }
 
     render() {
+        const gender = this.state.gender;
         return (
-            <View style={styles.onboarding__container}>
+            <View style={onboardingStyles.container}>
                 <Text style={{padding: 10}}>I identify as</Text>
-                <View style={{flexDirection:'row', justifyContent: 'space-between', paddingLeft: 30, paddingRight: 30}}>
-                    <TouchableOpacity style={[styles.button, this.props.gender === "female" ? {opacity: 1} : {opacity: .6}]}
-                                      onPress={() => this.props.setGender("female")}>
+                <View style={[this.props.gender ? true : true, {flexDirection:'row', justifyContent: 'space-between', paddingLeft: 30, paddingRight: 30}]}>
+                    <TouchableOpacity style={[styles.button, gender === "female" ? {opacity: 1} : {opacity: .6}]}
+                                      disabled={gender === "female"}
+                                      onPress={this.handleFemale}>
                         <Text style={styles.text__header}>Female</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, this.props.gender === "male" ? {opacity: 1} : {opacity: .6}]}
-                                      onPress={() => this.props.setGender("male")}>
+                    <TouchableOpacity style={[styles.button, gender === "male" ? {opacity: 1} : {opacity: .6}]}
+                                      disabled={gender === "male"}
+                                      onPress={this.handleMale}>
                         <Text style={styles.text__header}>Male</Text>
                     </TouchableOpacity>
                 </View>
@@ -64,13 +81,14 @@ export class OnboardingInput extends Component {
 
     render() {
         return (
-          <View style={styles.onboarding__container}>
+          <View style={onboardingStyles.container}>
               <Text style={{padding: 5}}>{this.state.text}</Text>
               <TextInput
-                  style={[styles.onboarding__input]}
+                  style={[onboardingStyles.input]}
                   placeholder={this.state.placeholder}
                   onChangeText={value => this.props.changeText(value)}
                   multiline={false}
+                  secureTextEntry={this.props.secureTextEntry}
               />
           </View>
         );
@@ -86,7 +104,7 @@ export class InterestPicker extends Component {
 
     render() {
         return (
-            <View style={[styles.onboarding__container, {margin: 10}]}>
+            <View style={[onboardingStyles.container, {margin: 10}]}>
                 <Text style={{padding: 10, fontSize: 16}}>I am interested in finding a</Text>
                 <View style={{flexDirection:'row', justifyContent: 'space-between', paddingLeft: 30, paddingRight: 30}}>
                     <TouchableOpacity style={[styles.button, this.props.friendship ? {opacity: 1} : {opacity: .6}]}
@@ -103,36 +121,44 @@ export class InterestPicker extends Component {
     }
 }
 
+
+const distances = [
+    [1, 5],
+    [5, 10],
+    [10, 25],
+    [25, 40]
+];
+
 export class DistancePicker extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            distance: this.props.distance
         }
+        this.setDistance = this.setDistance.bind(this);
+    }
+
+    setDistance(input) {
+        this.setState({distance: input});
+        this.props.setDistance(input);
     }
 
     render() {
         return (
-            <View style={[styles.onboarding__container, {height: 150}]}>
+            <View style={[onboardingStyles.container, {height: 150}]}>
                 <Text style={{padding: 10, fontSize: 16}}>Within...</Text>
-                <ScrollPicker
-                    dataSource={[
-                         '1-5',
-                         '5-10',
-                         '10-25',
-                    ]}
-                    selectedIndex={1}
-                    onValueChange={(data, selectedIndex) => {
-                        this.props.setDistance(data);
-                    }}
-                    wrapperHeight={90}
-                    wrapperWidth={150}
-                    wrapperBackground={'#AAEBFF'}
-                    itemHeight={30}
-                    highlightColor={'#808080'}
-                    highlightBorderWidth={1}
-                    activeItemColor={'#222121'}
-                    itemColor={'#B4B4B4'}
-                />
+                <View style={{alignItems: 'center'}}>
+                    <Picker
+                        selectedValue={this.props.distance}
+                        style={{width: '70%', height: 132}}
+                        itemStyle={{height: 132}}
+                        onValueChange={(itemValue, itemIndex) => this.setDistance(itemValue)}
+                    >
+                        {distances.map((range) =>
+                            <Picker.Item label={range[0]+'-'+range[1]+' mi'} value={range}/>
+                        )}
+                    </Picker>
+                </View>
             </View>
         )
     }
@@ -142,26 +168,28 @@ class AgePicker extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            age: this.props.age
         }
+        this.setAge = this.setAge.bind(this);
+    }
+
+    setAge(input) {
+        this.setState({age: input});
+        this.props.setAgeBound(input);
     }
 
     render() {
         return (
-            <ScrollPicker
-                dataSource={this.props.ageArray}
-                selectedIndex={1}
-                onValueChange={(data, selectedIndex) => {
-                    this.props.setAgeBound(data);
-                }}
-                wrapperHeight={90}
-                wrapperWidth={150}
-                wrapperBackground={'#AAEBFF'}
-                itemHeight={30}
-                highlightColor={'#808080'}
-                highlightBorderWidth={1}
-                activeItemColor={'#222121'}
-                itemColor={'#B4B4B4'}
-            />
+            <Picker
+                selectedValue={this.state.age}
+                style={{width: '45%', height: 132}}
+                itemStyle={{height: 132}}
+                onValueChange={(itemValue, itemIndex) => this.setAge(itemValue)}
+            >
+                {this.props.ageArray.map((age) =>
+                    <Picker.Item label={String(age)} value={age}/>
+                )}
+            </Picker>
         )
     }
 }
@@ -175,12 +203,12 @@ export class AgeBoundPicker extends Component {
 
     render() {
         return (
-            <View style={[styles.onboarding__container, {height: 150}]}>
+            <View style={[onboardingStyles.container, {height: 150}]}>
                 <Text style={{padding: 10, fontSize: 16}}>Age Range</Text>
                 <View style={{flexDirection:'row', justifyContent: 'space-between', paddingLeft: 30, paddingRight: 30, alignItems: 'center'}}>
-                    <AgePicker ageArray={this.props.lowerAgeArray} setAgeBound={this.props.setLowerAgeBound}/>
+                    <AgePicker ageArray={this.props.lowerAgeArray} setAgeBound={this.props.setLowerAgeBound} age={this.props.lowerAge}/>
                     <Text style={{padding: 10}}>to</Text>
-                    <AgePicker ageArray={this.props.upperAgeArray} setAgeBound={this.props.setUpperAgeBound}/>
+                    <AgePicker ageArray={this.props.upperAgeArray} setAgeBound={this.props.setUpperAgeBound} age={this.props.upperAge}/>
                 </View>
             </View>
         )
