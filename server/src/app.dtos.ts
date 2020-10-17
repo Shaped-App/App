@@ -2,6 +2,7 @@
 export type QID = string;
 export type AID = string;
 export type UID = string;
+export type Token = string;
 export type Time = string; // subject to change
 export type ResponsesLeft = number;
 
@@ -21,6 +22,9 @@ export interface APIAnswer {
   creator?: UID;
 }
 
+export interface getTokenInDto {
+  token: Token;
+}
 export interface getQuestionListInDto {
   time: Time;
 }

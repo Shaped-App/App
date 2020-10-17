@@ -12,6 +12,11 @@ export class AppController {
   constructor(private readonly testService: TestService,
     private readonly browseService: BrowseService) { }
 
+  @Get('/test/tokenTest')
+  postTokenTest(@Body() body: Dtos.getTokenInDto): Promise<string> {
+    return this.testService.getTokenTest(body.token);
+  }
+
   @Get(ApiFactory.getInstance().getApi('test', '/test1/test2/get'))
   getTest(): string {
     return this.testService.getTest();

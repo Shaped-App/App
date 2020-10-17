@@ -5,6 +5,10 @@ import { authGetUser, getAnswersOfQuestion, getAPIQuestionsFromIDs, makeAnswer, 
 
 @Injectable()
 export class TestService {
+  getTokenTest(token: Dtos.Token) : Promise<Dtos.UID> {
+    return this.getTokenTest(token);
+  }
+
   getTest(): string {
     return 'Success!';
   }

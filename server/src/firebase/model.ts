@@ -3,6 +3,7 @@ import { ROOT_DIR } from '../const';
 
 console.log('***** Loading firestore database *****');
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const serviceAccount = require(ROOT_DIR + 'firebase_key.json');
 
 admin.initializeApp({

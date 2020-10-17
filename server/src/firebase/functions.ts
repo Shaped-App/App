@@ -1,8 +1,16 @@
 import admin from 'firebase-admin';
-import { AID, APIQuestion, QID, UID, APIAnswer, postResponseOutDto } from 'src/app.dtos';
+import { Token, AID, APIQuestion, QID, UID, APIAnswer, postResponseOutDto } from 'src/app.dtos';
 import { FirebaseAnswer, FirebaseQuestion, FirestoreQuestionConverter, FirestoreAnswerConverter } from './firebase_objects';
 import { AnswerCollectionFromID, DocRef, QuestionCollection } from './model';
 
+export async function getTokenTest(token: Token): Promise<UID> 
+{
+    const goodToken = await admin.auth().verifyIdToken(token);
+    const uid = goodToken.uid;
+    console.log("from token got uid:", uid);
+    
+    return uid;
+}
 
 
 export async function getFirebaseQuestionsFromIDs(questionIDs: Array<QID>): Promise<Array<FirebaseQuestion>> {
