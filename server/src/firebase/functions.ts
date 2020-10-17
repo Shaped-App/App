@@ -3,7 +3,7 @@ import { Token, AID, APIQuestion, QID, UID, APIAnswer, postResponseOutDto } from
 import { FirebaseAnswer, FirebaseQuestion, FirestoreQuestionConverter, FirestoreAnswerConverter } from './firebase_objects';
 import { AnswerCollectionFromID, DocRef, QuestionCollection } from './model';
 
-export async function getUIDFromTokenTest(token: Token): Promise<JSON> 
+export async function getUIDFromTokenTest(token: Token): Promise<UID> 
 {
     const abUID = "88JPgNMNl4ZLollyfoTyHoS9qjC3"
     // try {
@@ -23,7 +23,7 @@ export async function getUIDFromTokenTest(token: Token): Promise<JSON>
         const goodToken = await admin.auth().verifyIdToken(token);
         const uid = goodToken.uid;
         console.log("from token got uid:", uid);
-        return {uid: uid};
+        return uid;
     }
     catch (e) {
         console.error(e);

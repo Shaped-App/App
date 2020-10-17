@@ -25,6 +25,9 @@ export interface APIAnswer {
 export interface getTokenInDto {
   token: Token;
 }
+export interface getTokenOutDto {
+  uid: UID;
+}
 export interface getQuestionListInDto {
   time: Time;
 }

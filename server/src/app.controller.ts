@@ -13,7 +13,7 @@ export class AppController {
     private readonly browseService: BrowseService) { }
 
   @Post('/test/tokenTest')
-  postTokenTest(@Body() body: Dtos.getTokenInDto): Promise<JSON> {
+  postTokenTest(@Body() body: Dtos.getTokenInDto): Promise<Dtos.getTokenOutDto> {
     console.log("body is");
     console.log(body);
     console.log("body end");

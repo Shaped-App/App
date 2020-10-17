@@ -5,8 +5,10 @@ import { authGetUser, getAnswersOfQuestion, getAPIQuestionsFromIDs, getUIDFromTo
 
 @Injectable()
 export class TestService {
-  getTokenTest(token: Dtos.Token) : Promise<JSON> {
-    return getUIDFromTokenTest(token);
+  async getTokenTest(token: Dtos.Token) : Promise<Dtos.getTokenOutDto> {
+    return {
+      uid: await getUIDFromTokenTest(token)
+    };
   }
 
   getTest(): string {
