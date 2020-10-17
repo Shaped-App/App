@@ -10,6 +10,7 @@ import {
 
 import styles from '../Static/main_style';
 import {browseThree} from '../NavBar';
+import { postAnswer } from '../Static/config.js';
 
 export default class BrowseTwoScreen extends Component {
     constructor(props){
@@ -25,11 +26,12 @@ export default class BrowseTwoScreen extends Component {
         this.handlePress = this.handlePress.bind(this);
     }
 
-  handleChange(value) {
-    this.setState({answer: value, disabled: value === ''});
-  }
+    handleChange(value) {
+        this.setState({answer: value, disabled: value === ''});
+    }
 
     handlePress(){
+        postAnswer(this.state.question_id, this.state.answer);
         this.state.navigation.navigate(browseThree,{
             question_id: this.state.question_id,
             question: this.state.question,

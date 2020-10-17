@@ -10,6 +10,7 @@ import {
 import Icon from '../Utility/Icon';
 import styles from '../Static/main_style.js';
 import ReadMore from 'react-native-read-more-text';
+import { postResponse } from '../Static/config.js';
 
 class Response extends Component {
   constructor(props) {
@@ -18,11 +19,11 @@ class Response extends Component {
       response: props.response,
       username: props.username,
       response_id: props.response_id,
+      question_id: props.question_id,
       time: props.time,
       reply: '',
       disabled: true,
       expand: false,
-      //nav: props.nav,
       answered: false,
       sent: false,
     };
@@ -37,6 +38,7 @@ class Response extends Component {
   handleSend() {
     console.log('Press the send button!');
     this.setState({sent: true, expand: false});
+    postResponse(this.state.question_id, this.state.response_id, reply);
   }
 
   render() {
@@ -91,7 +93,7 @@ export default class ResponseList extends Component {
     super(props);
     this.state = {
       responses: props.responses,
-      //nav: props.nav
+      question_id: props.question_id
     };
   }
 
@@ -103,6 +105,7 @@ export default class ResponseList extends Component {
             response={res.response}
             username={res.username}
             response_id={res.id}
+            question_id={this.state.question_id}
             time={res.time}
             key={res.id}
           />
