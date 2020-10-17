@@ -6,6 +6,8 @@ import {
   Text
 } from 'react-native';
 
+import auth from '@react-native-firebase/auth';
+
 import styles from '../Static/main_style.js';
 import { getQuestionList } from '../Static/config.js';
 import QuestionList from '../Matching/QuestionList';
@@ -21,8 +23,29 @@ export default class BrowseOneScreen extends Component {
     this.setQuestionList = this.setQuestionList.bind(this);
   }
 
-  componentDidMount() {
-    this.fetchQuestionList();
+componentDidMount() {
+
+  auth().currentUser.getIdToken().then(idTokenResult => {
+    const data = { token: idTokenResult };
+    console.log(data);
+
+    fetch('http://3.16.151.194:3000/test/tokenTest', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    }).then(function(response) {
+      return response.json();
+    }).then(function(data) {
+      console.log(data);
+    });
+  });
+  
+    
+
+
+    //this.fetchQuestionList();
   }
 
   setQuestionList(data){

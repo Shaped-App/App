@@ -55,7 +55,7 @@ export default class SignUp extends Component {
 
                 console.error(error);
         });
-
+        
     }
 
     setEmail(input) {
