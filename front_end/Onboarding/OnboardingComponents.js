@@ -32,20 +32,36 @@ export class GenderPicker extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            gender: ""
         }
+        this.handleFemale = this.handleFemale.bind(this);
+        this.handleMale = this.handleMale.bind(this);
+    }
+
+    handleFemale = () => {
+        this.setState({gender: "female"});
+        this.props.setGender("female");
+    }
+
+    handleMale = () => {
+        this.setState({gender: "male"});
+        this.props.setGender("male");
     }
 
     render() {
+        const gender = this.state.gender;
         return (
             <View style={onboardingStyles.container}>
                 <Text style={{padding: 10}}>I identify as</Text>
                 <View style={[this.props.gender ? true : true, {flexDirection:'row', justifyContent: 'space-between', paddingLeft: 30, paddingRight: 30}]}>
-                    <TouchableOpacity style={[styles.button, this.props.gender === "female" ? {opacity: 1} : {opacity: .6}]}
-                                      onPress={() => this.props.setGender("female")}>
+                    <TouchableOpacity style={[styles.button, gender === "female" ? {opacity: 1} : {opacity: .6}]}
+                                      disabled={gender === "female"}
+                                      onPress={this.handleFemale}>
                         <Text style={styles.text__header}>Female</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, this.props.gender === "male" ? {opacity: 1} : {opacity: .6}]}
-                                      onPress={() => this.props.setGender("male")}>
+                    <TouchableOpacity style={[styles.button, gender === "male" ? {opacity: 1} : {opacity: .6}]}
+                                      disabled={gender === "male"}
+                                      onPress={this.handleMale}>
                         <Text style={styles.text__header}>Male</Text>
                     </TouchableOpacity>
                 </View>
