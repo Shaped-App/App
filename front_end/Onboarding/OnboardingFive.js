@@ -74,12 +74,25 @@ export default class OnboardingFive extends Component {
     }
 
     render(){
+        const age = this.state.age;
+        let lowerAgeArray = [];
+        let upperAgeArray = [];
+
+        for (let i = 0; i < 5; ++i) {
+            if (age - i >= 18) {
+                //lowerAgeArray.push(age - i);
+            }
+            //upperAgeArray.push(age + i);
+        }
+        console.log(lowerAgeArray);
+        console.log(upperAgeArray);
+
         return(
             <SafeAreaView style={onboardingStyles.background}>
                 <View style={[styles.content__container, styles.content__centering]}>
                     <InterestPicker friendship={this.state.friendship} relationship={this.state.relationship} setFriendship={this.setFriendship} setRelationship={this.setRelationship}/>
-                    <DistancePicker setDistance={this.setDistance}/>
-                    <AgeBoundPicker lowerAgeArray={[18, 19, 20]} upperAgeArray={[20, 21, 22]} setLowerAgeBound={this.setLowerAgeBound} setUpperAgeBound={this.setUpperAgeBound}/>
+                    <DistancePicker setDistance={this.setDistance} distance={this.state.distance}/>
+                    <AgeBoundPicker lowerAgeArray={lowerAgeArray} upperAgeArray={upperAgeArray} setLowerAgeBound={this.setLowerAgeBound} setUpperAgeBound={this.setUpperAgeBound} lowerAge={this.state.lowerAgeBound} upperAge={this.state.upperAgeBound}/>
                     <TouchableOpacity style={[onboardingStyles.button, {margin: 30, height: 80}]} onPress={this.onNextPress} disabled={!this.state.done}>
                         <Text style={[this.state.done ? {color: 'black'} : {color: 'grey'}, {fontSize: 20, fontWeight: '600'}]}>Save</Text>
                     </TouchableOpacity>
