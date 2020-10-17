@@ -17,12 +17,12 @@ export default class OnboardingFive extends Component {
     constructor(props){
         super(props);
         this.state = {
-            email: props.email,
-            phoneNumber: props.phoneNumber,
-            gender: props.gender,
-            name: props.name,
-            birthday: props.birthday,
-            zipCode: props.zipCode,
+            email: props.route.params.email,
+            phoneNumber: props.route.params.phoneNumber,
+            gender: props.route.params.gender,
+            name: props.route.params.name,
+            birthday: props.route.params.birthday,
+            zipCode: props.route.params.zipCode,
             friendship: false,
             relationship: false,
             distance: 0,
@@ -74,15 +74,20 @@ export default class OnboardingFive extends Component {
     }
 
     render(){
-        const age = this.state.age;
+        console.log(this.state.birthday);
+        var ageDifMs = Date.now() - this.state.birthday;
+        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+        const age = Math.abs(ageDate.getUTCFullYear() - 1970);
+        console.log(age);
+
         let lowerAgeArray = [];
         let upperAgeArray = [];
 
         for (let i = 0; i < 5; ++i) {
             if (age - i >= 18) {
-                //lowerAgeArray.push(age - i);
+                lowerAgeArray.push(age - i);
             }
-            //upperAgeArray.push(age + i);
+            upperAgeArray.push(age + i);
         }
         console.log(lowerAgeArray);
         console.log(upperAgeArray);

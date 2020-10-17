@@ -37,8 +37,8 @@ export default class OnboardingFour extends Component {
     constructor(props){
         super(props);
         this.state = {
-            email: props.email,
-            phoneNumber: props.phoneNumber,
+            email: props.route.params.email,
+            phoneNumber: props.route.params.phoneNumber,
             gender: "",
             name: "",
             birthday: Date(),
