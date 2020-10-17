@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import * as Dtos from './app.dtos';
-import { authGetUser, getAnswersOfQuestion, getAPIQuestionsFromIDs, makeAnswer, postResponseToAnswer } from './firebase/functions';
+import { authGetUser, getAnswersOfQuestion, getAPIQuestionsFromIDs, getUIDFromTokenTest, makeAnswer, postResponseToAnswer } from './firebase/functions';
 
 
 @Injectable()
 export class TestService {
   getTokenTest(token: Dtos.Token) : Promise<Dtos.UID> {
-    return this.getTokenTest(token);
+    return getUIDFromTokenTest(token);
   }
 
   getTest(): string {
