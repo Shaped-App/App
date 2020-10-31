@@ -16,7 +16,13 @@
         "/browse/answer/get": "/api/v1.0/browse/answer/",
         "/browse/answer/post": "/api/v1.0/browse/answer/",
         "/browse/response/post": "api/v1.0/browse/response/",
-        "/browse/response-limit/get": "api/v1.0/browse/response-limit/"
+        "/browse/response-limit/get": "api/v1.0/browse/response-limit/",
+        "/profile/info/get": "/api/v1.0/profile/info/",
+        "/profile/info/post": "/api/v1.0/profile/info/",
+        "/profile/create/post": "/api/v1.0/profile/create/",
+        "/profile/recent-answers/get": "/api/v1.0/profile/recent-answers/",
+        "/profile/interests/get": "/api/v1.0/profile/interests/",
+        "/profile/interests/post": "/api/v1.0/profile/interests/",
       }
     }
   ]
