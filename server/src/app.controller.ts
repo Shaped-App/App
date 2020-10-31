@@ -70,4 +70,36 @@ export class AppController {
   async getBrowseResponseLimit(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
     return this.browseService.getBrowseResponseLimit(body);
   }
+
+  // Profile APIs
+  @Get(getApi("/profile/info/get"))
+  async getProfileInfo(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
+    return this.browseService.getBrowseResponseLimit(body);
+  }
+
+  @Post(getApi("/profile/info/post"))
+  async postProfileInfo(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
+    return this.browseService.getBrowseResponseLimit(body);
+  }
+
+  @Post(getApi("/profile/create/post"))
+  async postProfileCreate(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
+    return this.browseService.getBrowseResponseLimit(body);
+  }
+
+  @Get(getApi("/profile/recent-answers/get"))
+  async getProfileRecentAnswers(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
+    return this.browseService.getBrowseResponseLimit(body);
+  }
+
+  @Get(getApi("/profile/interests/get"))
+  async getProfileInterests(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
+    return this.browseService.getBrowseResponseLimit(body);
+  }
+
+  @Post(getApi("/profile/interests/post"))
+  async postProfileInterests(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
+    return this.browseService.getBrowseResponseLimit(body);
+  }
+
 }
