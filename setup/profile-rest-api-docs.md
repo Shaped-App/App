@@ -19,7 +19,8 @@ Response:
 
 ```
 {
-    <uid>: {
+    "info": {
+        "uid": <uid>,
         "email": <email>,
         "phone_number": <number>,
         "profile_pic": <image_id>,
@@ -45,6 +46,7 @@ Input:
 
 ```
 {
+    "token": <token>,
     "updating_info": {
         "looking_for_friend": <boolean>,
         "looking_for_relationship": <boolean>,
@@ -71,6 +73,7 @@ Input:
 
 ```
 {
+    "token": <token>,
     "new_user_info": { 
         "email": <email>,
         "phone_number": <number>,
@@ -158,6 +161,7 @@ Input:
 
 ```
 {
+    "token": <token>,
     "interests": [
         <string1>,
         <string2>,
