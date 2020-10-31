@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import ApiFactory from './api/import';
 import * as Dtos from './app.dtos';
 import { BrowseService, TestService } from './app.service';
+import { ProfileService } from './app.profile';
 
 function getApi(description: string) {
   return ApiFactory.getInstance().getApi('v1.0', description);
@@ -10,7 +11,9 @@ function getApi(description: string) {
 @Controller()
 export class AppController {
   constructor(private readonly testService: TestService,
-    private readonly browseService: BrowseService) { }
+    private readonly browseService: BrowseService,
+    private readonly profileService: ProfileService
+    ) { }
 
   @Post('/test/tokenTest')
   postTokenTest(@Body() body: Dtos.getTokenInDto): Promise<Dtos.getTokenOutDto> {
@@ -73,33 +76,33 @@ export class AppController {
 
   // Profile APIs
   @Get(getApi("/profile/info/get"))
-  async getProfileInfo(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
-    return this.browseService.getBrowseResponseLimit(body);
+  async getProfileInfo(@Body() body: Dtos.getProfileInfoInDto): Promise<Dtos.getProfileInfoOutDto> {
+    return this.profileService.getProfileInfo(body);
   }
 
   @Post(getApi("/profile/info/post"))
-  async postProfileInfo(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
-    return this.browseService.getBrowseResponseLimit(body);
+  async postProfileInfo(@Body() body: Dtos.postProfileInfoInDto): Promise<Dtos.postProfileInfoOutDto> {
+    return this.profileService.postProfileInfo(body);
   }
 
   @Post(getApi("/profile/create/post"))
-  async postProfileCreate(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
-    return this.browseService.getBrowseResponseLimit(body);
+  async postProfileCreate(@Body() body: Dtos.postCreateProfileInDto): Promise<Dtos.postCreateProfileInfoOutDto> {
+    return this.profileService.postProfileCreate(body);
   }
 
   @Get(getApi("/profile/recent-answers/get"))
-  async getProfileRecentAnswers(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
-    return this.browseService.getBrowseResponseLimit(body);
+  async getProfileRecentAnswers(@Body() body: Dtos.getProfileRecentAnswersInDto): Promise<Dtos.getProfileRecentAnswersOutDto> {
+    return this.profileService.getProfileRecentAnswers(body);
   }
 
   @Get(getApi("/profile/interests/get"))
-  async getProfileInterests(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
-    return this.browseService.getBrowseResponseLimit(body);
+  async getProfileInterests(@Body() body: Dtos.getProfileInterestsInDto): Promise<Dtos.getProfileInterestsOutDto> {
+    return this.profileService.getProfileInterests(body);
   }
 
   @Post(getApi("/profile/interests/post"))
-  async postProfileInterests(@Body() body: Dtos.getResponseLimitInDto): Promise<Dtos.getResponseLimitOutDto> {
-    return this.browseService.getBrowseResponseLimit(body);
+  async postProfileInterests(@Body() body: Dtos.postProfileInterestsInDto): Promise<Dtos.postProfileInterestsOutDto> {
+    return this.profileService.postProfileInterests(body);
   }
 
 }

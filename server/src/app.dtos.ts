@@ -93,3 +93,91 @@ export interface getResponseLimitInDto {
 export interface getResponseLimitOutDto {
   responsesLeft: ResponsesLeft;
 }
+
+export interface getProfileInfoInDto { 
+  uid: UID;
+}
+export interface getProfileInfoOutDto { 
+  info: {
+    uid: UID,
+    email: string,
+    phone_number: number,
+    //TODO:
+    // profile_pic: image_id,
+    gender: string,
+    first_name: string,
+    full_name: string,
+    birthday: Time,
+    zipcode: number,
+    looking_for_friend: boolean,
+    looking_for_relationship: boolean,
+    mile_distance: number,
+    age_low: number,
+    age_high: number,
+    about: string,
+    bible_verse: string,
+  }
+}
+
+export interface postProfileInfoInDto {
+  updating_info: {
+    looking_for_friend: boolean,
+    looking_for_relationship: boolean,
+    mile_distance: number,
+    age_low: number,
+    age_high: number,
+    about: string,
+    bible_verse: string,
+  }
+}
+export interface postProfileInfoOutDto { 
+  time: Time;
+}
+
+export interface postCreateProfileInDto { 
+  new_user_info: {
+    email: string,
+    phone_number: number,
+    //TODO: 
+    // profile_pic: image_id,
+    gender: string,
+    first_name: string,
+    full_name: string,
+    birthday: Time,
+    zipcode: number,
+    looking_for_friend: boolean,
+    looking_for_relationship: boolean,
+    mile_distance: number,
+    age_low: number,
+    age_high: number,
+  }
+}
+export interface postCreateProfileInfoOutDto { 
+  new_uid: UID;
+}
+
+export interface getProfileRecentAnswersInDto { 
+    uid: UID,
+    time: Time;
+}
+export interface getProfileRecentAnswersOutDto { 
+    answers: {
+        [index: string]: APIAnswer
+    }
+}
+
+export interface getProfileInterestsInDto { 
+  uid: UID;
+  time: Time;
+}
+export interface getProfileInterestsOutDto { 
+  interests: string[];
+}
+
+export interface postProfileInterestsInDto { 
+  interests: string[];
+  time: Time;
+}
+export interface postProfileInterestsOutDto { 
+  time: Time;
+}

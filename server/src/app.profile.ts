@@ -1,44 +1,103 @@
-import { Injectable } from '@nestjs/common';
 import * as Dtos from './app.dtos';
-import { authGetUser, getAnswersOfQuestion, getAPIQuestionsFromIDs, getUIDFromTokenTest, makeAnswer, postResponseToAnswer } from './firebase/functions';
+import { Body, Injectable } from '@nestjs/common';
+import { IncomingMessage } from 'http';
+
 
 @Injectable()
 export class ProfileService {
 
-  // @Get(getApi('/browse/answer/get'))
-  async getBrowseAnswer(body: Dtos.getAnswerInDto): Promise<Dtos.getAnswerOutDto> {
-    const questionID: string = body.qid;
-    const answerIDs: string[] = body.aids;
-    const answerFirebase = await getAnswersOfQuestion(questionID, answerIDs);
+  // Profile services
+  // @Get(getApi("/profile/info/get"))
+
+  getInfo() : Dtos.getProfileInfoOutDto {
     return {
-      answers: answerFirebase
+      "info": {
+        uid: "",
+        email: "",
+        phone_number: 3,
+        //TODO:
+        // profile_pic: image_id,
+        gender: "",
+        first_name: "",
+        full_name: "",
+        birthday: "time",
+        zipcode: 3,
+        looking_for_friend: false,
+        looking_for_relationship: false,
+        mile_distance: 3,
+        age_low: 3,
+        age_high: 3,
+        about: "",
+        bible_verse: "",
+      }
+    }
+  }
+  async getProfileInfo(@Body() body: Dtos.getProfileInfoInDto): Promise<Dtos.getProfileInfoOutDto> {
+    return this.getInfo();
+  }
+
+  postInfo(): Dtos.postProfileInfoOutDto {
+    return {
+      time: "time"
     };
   }
 
-  // @Post(getApi('/browse/answer/post'))
-  async postBrowseAnswer(body: Dtos.postAnswerInDto): Promise<Dtos.postAnswerOutDto> {
-    const userID: Dtos.UID = await authGetUser();
-    const questionID: Dtos.QID = body.qid;
-    const answerText: string = body.answer;
+  // @Post(getApi("/profile/info/post"))
+  async postProfileInfo(@Body() body: Dtos.postProfileInfoInDto): Promise<Dtos.postProfileInfoOutDto> {
+    return this.postInfo();
+  }
 
-    //?  using client-submitted time or server made time?
-    // const time: Dtos.Time = body.time;
+  createProfile() : Dtos.postCreateProfileInfoOutDto {
     return {
-      answer: await makeAnswer(userID, questionID, answerText)
+      new_uid: "uid"
+    };
+  }
+
+  // @Post(getApi("/profile/create/post"))
+  async postProfileCreate(@Body() body: Dtos.postCreateProfileInDto): Promise<Dtos.postCreateProfileInfoOutDto> {
+    return this.createProfile();
+  }
+
+  getAnswers(): Dtos.getProfileRecentAnswersOutDto {
+    return {
+      answers: {
+        "aid":
+        {
+          qid: "qid",
+          aid: "aid",
+          answer: "answer text",
+          created: "time",
+          creator: "creator"
+        }
+      }
+    };
+  }
+
+  // @Get(getApi("/profile/recent-answers/get"))
+  async getProfileRecentAnswers(@Body() body: Dtos.getProfileRecentAnswersInDto): Promise<Dtos.getProfileRecentAnswersOutDto> {
+    return this.getAnswers();
+  }
+
+  getInterests(): Dtos.getProfileInterestsOutDto {
+    return {
+      interests: ["talking", "dating", "reading books", "example-hypen"]
     }
   }
 
-  // @Post(getApi('/browse/response/post'))
-  async postBrowseResponse(body: Dtos.postResponseInDto): Promise<Dtos.postResponseOutDto> {
-    const aid = body.aid;
-    const qid = body.qid;
-    return await postResponseToAnswer(qid, aid);
+  postInterests(): Dtos.postProfileInterestsOutDto {
+    return {
+      time: "time"
+    }
   }
 
-  // @Get(getApi('/browse/response-limit/get'))
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getBrowseResponseLimit(body: Dtos.getResponseLimitInDto): Dtos.getResponseLimitOutDto {
-    return { responsesLeft: 5 };
+  // @Get(getApi("/profile/interests/get"))
+  async getProfileInterests(@Body() body: Dtos.getProfileInterestsInDto): Promise<Dtos.getProfileInterestsOutDto> {
+    return this.getInterests();
+  }
+
+  // @Post(getApi("/profile/interests/post"))
+  async postProfileInterests(@Body() body: Dtos.postProfileInterestsInDto): Promise<Dtos.postProfileInterestsOutDto> {
+    return this.postInterests();
   }
 
 }
