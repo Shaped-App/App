@@ -17,22 +17,8 @@ export default class InboxOneScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      incoming: [
-        {
-          name: "Bob Ross",
-          message: "I like to paint",
-          chatID: "1234",
-          time: "4:20"
-        }
-      ],
-      inbox: [
-        {
-          name: "Bob Ross",
-          message: "I like to paint",
-          chatID: "1234",
-          time: "4:20"
-        }
-      ],
+      incoming: [],
+      inbox: [],
       expand: false,
       navigation: props.navigation
     };
