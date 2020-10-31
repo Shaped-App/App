@@ -17,10 +17,24 @@ export default class InboxOneScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      incoming: [],
-      inbox: [],
+      incoming: [
+        {
+          name: "Bob Ross",
+          message: "I like to paint",
+          chatID: "1234",
+          time: "4:20"
+        }
+      ],
+      inbox: [
+        {
+          name: "Bob Ross",
+          message: "I like to paint",
+          chatID: "1234",
+          time: "4:20"
+        }
+      ],
       expand: false,
-      //navigation: props.navigation for later
+      navigation: props.navigation
     };
     this.onPressExpand = this.onPressExpand.bind(this);
   }
@@ -68,12 +82,14 @@ export default class InboxOneScreen extends Component {
               <ScrollView style={inbox_style.bar}>
                 {this.state.incoming.map(msg => (
                   <View style={{marginTop: 24}}>
-                    <Message
+                    <SingleMessage
                       name={msg.name}
                       message={msg.message}
                       time={msg.time}
                       chatID={msg.chatID}
                       key={msg.chatID}
+                      accepted={false}
+                      navigation={this.state.navigation}
                     />
                   </View>
                 ))}
@@ -85,12 +101,14 @@ export default class InboxOneScreen extends Component {
           <ScrollView>
             {this.state.inbox.map(msg => (
               <View style={styles.class__container}>
-                <Message
+                <SingleMessage
                   name={msg.name}
                   message={msg.message}
                   time={msg.time}
                   chatID={msg.chatID}
                   key={msg.chatID}
+                  accepted={true}
+                  navigation={this.state.navigation}
                 />
               </View>
             ))}

@@ -4,6 +4,7 @@ import {Text, TouchableHighlight, View} from 'react-native';
 import Icon from '../Utility/Icon';
 import styles from '../Static/main_style';
 import inbox_style from '../Static/inbox_style';
+import {inboxTwo} from '../NavBar';
 
 export default class SingleMessage extends Component {
   constructor(props) {
@@ -13,12 +14,18 @@ export default class SingleMessage extends Component {
       message: props.message,
       time: props.time,
       chatID: props.chatID,
-      //navigation: props.navigation for later
+      accepted: props.accepted,
+      navigation: props.navigation
     };
     this.onPressMessage = this.onPressMessage.bind(this);
   }
 
   onPressMessage() {
+    this.state.navigation.navigate(inboxTwo, {
+      name: this.state.name,
+      chatID: this.state.chatID,
+      accepted: this.state.accepted,
+  });
     console.log('Pressed Message!');
   }
 
