@@ -18,11 +18,13 @@ class Message extends Component {
   }
 
   render(){
-    const pos = this.props.owner ? {width: '70%', alignSelf: 'flex-end'} : {width: '70%'};
+    const pos = this.props.owner ? {alignSelf: 'flex-end'} : {alignSelf: 'flex-start'};
     return (
-      <SafeAreaView style={[styles.class__container, pos]}>
-        <Text style={{padding: '5%'}}>{this.props.message}</Text>
-      </SafeAreaView>
+      <View style={[pos, {width: 'auto'}]}>
+        <SafeAreaView style={[styles.class__container, {width: '70%'}]}>
+          <Text style={{padding: '5%'}}>{this.props.message}</Text>
+        </SafeAreaView>
+      </View>
     );
   }
 }
@@ -48,6 +50,7 @@ export default class ChatRoom extends Component {
     this.state.navigation.setOptions({
       title: this.state.name,
     });
+    console.log("Get chatlog");
   }
 
   handleChange(value){
@@ -67,7 +70,8 @@ export default class ChatRoom extends Component {
     if(accept){
       this.setState({accepted: accept});
     }else{
-      console.log("Pressed pass. IDK what's next")
+      console.log("Send to backend that it passed");
+      this.state.navigation.goBack();
     }
   }
 
