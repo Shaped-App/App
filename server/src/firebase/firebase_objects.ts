@@ -34,7 +34,7 @@ export class FirebaseQuestion {
 }
 
 export const FirestoreQuestionConverter: FirebaseFirestore.FirestoreDataConverter<FirebaseQuestion> = {
-  toFirestore: function (fireQuestion: FirebaseQuestion) {
+  toFirestore (fireQuestion: FirebaseQuestion): FirebaseFirestore.DocumentData{
     return {
       question: fireQuestion.question,
       created: fireQuestion.created,
@@ -73,7 +73,7 @@ export class FirebaseAnswer {
 }
 
 export const FirestoreAnswerConverter: FirebaseFirestore.FirestoreDataConverter<FirebaseAnswer> = {
-  toFirestore: function (fireAnswer: FirebaseAnswer) {
+  toFirestore (fireAnswer: FirebaseAnswer) : FirebaseFirestore.DocumentData {
     return {
       answer: fireAnswer.answer,
       created: fireAnswer.created,
@@ -82,5 +82,73 @@ export const FirestoreAnswerConverter: FirebaseFirestore.FirestoreDataConverter<
   },
   fromFirestore(snapshot: FirebaseFirestore.DocumentData): FirebaseAnswer {
     return new FirebaseAnswer(snapshot.answer, snapshot.created, snapshot.creator);
+  },
+};
+
+export class FirebaseUser {
+  // created: Time;
+  uid: UID;
+  email: string;
+  phone_number: string;
+  //todo:
+  // profile_pic: image_id,
+  gender: string;
+  first_name: string;
+  full_name: string;
+  birthday: Time;
+  zipcode: number;
+  looking_for_friend: boolean;
+  looking_for_relationship: boolean;
+  mile_distance: number;
+  age_low: number;
+  age_high: number;
+  about: string;
+  bible_verse: string;
+  constructor(fireData: FirebaseFirestore.DocumentData) {
+      this.uid = fireData.uid;
+      this.email = fireData.email;
+      this.phone_number = fireData.phone_number;
+      // this.profile_pic = fireData.profile_pic;
+      this.gender = fireData.gender;
+      this.first_name = fireData.first_name;
+      this.full_name = fireData.full_name;
+      this.birthday = fireData.birthday;
+      this.zipcode = fireData.zipcode;
+      this.looking_for_friend = fireData.looking_for_friend;
+      this.looking_for_relationship = fireData.looking_for_relationship;
+      this.mile_distance = fireData.mile_distance;
+      this.age_low = fireData.age_low;
+      this.age_high = fireData.age_high;
+      this.about = fireData.about;
+      this.bible_verse = fireData.bible_verse;
+  }
+  toFirestore() : FirebaseFirestore.DocumentData {
+    return {
+      uid: this.uid,
+      email: this.email,
+      phone_number: this.phone_number,
+      // profile_pic: this.profile_pic,
+      gender: this.gender,
+      first_name: this.first_name,
+      full_name: this.full_name,
+      birthday: this.birthday,
+      zipcode: this.zipcode,
+      looking_for_friend: this.looking_for_friend,
+      looking_for_relationship: this.looking_for_relationship,
+      mile_distance: this.mile_distance,
+      age_low: this.age_low,
+      age_high: this.age_high,
+      about: this.about,
+      bible_verse: this.bible_verse,
+    }
+  }
+}
+
+export const FirestoreUserConverter: FirebaseFirestore.FirestoreDataConverter<FirebaseUser> = {
+  toFirestore (fireUser: FirebaseUser) : FirebaseFirestore.DocumentData {
+    return fireUser.toFirestore();
+  },
+  fromFirestore(snapshot: FirebaseFirestore.DocumentData): FirebaseUser {
+    return new FirebaseUser(snapshot);
   },
 };

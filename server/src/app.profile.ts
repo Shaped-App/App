@@ -1,6 +1,6 @@
 import * as Dtos from './app.dtos';
 import { Body, Injectable } from '@nestjs/common';
-import { IncomingMessage } from 'http';
+import { getUserInfoFromUID } from './firebase/functions';
 
 
 @Injectable()
@@ -14,7 +14,7 @@ export class ProfileService {
       "info": {
         uid: "",
         email: "",
-        phone_number: 3,
+        phone_number: "",
         //TODO:
         // profile_pic: image_id,
         gender: "",
@@ -33,6 +33,8 @@ export class ProfileService {
     }
   }
   async getProfileInfo(@Body() body: Dtos.getProfileInfoInDto): Promise<Dtos.getProfileInfoOutDto> {
+    const info = getUserInfoFromUID(body.uid);
+    console.log(info);
     return this.getInfo();
   }
 

@@ -22,6 +22,26 @@ export interface APIAnswer {
   creator?: UID;
 }
 
+export interface APIUser {
+    uid: UID,
+    email: string,
+    phone_number: string,
+    //TODO:
+    // profile_pic: image_id,
+    gender: string,
+    first_name: string,
+    full_name: string,
+    birthday: Time,
+    zipcode: number,
+    looking_for_friend: boolean,
+    looking_for_relationship: boolean,
+    mile_distance: number,
+    age_low: number,
+    age_high: number,
+    about: string,
+    bible_verse: string,
+  }
+
 export interface getTokenInDto {
   token: Token;
 }
@@ -98,25 +118,7 @@ export interface getProfileInfoInDto {
   uid: UID;
 }
 export interface getProfileInfoOutDto { 
-  info: {
-    uid: UID,
-    email: string,
-    phone_number: number,
-    //TODO:
-    // profile_pic: image_id,
-    gender: string,
-    first_name: string,
-    full_name: string,
-    birthday: Time,
-    zipcode: number,
-    looking_for_friend: boolean,
-    looking_for_relationship: boolean,
-    mile_distance: number,
-    age_low: number,
-    age_high: number,
-    about: string,
-    bible_verse: string,
-  }
+  info: APIUser
 }
 
 export interface postProfileInfoInDto {

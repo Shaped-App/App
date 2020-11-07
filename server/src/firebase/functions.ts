@@ -1,7 +1,7 @@
 import admin from 'firebase-admin';
-import { Token, AID, APIQuestion, QID, UID, APIAnswer, postResponseOutDto } from 'src/app.dtos';
-import { FirebaseAnswer, FirebaseQuestion, FirestoreQuestionConverter, FirestoreAnswerConverter } from './firebase_objects';
-import { AnswerCollectionFromID, DocRef, QuestionCollection } from './model';
+import { AID, APIAnswer, APIQuestion, getProfileInfoOutDto, postResponseOutDto, QID, Token, UID } from 'src/app.dtos';
+import { FirebaseAnswer, FirebaseQuestion, FirestoreAnswerConverter, FirestoreQuestionConverter, FirestoreUserConverter } from './firebase_objects';
+import { AnswerCollectionFromID, DocRef, QuestionCollection, UserCollection } from './model';
 
 export async function getUIDFromTokenTest(token: Token): Promise<UID> 
 {
@@ -112,8 +112,41 @@ export async function postResponseToAnswer(qid: QID, aid: AID): Promise<postResp
     };
 }
 
+export async function getUserInfoFromUID(UID: UID): Promise<getProfileInfoOutDto> {
+    
+    console.log("start");
+    const userQuery = UserCollection
+    console.log("saasdf");
+    const doc = userQuery.doc(UID)
+    console.log("end");
+    const docs = await doc.withConverter(FirestoreUserConverter).get()
+    
+    console.log(docs);
+    return {
+      "info": {
+        uid: "",
+        email: "",
+        phone_number: "",
+        //TODO:
+        // profile_pic: image_id,
+        gender: "",
+        first_name: "",
+        full_name: "",
+        birthday: "time",
+        zipcode: 3,
+        looking_for_friend: false,
+        looking_for_relationship: false,
+        mile_distance: 3,
+        age_low: 3,
+        age_high: 3,
+        about: "",
+        bible_verse: "",
+      }
+    }
+}
 ///     Helper functions     
 // TODO: actually get userid from firebase auth
+// needs to get from token 
 //? needs async or not?
 export async function authGetUser(): Promise<UID> {
     return "FDr6IxDIO3GDkZMJ8hPy"
