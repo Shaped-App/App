@@ -113,7 +113,7 @@ export async function postResponseToAnswer(qid: QID, aid: AID): Promise<postResp
 }
 
 export async function makeUser(info: APIUserInfo): Promise<APIUser> {
-    const uid: UID = info.uid;
+    const uid: UID = await authGetUser();
     //? use UID from API or make user UID on own?
     // const newUserRef: DocRef = UserCollection.doc();
     const newUserRef: DocRef = UserCollection.doc(uid);
@@ -121,7 +121,6 @@ export async function makeUser(info: APIUserInfo): Promise<APIUser> {
     newUserRef.set(newUser);
     // return user document in APIUser format
     return newUser.toAPIUser();
-
 }
 
 export async function getUserInfoFromUID(UID: UID): Promise<getProfileInfoOutDto> {

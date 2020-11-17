@@ -7,8 +7,31 @@ import { getUserInfoFromUID, makeUser } from './firebase/functions';
 export class ProfileService {
 
   // Profile services
-
   // @Get(getApi("/profile/info/get"))
+
+  // getInfo() : Dtos.getProfileInfoOutDto {
+  //   return {
+  //     "info": {
+  //       uid: "",
+  //       email: "",
+  //       phone_number: 323,
+  //       //TODO:
+  //       // profile_pic: image_id,
+  //       gender: "",
+  //       first_name: "",
+  //       full_name: "",
+  //       birthday: "time",
+  //       zipcode: 3,
+  //       looking_for_friend: false,
+  //       looking_for_relationship: false,
+  //       mile_distance: 3,
+  //       age_low: 3,
+  //       age_high: 3,
+  //       about: "",
+  //       bible_verse: "",
+  //     }
+  //   }
+  // }
   async getProfileInfo(@Body() body: Dtos.getProfileInfoInDto): Promise<Dtos.getProfileInfoOutDto> {
     const info = getUserInfoFromUID(body.uid);
     console.log(info);
@@ -26,16 +49,23 @@ export class ProfileService {
     return this.postInfo();
   }
 
+  async createUser(info: Dtos.APIUserInfo): Promise<Dtos.APIUser> {
+    const user: Dtos.APIUser = await makeUser(info);
+    return user;
+  }
+
   // @Post(getApi("/profile/create/post"))
   async postProfileCreate(@Body() body: Dtos.postCreateProfileInDto): Promise<Dtos.postCreateProfileInfoOutDto> {
-    const user: Dtos.APIUser = await makeUser(body.new_user_info);
+    const user: Dtos.APIUser = await this.createUser(body.new_user_info);
     return {
+      time: "timeType",
       new_uid: user.uid
     };
   }
 
   getAnswers(): Dtos.getProfileRecentAnswersOutDto {
     return {
+      time: "timeType",
       answers: {
         "aid":
         {
@@ -56,6 +86,7 @@ export class ProfileService {
 
   getInterests(): Dtos.getProfileInterestsOutDto {
     return {
+      time: "timeType",
       interests: ["talking", "dating", "reading books", "example-hypen"]
     }
   }

@@ -101,7 +101,6 @@ export class FirebaseUser {
   }
   toAPIUser() : APIUser {
     return {
-      uid: this.uid,
       email: this.info.email,
       phone_number: this.info.phone_number,
       // profile_pic: this.info.profile_pic,
@@ -127,7 +126,6 @@ export class FirebaseUser {
 function parseFirebaseUser(snapshot: FirebaseFirestore.DocumentData): FirebaseUser {
   const uid = snapshot.data.uid;
   const info: APIUserInfo = {
-    uid: uid,
     email: snapshot.data.email,
     phone_number: snapshot.data.phone_number,
     // profile_pic: snapshot.data.profile_pic,

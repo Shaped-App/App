@@ -3,13 +3,13 @@ export type QID = string;
 export type AID = string;
 export type UID = string;
 export type UIDToken = string;
-export type Time = string; // subject to change
+export type APITime = string; // subject to change
 export type ResponsesLeft = number;
 
 export interface APIQuestion {
   qid: QID,
   question: string,
-  created: Time,
+  created: APITime,
   userAnswered: boolean,
   creator?: UID;
 }
@@ -18,7 +18,7 @@ export interface APIAnswer {
   qid: QID,
   aid: AID,
   answer: string,
-  created: Time,
+  created: APITime,
   creator?: UID;
 }
 
@@ -28,7 +28,6 @@ export interface APIUser extends APIUserInfo {
 }
 
 export interface APIUserInfo {
-  uid: UID,
   email: string,
   phone_number: number,
   //TODO: use pictures
@@ -36,7 +35,7 @@ export interface APIUserInfo {
   gender: string,
   first_name: string,
   full_name: string,
-  birthday: Time,
+  birthday: APITime,
   zipcode: number,
   looking_for_friend: boolean,
   looking_for_relationship: boolean,
@@ -45,90 +44,91 @@ export interface APIUserInfo {
   age_high: number,
 }
 
-interface APIDto {
+interface APIInDto {
   token: UIDToken
 }
 
-export interface getTokenInDto extends APIDto {
-  uid: UID
-}
-export interface getTokenOutDto extends APIDto {
-  uid: UID;
-}
-export interface getQuestionListInDto extends APIDto {
-  time: Time;
+interface APIOutDto {
+  time: APITime
 }
 
-export interface getQuestionListOutDto extends APIDto {
+export interface getTokenInDto extends APIInDto {
+  uid: UID
+}
+export interface getTokenOutDto extends APIOutDto {
+  uid: UID;
+}
+
+export type getQuestionListInDto = APIInDto
+
+export interface getQuestionListOutDto extends APIOutDto {
   qids: APIQuestion[];
 }
 
-export interface getQuestionInDto extends APIDto {
+export interface getQuestionInDto extends APIInDto {
   qids: QID[];
 }
 
-export interface getQuestionOutDto extends APIDto {
+export interface getQuestionOutDto extends APIOutDto {
   questions: APIQuestion[];
 }
 
-export interface getAnswerListInDto extends APIDto {
-  time: Time,
+export interface getAnswerListInDto extends APIInDto {
+  // time: APITime,
   qid: QID;
 }
 
-export interface getAnswerListOutDto extends APIDto {
+export interface getAnswerListOutDto extends APIOutDto {
   aids: APIAnswer[];
 }
 
-export interface getAnswerInDto extends APIDto {
+export interface getAnswerInDto extends APIInDto {
   qid: QID,
   aids: AID[];
 }
 
-export interface getAnswerOutDto extends APIDto {
+export interface getAnswerOutDto extends APIOutDto {
   answers: APIAnswer[];
 }
 
-export interface postAnswerInDto extends APIDto {
+export interface postAnswerInDto extends APIInDto {
   qid: QID,
   answer: string,
-  time: Time;
+  // time: APITime;
 }
 
-export interface postAnswerOutDto extends APIDto {
+export interface postAnswerOutDto extends APIOutDto {
   answer: APIAnswer;
 }
 
-export interface postResponseInDto extends APIDto {
+export interface postResponseInDto extends APIInDto {
   qid: QID,
   aid: AID,
   response: string,
-  time: Time;
+  // time: APITime;
 }
 
-export interface postResponseOutDto extends APIDto {
+export interface postResponseOutDto extends APIOutDto {
   qid: QID,
   aid: AID,
-  time: Time,
+  // time: APITime,
   responsesLeft: ResponsesLeft;
 }
 
-export interface getResponseLimitInDto extends APIDto {
-  time: Time;
-}
+export type getResponseLimitInDto = APIInDto
 
-export interface getResponseLimitOutDto extends APIDto {
+export interface getResponseLimitOutDto extends APIOutDto {
   responsesLeft: ResponsesLeft;
 }
 
-export interface getProfileInfoInDto extends APIDto {
+export interface getProfileInfoInDto extends APIInDto {
   uid: UID;
 }
-export interface getProfileInfoOutDto extends APIDto {
+export interface getProfileInfoOutDto extends APIOutDto {
   info: APIUser
 }
 
-export interface postProfileInfoInDto extends APIDto {
+export interface postProfileInfoInDto extends APIInDto {
   updating_info: {
     looking_for_friend: boolean,
     looking_for_relationship: boolean,
@@ -139,39 +139,35 @@ export interface postProfileInfoInDto extends APIDto {
     bible_verse: string,
   }
 }
-export interface postProfileInfoOutDto extends APIDto {
-  time: Time;
-}
+export type postProfileInfoOutDto = APIOutDto
 
-export interface postCreateProfileInDto extends APIDto {
+export interface postCreateProfileInDto extends APIInDto {
   new_user_info: APIUserInfo
 }
-export interface postCreateProfileInfoOutDto extends APIDto {
+export interface postCreateProfileInfoOutDto extends APIOutDto {
   new_uid: UID;
 }
 
-export interface getProfileRecentAnswersInDto extends APIDto {
+export interface getProfileRecentAnswersInDto extends APIInDto {
     uid: UID,
-    time: Time;
+    // time: APITime;
 }
-export interface getProfileRecentAnswersOutDto extends APIDto {
+export interface getProfileRecentAnswersOutDto extends APIOutDto {
     answers: {
         [index: string]: APIAnswer
     }
 }
 
-export interface getProfileInterestsInDto extends APIDto {
+export interface getProfileInterestsInDto extends APIInDto {
   uid: UID;
-  time: Time;
+  // time: APITime;
 }
-export interface getProfileInterestsOutDto extends APIDto {
+export interface getProfileInterestsOutDto extends APIOutDto {
   interests: string[];
 }
 
-export interface postProfileInterestsInDto extends APIDto {
+export interface postProfileInterestsInDto extends APIInDto {
   interests: string[];
-  time: Time;
+  // time: APITime;
 }
-export interface postProfileInterestsOutDto extends APIDto {
-  time: Time;
-}
+export type postProfileInterestsOutDto = APIOutDto
