@@ -1,5 +1,6 @@
 import admin from 'firebase-admin';
-import { APIQuestion, APIAnswer } from 'src/app.dtos';
+import { userInfo } from 'os';
+import { APIQuestion, APIAnswer, APIUserInfo, APIUser } from 'src/app.dtos';
 
 type QID = string;
 //TODO: aid requires qid, make class instead?
@@ -88,60 +89,62 @@ export const FirestoreAnswerConverter: FirebaseFirestore.FirestoreDataConverter<
 export class FirebaseUser {
   // created: Time;
   uid: UID;
-  email: string;
-  phone_number: string;
-  //todo:
-  // profile_pic: image_id,
-  gender: string;
-  first_name: string;
-  full_name: string;
-  birthday: Time;
-  zipcode: number;
-  looking_for_friend: boolean;
-  looking_for_relationship: boolean;
-  mile_distance: number;
-  age_low: number;
-  age_high: number;
+  info: APIUserInfo;
   about: string;
   bible_verse: string;
-  constructor(fireData: FirebaseFirestore.DocumentData) {
-      this.uid = fireData.uid;
-      this.email = fireData.email;
-      this.phone_number = fireData.phone_number;
-      // this.profile_pic = fireData.profile_pic;
-      this.gender = fireData.gender;
-      this.first_name = fireData.first_name;
-      this.full_name = fireData.full_name;
-      this.birthday = fireData.birthday;
-      this.zipcode = fireData.zipcode;
-      this.looking_for_friend = fireData.looking_for_friend;
-      this.looking_for_relationship = fireData.looking_for_relationship;
-      this.mile_distance = fireData.mile_distance;
-      this.age_low = fireData.age_low;
-      this.age_high = fireData.age_high;
-      this.about = fireData.about;
-      this.bible_verse = fireData.bible_verse;
+
+  constructor(uid: UID, info: APIUserInfo, about?: string, bible_verse?: string) {
+      this.uid = uid;
+      this.info = info;
+      this.about = about || "";
+      this.bible_verse = bible_verse || "";
   }
-  toFirestore() : FirebaseFirestore.DocumentData {
+  toAPIUser() : APIUser {
     return {
       uid: this.uid,
-      email: this.email,
-      phone_number: this.phone_number,
-      // profile_pic: this.profile_pic,
-      gender: this.gender,
-      first_name: this.first_name,
-      full_name: this.full_name,
-      birthday: this.birthday,
-      zipcode: this.zipcode,
-      looking_for_friend: this.looking_for_friend,
-      looking_for_relationship: this.looking_for_relationship,
-      mile_distance: this.mile_distance,
-      age_low: this.age_low,
-      age_high: this.age_high,
+      email: this.info.email,
+      phone_number: this.info.phone_number,
+      // profile_pic: this.info.profile_pic,
+      gender: this.info.gender,
+      first_name: this.info.first_name,
+      full_name: this.info.full_name,
+      birthday: this.info.birthday,
+      zipcode: this.info.zipcode,
+      looking_for_friend: this.info.looking_for_friend,
+      looking_for_relationship: this.info.looking_for_relationship,
+      mile_distance: this.info.mile_distance,
+      age_low: this.info.age_low,
+      age_high: this.info.age_high,
       about: this.about,
       bible_verse: this.bible_verse,
     }
   }
+  toFirestore() : FirebaseFirestore.DocumentData {
+    return this.toAPIUser();
+  }
+}
+
+function parseFirebaseUser(snapshot: FirebaseFirestore.DocumentData): FirebaseUser {
+  const uid = snapshot.data.uid;
+  const info: APIUserInfo = {
+    uid: uid,
+    email: snapshot.data.email,
+    phone_number: snapshot.data.phone_number,
+    // profile_pic: snapshot.data.profile_pic,
+    gender: snapshot.data.gender,
+    first_name: snapshot.data.first_name,
+    full_name: snapshot.data.full_name,
+    birthday: snapshot.data.birthday,
+    zipcode: snapshot.data.zipcode,
+    looking_for_friend: snapshot.data.looking_for_friend,
+    looking_for_relationship: snapshot.data.looking_for_relationship,
+    mile_distance: snapshot.data.mile_distance,
+    age_low: this.info.age_low,
+    age_high: this.info.age_high,
+  }
+  const about = snapshot.data.about;
+  const bible_verse = snapshot.data.bible_verse;
+  return new FirebaseUser(uid, info, about, bible_verse);
 }
 
 export const FirestoreUserConverter: FirebaseFirestore.FirestoreDataConverter<FirebaseUser> = {
@@ -149,6 +152,6 @@ export const FirestoreUserConverter: FirebaseFirestore.FirestoreDataConverter<Fi
     return fireUser.toFirestore();
   },
   fromFirestore(snapshot: FirebaseFirestore.DocumentData): FirebaseUser {
-    return new FirebaseUser(snapshot);
+    return parseFirebaseUser(snapshot);
   },
 };

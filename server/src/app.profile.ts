@@ -1,41 +1,18 @@
 import * as Dtos from './app.dtos';
 import { Body, Injectable } from '@nestjs/common';
-import { getUserInfoFromUID } from './firebase/functions';
+import { getUserInfoFromUID, makeUser } from './firebase/functions';
 
 
 @Injectable()
 export class ProfileService {
 
   // Profile services
-  // @Get(getApi("/profile/info/get"))
 
-  getInfo() : Dtos.getProfileInfoOutDto {
-    return {
-      "info": {
-        uid: "",
-        email: "",
-        phone_number: "",
-        //TODO:
-        // profile_pic: image_id,
-        gender: "",
-        first_name: "",
-        full_name: "",
-        birthday: "time",
-        zipcode: 3,
-        looking_for_friend: false,
-        looking_for_relationship: false,
-        mile_distance: 3,
-        age_low: 3,
-        age_high: 3,
-        about: "",
-        bible_verse: "",
-      }
-    }
-  }
+  // @Get(getApi("/profile/info/get"))
   async getProfileInfo(@Body() body: Dtos.getProfileInfoInDto): Promise<Dtos.getProfileInfoOutDto> {
     const info = getUserInfoFromUID(body.uid);
     console.log(info);
-    return this.getInfo();
+    return info;
   }
 
   postInfo(): Dtos.postProfileInfoOutDto {
@@ -49,15 +26,12 @@ export class ProfileService {
     return this.postInfo();
   }
 
-  createProfile() : Dtos.postCreateProfileInfoOutDto {
-    return {
-      new_uid: "uid"
-    };
-  }
-
   // @Post(getApi("/profile/create/post"))
   async postProfileCreate(@Body() body: Dtos.postCreateProfileInDto): Promise<Dtos.postCreateProfileInfoOutDto> {
-    return this.createProfile();
+    const user: Dtos.APIUser = await makeUser(body.new_user_info);
+    return {
+      new_uid: user.uid
+    };
   }
 
   getAnswers(): Dtos.getProfileRecentAnswersOutDto {

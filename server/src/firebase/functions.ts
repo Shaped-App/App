@@ -1,6 +1,6 @@
 import admin from 'firebase-admin';
-import { AID, APIAnswer, APIQuestion, getProfileInfoOutDto, postResponseOutDto, QID, Token, UID } from 'src/app.dtos';
-import { FirebaseAnswer, FirebaseQuestion, FirestoreAnswerConverter, FirestoreQuestionConverter, FirestoreUserConverter } from './firebase_objects';
+import { AID, APIAnswer, APIQuestion, APIUser, APIUserInfo, getProfileInfoOutDto, postResponseOutDto, QID, Token, UID } from 'src/app.dtos';
+import { FirebaseAnswer, FirebaseQuestion, FirebaseUser, FirestoreAnswerConverter, FirestoreQuestionConverter, FirestoreUserConverter } from './firebase_objects';
 import { AnswerCollectionFromID, DocRef, QuestionCollection, UserCollection } from './model';
 
 export async function getUIDFromTokenTest(token: Token): Promise<UID> 
@@ -112,6 +112,18 @@ export async function postResponseToAnswer(qid: QID, aid: AID): Promise<postResp
     };
 }
 
+export async function makeUser(info: APIUserInfo): Promise<APIUser> {
+    const uid: UID = info.uid;
+    //? use UID from API or make user UID on own?
+    // const newUserRef: DocRef = UserCollection.doc();
+    const newUserRef: DocRef = UserCollection.doc(uid);
+    const newUser = new FirebaseUser(uid, info)
+    newUserRef.set(newUser);
+    // return user document in APIUser format
+    return newUser.toAPIUser();
+
+}
+
 export async function getUserInfoFromUID(UID: UID): Promise<getProfileInfoOutDto> {
     
     console.log("start");
@@ -126,7 +138,7 @@ export async function getUserInfoFromUID(UID: UID): Promise<getProfileInfoOutDto
       "info": {
         uid: "",
         email: "",
-        phone_number: "",
+        phone_number: 343,
         //TODO:
         // profile_pic: image_id,
         gender: "",
