@@ -101,6 +101,7 @@ export class FirebaseUser {
   }
   toAPIUser() : APIUser {
     return {
+      uid: this.uid,
       email: this.info.email,
       phone_number: this.info.phone_number,
       // profile_pic: this.info.profile_pic,

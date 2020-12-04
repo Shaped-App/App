@@ -23,6 +23,7 @@ export interface APIAnswer {
 }
 
 export interface APIUser extends APIUserInfo {
+  uid: UID,
   about: string,
   bible_verse: string,
 }
@@ -52,14 +53,24 @@ interface APIOutDto {
   time: APITime
 }
 
-export interface getTokenInDto extends APIInDto {
+export interface getTokenInDto {
   uid: UID
 }
 export interface getTokenOutDto extends APIOutDto {
+  token: UIDToken;
   uid: UID;
 }
 
-export type getQuestionListInDto = APIInDto
+export interface postTokenInDto extends APIInDto {
+  uid: UID
+}
+export interface postTokenOutDto extends APIOutDto {
+  uid: UID;
+}
+
+export interface getQuestionListInDto extends APIInDto {
+  time: APITime;
+}
 
 export interface getQuestionListOutDto extends APIOutDto {
   qids: APIQuestion[];
@@ -74,7 +85,7 @@ export interface getQuestionOutDto extends APIOutDto {
 }
 
 export interface getAnswerListInDto extends APIInDto {
-  // time: APITime,
+  time: APITime,
   qid: QID;
 }
 

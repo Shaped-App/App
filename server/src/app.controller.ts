@@ -15,12 +15,20 @@ export class AppController {
     private readonly profileService: ProfileService
     ) { }
 
-  @Post('/test/tokenTest')
-  postTokenTest(@Body() body: Dtos.getTokenInDto): Promise<Dtos.getTokenOutDto> {
+  @Get('/test/tokenTest/get')
+  getTokenTest(@Body() body: Dtos.getTokenInDto): Promise<Dtos.getTokenOutDto> {
     console.log("body is");
     console.log(body);
     console.log("body end");
-    return this.testService.getTokenTest(body.token);
+    return this.testService.getTokenTest(body.uid);
+  }  
+  
+  @Post('/test/tokenTest/post')
+  postTokenTest(@Body() body: Dtos.postTokenInDto): Promise<Dtos.postTokenOutDto> {
+    console.log("body is");
+    console.log(body);
+    console.log("body end");
+    return this.testService.postTokenTest(body.token);
   }
 
   @Get(ApiFactory.getInstance().getApi('test', '/test1/test2/get'))

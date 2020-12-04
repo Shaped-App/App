@@ -1,14 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import * as Dtos from './app.dtos';
-import { authGetUser, getAnswersOfQuestion, getAPIQuestionsFromIDs, getUIDFromTokenTest, makeAnswer, postResponseToAnswer } from './firebase/functions';
+import { getAnswersOfQuestion, getAPIQuestionsFromIDs, getUIDFromTokenTest, makeAnswer, postResponseToAnswer } from './firebase/functions';
+import { getTokenFromUIDTest } from './firebase/test_functions';
 
 
 @Injectable()
 export class TestService {
-  async getTokenTest(token: Dtos.Token) : Promise<Dtos.getTokenOutDto> {
+  async postTokenTest(token: Dtos.UIDToken) : Promise<Dtos.postTokenOutDto> {
     return {
+      time: "timetype",
       uid: await getUIDFromTokenTest(token)
     };
+  }
+  async getTokenTest(uid: Dtos.UID) : Promise<Dtos.getTokenOutDto> {
+    return {
+      time: "timeType",
+      token: await getTokenFromUIDTest(uid),
+      uid: uid
+    }
   }
 
   getTest(): string {
@@ -19,12 +28,12 @@ export class TestService {
 @Injectable()
 export class BrowseService {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async getBrowseQIDsFromTime(time: Dtos.Time): Promise<Array<Dtos.QID>> {
+  async getBrowseQIDsFromTime(time: Dtos.APITime): Promise<Array<Dtos.QID>> {
     // const qids = await QuestionCollection.orderBy("created").limit(10).get()
     return ["aGixGhyA1S5LZYyXXCcE", "7ahZDKrDfQEhDZO5Br9R"];
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async getAnswerIDsForQuestion(questionID: Dtos.QID, time: Dtos.Time): Promise<Array<Dtos.QID>> {
+  async getAnswerIDsForQuestion(questionID: Dtos.QID, time: Dtos.APITime): Promise<Array<Dtos.QID>> {
     return ["9GW3CScIcvl9ZEuwCxEb"];
   }
 
@@ -32,14 +41,16 @@ export class BrowseService {
   async getBrowseQuestionList(body: Dtos.getQuestionListInDto): Promise<Dtos.getQuestionListOutDto> {
     const qids = await this.getBrowseQIDsFromTime(body.time)
     return {
-      qids: await getAPIQuestionsFromIDs(qids)
+      time: "timeType",
+      qids: await getAPIQuestionsFromIDs(body.token, qids)
     }
   }
 
   // @Get(getApi('/browse/question/get'))
   async getBrowseQuestion(body: Dtos.getQuestionInDto): Promise<Dtos.getQuestionOutDto> {
     return {
-      questions: await getAPIQuestionsFromIDs(body.qids)
+      time: "timeType",
+      questions: await getAPIQuestionsFromIDs(body.token, body.qids)
     }
   }
 
@@ -47,6 +58,7 @@ export class BrowseService {
   async getBrowseAnswerList(body: Dtos.getAnswerListInDto): Promise<Dtos.getAnswerListOutDto> {
     const aids = await this.getAnswerIDsForQuestion(body.qid, body.time);
     return {
+      time: "timeType",
       aids: await getAnswersOfQuestion(body.qid, aids)
     }
   }
@@ -57,20 +69,22 @@ export class BrowseService {
     const answerIDs: string[] = body.aids;
     const answerFirebase = await getAnswersOfQuestion(questionID, answerIDs);
     return {
+      time: "timeType",
       answers: answerFirebase
     };
   }
 
   // @Post(getApi('/browse/answer/post'))
   async postBrowseAnswer(body: Dtos.postAnswerInDto): Promise<Dtos.postAnswerOutDto> {
-    const userID: Dtos.UID = await authGetUser();
+    // const userID: Dtos.UID = await getUIDFromToken(body.token);
     const questionID: Dtos.QID = body.qid;
     const answerText: string = body.answer;
 
     //?  using client-submitted time or server made time?
-    // const time: Dtos.Time = body.time;
+    // const time: Dtos.APITime = body.time;
     return {
-      answer: await makeAnswer(userID, questionID, answerText)
+      time: "timeType",
+      answer: await makeAnswer(body.token, questionID, answerText)
     }
   }
 
@@ -84,7 +98,10 @@ export class BrowseService {
   // @Get(getApi('/browse/response-limit/get'))
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getBrowseResponseLimit(body: Dtos.getResponseLimitInDto): Dtos.getResponseLimitOutDto {
-    return { responsesLeft: 5 };
+    return {
+      time: "timeType",
+      responsesLeft: 5
+    };
   }
 
 }

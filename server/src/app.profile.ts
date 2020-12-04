@@ -1,6 +1,6 @@
 import * as Dtos from './app.dtos';
 import { Body, Injectable } from '@nestjs/common';
-import { getUserInfoFromUID, makeUser } from './firebase/functions';
+import { getUIDFromToken, getUserInfoFromUID, makeUser } from './firebase/functions';
 
 
 @Injectable()
@@ -49,14 +49,14 @@ export class ProfileService {
     return this.postInfo();
   }
 
-  async createUser(info: Dtos.APIUserInfo): Promise<Dtos.APIUser> {
-    const user: Dtos.APIUser = await makeUser(info);
+  async createUser(token: Dtos.UIDToken, info: Dtos.APIUserInfo): Promise<Dtos.APIUser> {
+    const user: Dtos.APIUser = await makeUser(token, info);
     return user;
   }
 
   // @Post(getApi("/profile/create/post"))
   async postProfileCreate(@Body() body: Dtos.postCreateProfileInDto): Promise<Dtos.postCreateProfileInfoOutDto> {
-    const user: Dtos.APIUser = await this.createUser(body.new_user_info);
+    const user: Dtos.APIUser = await this.createUser(body.token, body.new_user_info);
     return {
       time: "timeType",
       new_uid: user.uid
