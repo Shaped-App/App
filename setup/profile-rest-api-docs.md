@@ -19,7 +19,8 @@ Response:
 
 ```
 {
-    <uid>: {
+    "info": {
+        "uid": <uid>,
         "email": <email>,
         "phone_number": <number>,
         "profile_pic": <image_id>,
@@ -30,7 +31,8 @@ Response:
         "zipcode": <number>,
         "looking_for_friend": <boolean>,
         "looking_for_relationship": <boolean>,
-        "mile_distance": <number>,
+        "mile_distance_low": <number>,
+        "mile_distance_high": <number>,
         "age_low": <number>,
         "age_high": <number>,
         "about": <text>,
@@ -45,10 +47,12 @@ Input:
 
 ```
 {
+    "token": <token>,
     "updating_info": {
         "looking_for_friend": <boolean>,
         "looking_for_relationship": <boolean>,
-        "mile_distance": <number>,
+        "mile_distance_low": <number>,
+        "mile_distance_high": <number>,
         "age_low": <number>,
         "age_high": <number>,
         "about": <text>,
@@ -71,6 +75,7 @@ Input:
 
 ```
 {
+    "token": <token>,
     "new_user_info": { 
         "email": <email>,
         "phone_number": <number>,
@@ -82,7 +87,8 @@ Input:
         "zipcode": <number>,
         "looking_for_friend": <boolean>,
         "looking_for_relationship": <boolean>,
-        "mile_distance": <number>,
+        "mile_distance_low": <number>,
+        "mile_distance_high": <number>,
         "age_low": <number>,
         "age_high": <number>,
     }
@@ -158,6 +164,7 @@ Input:
 
 ```
 {
+    "token": <token>,
     "interests": [
         <string1>,
         <string2>,
