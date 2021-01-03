@@ -7,7 +7,6 @@ import { getUIDFromToken, getUserInfoFromUID, makeUser } from './firebase/functi
 export class ProfileService {
 
   // Profile services
-  // @Get(getApi("/profile/info/get"))
 
   // getInfo() : Dtos.getProfileInfoOutDto {
   //   return {
@@ -32,6 +31,9 @@ export class ProfileService {
   //     }
   //   }
   // }
+
+
+  // @Get(getApi("/profile/info/get"))
   async getProfileInfo(@Body() body: Dtos.getProfileInfoInDto): Promise<Dtos.getProfileInfoOutDto> {
     const info = getUserInfoFromUID(body.uid);
     console.log(info);
