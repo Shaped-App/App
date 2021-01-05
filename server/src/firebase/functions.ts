@@ -131,7 +131,7 @@ export async function makeUser(token: UIDToken, info: APIUserInfo): Promise<APIU
     return newUser.toAPIUser();
 }
 
-export async function getUserInfoFromUID(UID: UID): Promise<getProfileInfoOutDto> {
+export async function getUserInfoFromUID(UID: UID): Promise<APIUser> {
     
     console.log("start");
     const userQuery = UserCollection
@@ -140,31 +140,13 @@ export async function getUserInfoFromUID(UID: UID): Promise<getProfileInfoOutDto
     console.log("end");
     const docs = await doc.withConverter(FirestoreUserConverter).get()
     
-    console.log(docs);
-    return {
-        time: "timeType",
-        "info": {
-            uid: "",
-            email: "",
-            phone_number: 343,
-            //TODO:
-            // profile_pic: image_id,
-            gender: "",
-            first_name: "",
-            full_name: "",
-            birthday: "time",
-            zipcode: 3,
-            looking_for_friend: false,
-            looking_for_relationship: false,
-            mile_distance_low: 3,
-            mile_distance_high: 6,
-            age_low: 3,
-            age_high: 3,
-            about: "",
-            bible_verse: "",
-        }
-    }
+    const user = await docs.data();
+    const info = user.toAPIUser();
+    console.log(user);
+    return info;
 }
+
+/*  */
 ///     Helper functions     
 
 export async function getUIDFromToken(token: UIDToken): Promise<UID> 

@@ -35,9 +35,12 @@ export class ProfileService {
 
   // @Get(getApi("/profile/info/get"))
   async getProfileInfo(@Body() body: Dtos.getProfileInfoInDto): Promise<Dtos.getProfileInfoOutDto> {
-    const info = getUserInfoFromUID(body.uid);
-    console.log(info);
-    return info;
+    const user = await getUserInfoFromUID(body.uid);
+    console.log(user);
+    return {
+      time: "timeType",
+      info: user
+    };
   }
 
   postInfo(): Dtos.postProfileInfoOutDto {
@@ -58,6 +61,7 @@ export class ProfileService {
 
   // @Post(getApi("/profile/create/post"))
   async postProfileCreate(@Body() body: Dtos.postCreateProfileInDto): Promise<Dtos.postCreateProfileInfoOutDto> {
+    //TODO: stop if uid already exists
     const user: Dtos.APIUser = await this.createUser(body.token, body.new_user_info);
     return {
       time: "timeType",

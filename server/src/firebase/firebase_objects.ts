@@ -90,14 +90,13 @@ export class FirebaseUser {
   // created: Time;
   uid: UID;
   info: APIUserInfo;
-  about: string;
-  bible_verse: string;
 
-  constructor(uid: UID, info: APIUserInfo, about?: string, bible_verse?: string) {
+  // constructor(uid: UID, info: APIUserInfo, about?: string, bible_verse?: string) {
+  constructor(uid: UID, info: APIUserInfo) {
       this.uid = uid;
       this.info = info;
-      this.about = about || "";
-      this.bible_verse = bible_verse || "";
+      // this.about = about || "";
+      // this.bible_verse = bible_verse || "";
   }
   toAPIUser() : APIUser {
     return {
@@ -116,8 +115,10 @@ export class FirebaseUser {
       mile_distance_high: this.info.mile_distance_high,
       age_low: this.info.age_low,
       age_high: this.info.age_high,
-      about: this.about,
-      bible_verse: this.bible_verse,
+      about: this.info.about,
+      bible_verse: this.info.bible_verse,
+      // about: this.about,
+      // bible_verse: this.bible_verse,
     }
   }
   toFirestore() : FirebaseFirestore.DocumentData {
@@ -126,26 +127,30 @@ export class FirebaseUser {
 }
 
 function parseFirebaseUser(snapshot: FirebaseFirestore.DocumentData): FirebaseUser {
-  const uid = snapshot.data.uid;
+  const uid = snapshot.uid;
+
   const info: APIUserInfo = {
-    email: snapshot.data.email,
-    phone_number: snapshot.data.phone_number,
-    // profile_pic: snapshot.data.profile_pic,
-    gender: snapshot.data.gender,
-    first_name: snapshot.data.first_name,
-    full_name: snapshot.data.full_name,
-    birthday: snapshot.data.birthday,
-    zipcode: snapshot.data.zipcode,
-    looking_for_friend: snapshot.data.looking_for_friend,
-    looking_for_relationship: snapshot.data.looking_for_relationship,
-    mile_distance_low: this.info.mile_distance_low,
-    mile_distance_high: this.info.mile_distance_high,
-    age_low: this.info.age_low,
-    age_high: this.info.age_high,
+    email: snapshot.email,
+    phone_number: snapshot.phone_number,
+    // profile_pic: snapshot.profile_pic,
+    gender: snapshot.gender,
+    first_name: snapshot.first_name,
+    full_name: snapshot.full_name,
+    birthday: snapshot.birthday,
+    zipcode: snapshot.zipcode,
+    looking_for_friend: snapshot.looking_for_friend,
+    looking_for_relationship: snapshot.looking_for_relationship,
+    mile_distance_low: snapshot.mile_distance_low,
+    mile_distance_high: snapshot.mile_distance_high,
+    age_low: snapshot.age_low,
+    age_high: snapshot.age_high, 
+    about: snapshot.about,
+    bible_verse: snapshot.bible_verse,
   }
-  const about = snapshot.data.about;
-  const bible_verse = snapshot.data.bible_verse;
-  return new FirebaseUser(uid, info, about, bible_verse);
+  // const about = snapshot.about;
+  // const bible_verse = snapshot.bible_verse;
+  return new FirebaseUser(uid, info);
+  // return new FirebaseUser(uid, info, about, bible_verse);
 }
 
 export const FirestoreUserConverter: FirebaseFirestore.FirestoreDataConverter<FirebaseUser> = {

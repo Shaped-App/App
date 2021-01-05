@@ -24,8 +24,9 @@ export interface APIAnswer {
 
 export interface APIUser extends APIUserInfo {
   uid: UID,
-  about: string,
-  bible_verse: string,
+  // TODO: separate info that can and can't be updated
+  // about: string,
+  // bible_verse: string,
 }
 
 export interface APIUserInfo {
@@ -33,10 +34,12 @@ export interface APIUserInfo {
   phone_number: number,
   //TODO: use pictures
   // profile_pic: image_id,
+
   gender: string,
   first_name: string,
   full_name: string,
   birthday: APITime,
+
   zipcode: number,
   looking_for_friend: boolean,
   looking_for_relationship: boolean,
@@ -44,6 +47,8 @@ export interface APIUserInfo {
   mile_distance_high: number,
   age_low: number,
   age_high: number,
+  about: string,
+  bible_verse: string,
 }
 
 interface APIInDto {
