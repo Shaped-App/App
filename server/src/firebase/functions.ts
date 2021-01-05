@@ -6,7 +6,7 @@ import { AnswerCollectionFromID, DocRef, QuestionCollection, UserCollection } fr
 
 export async function getUIDFromTokenTest(token: UIDToken): Promise<UID> 
 {
-    const abUID = "88JPgNMNl4ZLollyfoTyHoS9qjC3"
+    // const abUID = "88JPgNMNl4ZLollyfoTyHoS9qjC3"
     // try {
     //     const abToke = await admin.auth().createCustomToken(abUID);
     //     console.log("got abtoke");
@@ -28,11 +28,13 @@ export async function getUIDFromTokenTest(token: UIDToken): Promise<UID>
     }
     catch (e) {
         console.error(e);
+        //TODO: determine reasonable return value when token invalid
+        // needs to be universal, since token used many
+        return e;
     }
-    finally {
-        console.log("cleanup");
-    }
-    return "bad token, no uid"
+    // finally {
+    //     console.log("cleanup");
+    // }
 }
 
 
@@ -117,10 +119,14 @@ export async function postResponseToAnswer(qid: QID, aid: AID): Promise<postResp
 export async function makeUser(token: UIDToken, info: APIUserInfo): Promise<APIUser> {
     const uid: UID = await getUIDFromToken(token);
     //? use UID from API token or make user UID on own?
+    //      .doc(uid) means that incoming uid (from token) has to be new
+    //      otherwise new data could overwrite existing user's data
+
     // const newUserRef: DocRef = UserCollection.doc();
     const newUserRef: DocRef = UserCollection.doc(uid);
     const newUser = new FirebaseUser(uid, info)
-    newUserRef.set(newUser);
+    //TODO: how to protect if uid collides?
+    newUserRef.set(newUser.toFirestore());
     // return user document in APIUser format
     return newUser.toAPIUser();
 }

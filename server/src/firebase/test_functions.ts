@@ -1,7 +1,7 @@
 // Firebase App (the core Firebase SDK) is always required and
 // must be listed before other Firebase SDKs
 import admin from 'firebase-admin';
-import firebase from "firebase/app";
+import firebase from 'firebase/app';
 
 // Add the Firebase services that you want to use
 import "firebase/auth";
@@ -23,10 +23,12 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
+// Generates a custom token for a specified user
+// This is our fake authentication service 
+// Lets use obtain tokens for use in the API
 export async function getTokenFromUIDTest(uid: UID): Promise<UIDToken> {
     const customToken = await admin.auth().createCustomToken(uid);
-    firebase.auth().signInWithCustomToken(customToken).catch(function (error) {
+    const user = await firebase.auth().signInWithCustomToken(customToken).catch(function (error) {
         const code = error.code;
         if(code == 'auth/invalid-custom-token') {
             console.log("bad token");
@@ -38,8 +40,7 @@ export async function getTokenFromUIDTest(uid: UID): Promise<UIDToken> {
             
         }
     })
-    const user = firebase.auth().currentUser;
     if(user)
-    return await user.getIdToken();
+        return await user.user.getIdToken();
     return "bad uid, no token";
 }

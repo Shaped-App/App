@@ -40,7 +40,8 @@ export interface APIUserInfo {
   zipcode: number,
   looking_for_friend: boolean,
   looking_for_relationship: boolean,
-  mile_distance: number,
+  mile_distance_low: number,
+  mile_distance_high: number,
   age_low: number,
   age_high: number,
 }
@@ -143,7 +144,8 @@ export interface postProfileInfoInDto extends APIInDto {
   updating_info: {
     looking_for_friend: boolean,
     looking_for_relationship: boolean,
-    mile_distance: number,
+    mile_distance_low: number,
+    mile_distance_high: number,
     age_low: number,
     age_high: number,
     about: string,
