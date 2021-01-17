@@ -131,6 +131,17 @@ export async function makeUser(token: UIDToken, info: APIUserInfo): Promise<APIU
     return newUser.toAPIUser();
 }
 
+export async function setUserInfo(token: UIDToken, info: APIUserInfo): Promise<APIUser> {
+    const uid: UID = await getUIDFromToken(token);
+    const newUserRef: DocRef = UserCollection.doc(uid);
+    const newUser = new FirebaseUser(uid, info)
+    // TODO: ensure info only has proper fields
+    newUserRef.update(info);
+    // newUserRef.set(newUser.toFirestore());
+
+    return newUser.toAPIUser();
+}
+
 export async function getUserInfoFromUID(UID: UID): Promise<APIUser> {
     
     console.log("start");

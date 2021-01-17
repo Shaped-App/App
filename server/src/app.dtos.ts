@@ -55,6 +55,10 @@ interface APIInDto {
   token: UIDToken
 }
 
+//TODO: should there be a checksum?
+// making sure info coming in is same as info processed by server
+// not needed with perfect backend, but will help expose bugs/improper processing
+//TODO: also may change for error handling
 interface APIOutDto {
   time: APITime
 }
@@ -146,16 +150,20 @@ export interface getProfileInfoOutDto extends APIOutDto {
 }
 
 export interface postProfileInfoInDto extends APIInDto {
-  updating_info: {
-    looking_for_friend: boolean,
-    looking_for_relationship: boolean,
-    mile_distance_low: number,
-    mile_distance_high: number,
-    age_low: number,
-    age_high: number,
-    about: string,
-    bible_verse: string,
-  }
+  updating_info: APIUserInfo
+
+  // //TODO: make this not so hardcoded
+  // // in case we allow different things to be changed
+  // updating_info: {
+  //   looking_for_friend: boolean,
+  //   looking_for_relationship: boolean,
+  //   mile_distance_low: number,
+  //   mile_distance_high: number,
+  //   age_low: number,
+  //   age_high: number,
+  //   about: string,
+  //   bible_verse: string,
+  // }
 }
 export type postProfileInfoOutDto = APIOutDto
 

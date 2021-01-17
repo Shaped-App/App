@@ -1,6 +1,6 @@
 import * as Dtos from './app.dtos';
 import { Body, Injectable } from '@nestjs/common';
-import { getUIDFromToken, getUserInfoFromUID, makeUser } from './firebase/functions';
+import { getUIDFromToken, getUserInfoFromUID, makeUser, setUserInfo } from './firebase/functions';
 
 
 @Injectable()
@@ -8,50 +8,28 @@ export class ProfileService {
 
   // Profile services
 
-  // getInfo() : Dtos.getProfileInfoOutDto {
-  //   return {
-  //     "info": {
-  //       uid: "",
-  //       email: "",
-  //       phone_number: 323,
-  //       //TODO:
-  //       // profile_pic: image_id,
-  //       gender: "",
-  //       first_name: "",
-  //       full_name: "",
-  //       birthday: "time",
-  //       zipcode: 3,
-  //       looking_for_friend: false,
-  //       looking_for_relationship: false,
-  //       mile_distance: 3,
-  //       age_low: 3,
-  //       age_high: 3,
-  //       about: "",
-  //       bible_verse: "",
-  //     }
-  //   }
-  // }
-
-
   // @Get(getApi("/profile/info/get"))
   async getProfileInfo(@Body() body: Dtos.getProfileInfoInDto): Promise<Dtos.getProfileInfoOutDto> {
     const user = await getUserInfoFromUID(body.uid);
     console.log(user);
     return {
-      time: "timeType",
+      time: this.getTime(),
       info: user
     };
   }
 
   postInfo(): Dtos.postProfileInfoOutDto {
     return {
-      time: "time"
+      time: this.getTime()
     };
   }
 
   // @Post(getApi("/profile/info/post"))
   async postProfileInfo(@Body() body: Dtos.postProfileInfoInDto): Promise<Dtos.postProfileInfoOutDto> {
-    return this.postInfo();
+    const user = await setUserInfo(body.token, body.updating_info);
+    return {
+      time: this.getTime(),
+    }
   }
 
   async createUser(token: Dtos.UIDToken, info: Dtos.APIUserInfo): Promise<Dtos.APIUser> {
@@ -64,14 +42,14 @@ export class ProfileService {
     //TODO: stop if uid already exists
     const user: Dtos.APIUser = await this.createUser(body.token, body.new_user_info);
     return {
-      time: "timeType",
+      time: this.getTime(),
       new_uid: user.uid
     };
   }
 
   getAnswers(): Dtos.getProfileRecentAnswersOutDto {
     return {
-      time: "timeType",
+      time: this.getTime(),
       answers: {
         "aid":
         {
@@ -90,16 +68,20 @@ export class ProfileService {
     return this.getAnswers();
   }
 
+  getTime(): string {
+    return "timeType";
+  }
+
   getInterests(): Dtos.getProfileInterestsOutDto {
     return {
-      time: "timeType",
+      time: this.getTime(),
       interests: ["talking", "dating", "reading books", "example-hypen"]
     }
   }
 
   postInterests(): Dtos.postProfileInterestsOutDto {
     return {
-      time: "time"
+      time: this.getTime()
     }
   }
 
