@@ -22,8 +22,14 @@ export const UserCollection: admin.firestore.CollectionReference = db.collection
 export type DocRef = admin.firestore.DocumentReference;
 export type ColRef = admin.firestore.CollectionReference;
 
+export function RecentAnswersCollectionForUser(uid: string): ColRef {
+  return RecentAnswerCollection(UserCollection.doc(uid));
+}
 export function AnswerCollectionFromID(qid: string): ColRef {
   return AnswerCollection(QuestionCollection.doc(qid));
+}
+export function RecentAnswerCollection(uid: DocRef): ColRef {
+  return uid.collection("recent-answers");
 }
 export function AnswerCollection(qid: DocRef): ColRef {
   return qid.collection("answers");

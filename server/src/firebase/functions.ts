@@ -1,7 +1,7 @@
 import admin from 'firebase-admin';
-import { AID, APIAnswer, APIQuestion, APIUser, APIUserInfo, getProfileInfoOutDto, postResponseOutDto, QID, UIDToken, UID } from 'src/app.dtos';
+import { AID, APIAnswer, APIQuestion, APIUser, APIUserInfo, postResponseOutDto, QID, UIDToken, UID } from 'src/app.dtos';
 import { FirebaseAnswer, FirebaseQuestion, FirebaseUser, FirestoreAnswerConverter, FirestoreQuestionConverter, FirestoreUserConverter } from './firebase_objects';
-import { AnswerCollectionFromID, DocRef, QuestionCollection, UserCollection } from './model';
+import { AnswerCollectionFromID, DocRef, QuestionCollection, RecentAnswersCollectionForUser, UserCollection } from './model';
 
 
 export async function getUIDFromTokenTest(token: UIDToken): Promise<UID> 
@@ -84,14 +84,17 @@ export async function getAnswersOfQuestion(questionID: QID, answerIDs: Array<AID
     return answerList;
 }
 
-export async function makeAnswer(creatorToken: UIDToken , question: QID, answerText: string): Promise<APIAnswer> {
-    const creator: UID = await getUIDFromToken(creatorToken);
+export async function makeAnswer(creator: UID, question: QID, answerText: string): Promise<APIAnswer> {
     // TODO: make sure question document exists
-    // TODO: make "answer" collection not a special string
     // make answer document
     const newAnswerRef: DocRef = AnswerCollectionFromID(question).doc();
+    const recentAnswerRef: DocRef = RecentAnswersCollectionForUser(creator).doc();
     const newAnswer = new FirebaseAnswer(answerText, admin.firestore.Timestamp.now(), creator)
-    newAnswerRef.set(newAnswer);
+    newAnswerRef.withConverter(FirestoreAnswerConverter).set(newAnswer);
+    recentAnswerRef.set({
+        qid: question,
+        aid: newAnswerRef.id,
+    });
     // return answer document in APIAnswer format
     return newAnswer.toAPIAnswer(question, newAnswerRef.id);
 }

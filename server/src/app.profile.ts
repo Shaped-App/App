@@ -1,6 +1,6 @@
 import * as Dtos from './app.dtos';
 import { Body, Injectable } from '@nestjs/common';
-import { getUIDFromToken, getUserInfoFromUID, makeUser, setUserInfo } from './firebase/functions';
+import { getUserInfoFromUID, makeUser, setUserInfo } from './firebase/functions';
 
 
 @Injectable()

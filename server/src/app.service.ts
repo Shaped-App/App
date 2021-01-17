@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as Dtos from './app.dtos';
-import { getAnswersOfQuestion, getAPIQuestionsFromIDs, getUIDFromTokenTest, makeAnswer, postResponseToAnswer } from './firebase/functions';
+import { getAnswersOfQuestion, getAPIQuestionsFromIDs, getUIDFromToken, getUIDFromTokenTest, makeAnswer, postResponseToAnswer } from './firebase/functions';
 import { getTokenFromUIDTest } from './firebase/test_functions';
 
 
@@ -76,7 +76,7 @@ export class BrowseService {
 
   // @Post(getApi('/browse/answer/post'))
   async postBrowseAnswer(body: Dtos.postAnswerInDto): Promise<Dtos.postAnswerOutDto> {
-    // const userID: Dtos.UID = await getUIDFromToken(body.token);
+    const userID: Dtos.UID = await getUIDFromToken(body.token);
     const questionID: Dtos.QID = body.qid;
     const answerText: string = body.answer;
 
@@ -84,7 +84,7 @@ export class BrowseService {
     // const time: Dtos.APITime = body.time;
     return {
       time: "timeType",
-      answer: await makeAnswer(body.token, questionID, answerText)
+      answer: await makeAnswer(userID, questionID, answerText)
     }
   }
 
