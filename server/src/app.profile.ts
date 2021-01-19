@@ -1,6 +1,7 @@
+import admin from 'firebase-admin';
 import * as Dtos from './app.dtos';
 import { Body, Injectable } from '@nestjs/common';
-import { getUserInfoFromUID, makeUser, setUserInfo } from './firebase/functions';
+import { getRecentAnswers, getUserInfoFromUID, makeUser, setUserInfo } from './firebase/functions';
 
 
 @Injectable()
@@ -15,12 +16,6 @@ export class ProfileService {
     return {
       time: this.getTime(),
       info: user
-    };
-  }
-
-  postInfo(): Dtos.postProfileInfoOutDto {
-    return {
-      time: this.getTime()
     };
   }
 
@@ -47,25 +42,41 @@ export class ProfileService {
     };
   }
 
-  getAnswers(): Dtos.getProfileRecentAnswersOutDto {
+  getAnswers(answers: Array<Dtos.APIAnswer>): Dtos.getProfileRecentAnswersOutDto {
+    console.log("answers: ", answers);
+    const answerMap = {};
+    answers.forEach( answer => {
+      answerMap[answer.aid] = answer;
+    });
     return {
       time: this.getTime(),
-      answers: {
-        "aid":
-        {
-          qid: "qid",
-          aid: "aid",
-          answer: "answer text",
-          created: "time",
-          creator: "creator"
-        }
-      }
+      answers: answerMap
     };
+    // return {
+    //   time: this.getTime(),
+    //   answers: {
+    //     "aid":
+    //     {
+    //       qid: "qid",
+    //       aid: "aid",
+    //       answer: "answer text",
+    //       created: "time",
+    //       creator: "creator"
+    //     }
+    //   }
+    // };
   }
 
   // @Get(getApi("/profile/recent-answers/get"))
   async getProfileRecentAnswers(@Body() body: Dtos.getProfileRecentAnswersInDto): Promise<Dtos.getProfileRecentAnswersOutDto> {
-    return this.getAnswers();
+    //TODO: assert valid token
+    // should check in all profile, service.ts
+    // body.token
+    const dateMillis: number = Date.parse(body.time);
+    const ts = admin.firestore.Timestamp.fromMillis(dateMillis);
+    const answers = await getRecentAnswers(body.uid, ts);
+    console.log("answers: ", answers);
+    return this.getAnswers(answers);
   }
 
   getTime(): string {

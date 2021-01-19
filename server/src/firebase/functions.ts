@@ -71,6 +71,19 @@ export async function getAPIQuestionsFromIDs(token: UIDToken, questionIDs: Array
     return docList
 }
 
+// export async function getAnswer(questionID: QID, answerIDs: Array<AID>): Promise<Array<APIAnswer>> {
+//     // const answerRef: DocRef = AnswerCollectionFromID(questionID).doc(answerID);
+//     const answerQuery = AnswerCollectionFromID(questionID).where(admin.firestore.FieldPath.documentId(), "in", answerIDs)
+//     const answerData = await answerQuery.withConverter(FirestoreAnswerConverter).get()
+//     const answerList: APIAnswer[] = [];
+//     answerData.forEach(async function (snapshot) {
+//         const data: FirebaseAnswer = snapshot.data();
+//         const question: APIAnswer = data.toAPIAnswer(questionID, snapshot.id);
+//         snapshot.exists ? answerList.push(question) : null;
+//     })
+//     return answerList;
+// }
+
 export async function getAnswersOfQuestion(questionID: QID, answerIDs: Array<AID>): Promise<Array<APIAnswer>> {
     // const answerRef: DocRef = AnswerCollectionFromID(questionID).doc(answerID);
     const answerQuery = AnswerCollectionFromID(questionID).where(admin.firestore.FieldPath.documentId(), "in", answerIDs)
@@ -94,6 +107,7 @@ export async function makeAnswer(creator: UID, question: QID, answerText: string
     recentAnswerRef.set({
         qid: question,
         aid: newAnswerRef.id,
+        time: admin.firestore.Timestamp.now(),
     });
     // return answer document in APIAnswer format
     return newAnswer.toAPIAnswer(question, newAnswerRef.id);
@@ -145,19 +159,37 @@ export async function setUserInfo(token: UIDToken, info: APIUserInfo): Promise<A
     return newUser.toAPIUser();
 }
 
-export async function getUserInfoFromUID(UID: UID): Promise<APIUser> {
+export async function getUserInfoFromUID(uid: UID): Promise<APIUser> {
     
-    console.log("start");
     const userQuery = UserCollection
-    console.log("saasdf");
-    const doc = userQuery.doc(UID)
-    console.log("end");
+    const doc = userQuery.doc(uid)
     const docs = await doc.withConverter(FirestoreUserConverter).get()
     
-    const user = await docs.data();
+    const user = docs.data();
     const info = user.toAPIUser();
     console.log(user);
     return info;
+}
+
+export async function getRecentAnswers(uid: UID, time: FirebaseFirestore.Timestamp): Promise<Array<APIAnswer>> {
+    const recentRef = RecentAnswersCollectionForUser(uid);
+
+    //TODO: include '10' limit as parameter in api
+    const first = recentRef.orderBy("time").limit(10).startAfter(time);
+
+    const firstData = await first.get();
+    const answerList: APIAnswer[] = [];
+    for (const doc of firstData.docs) {
+        const data = doc.data();
+        console.log("data: ", data);
+        console.log(": ", data.aid);
+        
+        const aids = [data.aid];
+        const singleAnswer = await getAnswersOfQuestion(data.qid, aids);
+        console.log("goet here", singleAnswer[0]);
+        answerList.push(singleAnswer[0]);
+    }
+    return answerList;
 }
 
 /*  */
