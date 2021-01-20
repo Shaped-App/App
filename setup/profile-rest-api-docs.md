@@ -110,6 +110,8 @@ Input:
 ```
 {
     "uid": <uid>,
+    "size": <number>,
+    "page": <number>,
     "time": <TimeFormatTBD>
 }
 ```
