@@ -176,6 +176,8 @@ export interface postCreateProfileInfoOutDto extends APIOutDto {
 
 export interface getProfileRecentAnswersInDto extends APIInDto {
     uid: UID,
+    size: number,
+    page: number,
     time: APITime;
 }
 export interface getProfileRecentAnswersOutDto extends APIOutDto {

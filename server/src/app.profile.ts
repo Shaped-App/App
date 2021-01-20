@@ -74,7 +74,7 @@ export class ProfileService {
     // body.token
     const dateMillis: number = Date.parse(body.time);
     const ts = admin.firestore.Timestamp.fromMillis(dateMillis);
-    const answers = await getRecentAnswers(body.uid, ts);
+    const answers = await getRecentAnswers(body.uid, ts, body.size, body.page);
     console.log("answers: ", answers);
     return this.getAnswers(answers);
   }

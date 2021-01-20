@@ -171,22 +171,26 @@ export async function getUserInfoFromUID(uid: UID): Promise<APIUser> {
     return info;
 }
 
-export async function getRecentAnswers(uid: UID, time: FirebaseFirestore.Timestamp): Promise<Array<APIAnswer>> {
+export async function getRecentAnswers(uid: UID, time: FirebaseFirestore.Timestamp, size?: number, page?: number): Promise<Array<APIAnswer>> {
     const recentRef = RecentAnswersCollectionForUser(uid);
 
     //TODO: include '10' limit as parameter in api
-    const first = recentRef.orderBy("time").limit(10).startAfter(time);
+    // let size = 10;
+    size = size ? size : 0;
+    page = page ? page : 0;
+
+    const first = recentRef.orderBy("time").limit(size).startAfter(time).offset(size * page);
 
     const firstData = await first.get();
     const answerList: APIAnswer[] = [];
     for (const doc of firstData.docs) {
         const data = doc.data();
-        console.log("data: ", data);
-        console.log(": ", data.aid);
+        // console.log("data: ", data);
+        // console.log(": ", data.aid);
         
         const aids = [data.aid];
         const singleAnswer = await getAnswersOfQuestion(data.qid, aids);
-        console.log("goet here", singleAnswer[0]);
+        // console.log("goet here", singleAnswer[0]);
         answerList.push(singleAnswer[0]);
     }
     return answerList;
