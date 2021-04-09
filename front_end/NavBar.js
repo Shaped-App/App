@@ -11,6 +11,7 @@ import BrowseTwoScreen from './Matching/MatchingBrowseTwo';
 import BrowseThreeScreen from './Matching/MatchingBrowseThree';
 //Inbox Screens
 import InboxOneScreen from './Inbox/InboxOne';
+import ChatRoom from './Inbox/ChatRoom';
 //Profile Screens
 import ProfileOneScreen from './Profile/ProfileOne';
 import Settings from './Profile/Settings';
@@ -46,6 +47,8 @@ function InboxNav() {
         screenOptions={stackOption}>
             <InboxStack.Screen name={inboxOne} component={InboxOneScreen}
             options={{title: "Messages", headerLeft: null}}/>
+            <InboxStack.Screen name={inboxTwo} component={ChatRoom}
+            options={{title: "Chat Room"}}/>
         </InboxStack.Navigator>
     );
 }
@@ -125,7 +128,7 @@ export const browseThree = "BrowseThree";
 export const browseFour = "BrowseFour";
 //inbox option
 export const inboxOne = "InboxOne";
-export const inboxTwo = "InboxTwo";
+export const inboxTwo = "Chat Room";
 export const inboxThree = "InboxThree";
 //profile option
 export const userProfile = "UserProfile";

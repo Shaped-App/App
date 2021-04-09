@@ -38,5 +38,13 @@ export default StyleSheet.create({
         flex: 0,
         flexDirection: 'row',
         justifyContent: 'center'
+    },
+    send__button: {
+        backgroundColor: '#16B7EA',
+        borderRadius: 15,
+        width: 30,
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
